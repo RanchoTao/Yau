@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>丘成桐 · 几何的纪念碑</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#06070b; --ink2:#0c0e15; --line:rgba(216,180,106,.18);
+  --gold:#d8b46a; --gold2:#f1dba4; --dim:#8c8676; --text:#e9e4d6;
+  --serif:"Noto Serif SC","Songti SC","STSong",serif;
+  --latin:"Cormorant Garamond","Times New Roman",serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--text);font-family:var(--serif);font-weight:300;line-height:1.8;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:var(--gold2)}
+::selection{background:var(--gold);color:var(--ink)}
+
+/* ---------- nav ---------- */
+nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:22px clamp(20px,5vw,64px);mix-blend-mode:difference}
+nav .mark{font-family:var(--latin);letter-spacing:.32em;font-size:13px;color:#fff;text-transform:uppercase}
+nav ul{display:flex;gap:28px;list-style:none}
+nav a{color:#fff;text-decoration:none;font-size:13px;letter-spacing:.2em;opacity:.75;transition:opacity .3s}
+nav a:hover{opacity:1}
+@media(max-width:760px){nav ul{display:none}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;height:100vh;min-height:640px;overflow:hidden}
+#cy{position:absolute;inset:0;width:100%;height:100%;cursor:grab;touch-action:pan-y}
+#cy:active{cursor:grabbing}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 62% 50%,transparent 30%,rgba(6,7,11,.55) 70%,var(--ink) 100%)}
+.hero-text{position:absolute;left:clamp(20px,7vw,110px);bottom:clamp(60px,14vh,150px);z-index:2;pointer-events:none;max-width:560px}
+.tag{display:inline-block;font-size:11px;letter-spacing:.3em;color:var(--gold);border:1px solid var(--line);padding:5px 12px;margin-bottom:28px;background:rgba(6,7,11,.5)}
+.hero h1{font-weight:900;font-size:clamp(64px,11vw,148px);line-height:1;letter-spacing:.06em;
+  background:linear-gradient(180deg,#fff7e0 0%,var(--gold) 60%,#8a6a30 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .latin{font-family:var(--latin);font-style:italic;font-size:clamp(22px,3vw,34px);color:var(--gold2);margin:14px 0 22px;letter-spacing:.04em}
+.hero p.sub{color:var(--dim);font-size:15px;letter-spacing:.12em}
+.hero .caption{position:absolute;right:clamp(20px,5vw,64px);bottom:34px;z-index:2;text-align:right;font-size:11px;color:var(--dim);letter-spacing:.14em;line-height:1.9}
+.hero .caption b{color:var(--gold);font-weight:500}
+.alpha{pointer-events:auto;margin-top:10px;display:flex;gap:10px;align-items:center;justify-content:flex-end}
+.alpha input{accent-color:var(--gold);width:120px}
+.scroll{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:2;width:1px;height:56px;background:linear-gradient(var(--gold),transparent);animation:drip 2.4s ease-in-out infinite}
+@keyframes drip{0%{transform:translateX(-50%) scaleY(0);transform-origin:top}50%{transform:translateX(-50%) scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:translateX(-50%) scaleY(0);transform-origin:bottom}}
+@media(max-width:760px){.hero .caption{display:none}}
+
+/* ---------- sections ---------- */
+section{position:relative;padding:clamp(90px,14vh,160px) clamp(20px,7vw,110px)}
+.kicker{font-family:var(--latin);letter-spacing:.4em;font-size:12px;color:var(--gold);text-transform:uppercase;margin-bottom:18px}
+h2{font-weight:700;font-size:clamp(34px,5vw,60px);letter-spacing:.08em;line-height:1.25;margin-bottom:48px}
+h2 em{font-style:normal;color:var(--gold)}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 1.2s cubic-bezier(.2,.7,.2,1),transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.reveal.on{opacity:1;transform:none}
+
+/* epigraph */
+.epigraph{text-align:center;padding:clamp(120px,22vh,240px) 20px}
+.epigraph blockquote{font-size:clamp(26px,3.6vw,46px);font-weight:300;letter-spacing:.14em;line-height:2}
+.epigraph blockquote span{color:var(--gold)}
+.epigraph .rule{width:1px;height:90px;background:linear-gradient(transparent,var(--gold),transparent);margin:50px auto 0}
+
+
+/* portrait */
+.portrait{display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:clamp(30px,6vw,100px);padding-top:clamp(40px,8vh,80px);padding-bottom:0;min-height:100vh}
+.pframe{position:relative;aspect-ratio:933/1400;max-height:92vh;justify-self:center;width:100%;max-width:620px}
+.pframe img{position:relative;z-index:2;width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 0 40px rgba(216,180,106,.12));will-change:transform}
+.halo{position:absolute;z-index:1;left:50%;top:34%;width:120%;aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none}
+.halo circle,.halo ellipse{fill:none;stroke:var(--gold);stroke-width:.6}
+.halo .spin{transform-origin:200px 200px;animation:spin 90s linear infinite}
+.halo .spin2{transform-origin:200px 200px;animation:spin 140s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.glow{position:absolute;z-index:0;left:50%;top:30%;width:90%;aspect-ratio:1;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(216,180,106,.22),rgba(216,180,106,.05) 45%,transparent 70%);filter:blur(10px)}
+.ptext h2{margin-bottom:34px;line-height:1.5}
+.ptext p{color:#bdb6a5;font-size:16px;margin-bottom:18px;max-width:30em}
+.ptext .sig{font-family:var(--latin);font-style:italic;font-size:44px;color:var(--gold);margin-top:34px;opacity:.85}
+.pcredit{font-size:11px;color:#5d594e;letter-spacing:.12em;margin-top:8px}
+@media(max-width:900px){.portrait{grid-template-columns:1fr}.pframe{max-width:440px}}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stat{padding:48px 24px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:none}
+.stat .n{font-family:var(--latin);font-size:clamp(48px,6vw,84px);font-weight:300;color:var(--gold2);line-height:1}
+.stat .l{margin-top:14px;font-size:14px;color:var(--dim);letter-spacing:.12em}
+@media(max-width:860px){.stats{grid-template-columns:1fr 1fr}.stat:nth-child(2){border-right:none}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+
+/* timeline */
+.timeline{position:relative;max-width:1100px;margin:0 auto}
+.timeline::before{content:"";position:absolute;left:150px;top:0;bottom:0;width:1px;background:var(--line)}
+.ev{display:grid;grid-template-columns:150px 1fr;gap:0;padding:26px 0;position:relative}
+.ev .y{font-family:var(--latin);font-size:34px;color:var(--gold);line-height:1.2;padding-right:40px;text-align:right}
+.ev .d{padding-left:44px;position:relative}
+.ev .d::before{content:"";position:absolute;left:-5px;top:14px;width:9px;height:9px;border:1px solid var(--gold);background:var(--ink);transform:rotate(45deg)}
+.ev.major .d::before{background:var(--gold);box-shadow:0 0 18px var(--gold)}
+.ev h3{font-weight:500;font-size:21px;letter-spacing:.06em}
+.ev p{color:var(--dim);font-size:15px;margin-top:4px}
+@media(max-width:700px){.timeline::before{left:8px}.ev{grid-template-columns:1fr}.ev .y{text-align:left;padding:0 0 4px 34px;font-size:28px}.ev .d{padding-left:34px}.ev .d::before{left:4px}}
+
+/* theorems */
+.steles{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.stele{background:var(--ink);padding:44px 34px 40px;position:relative;overflow:hidden;transition:background .6s}
+.stele:hover{background:var(--ink2)}
+.stele::after{content:"";position:absolute;left:0;top:0;height:2px;width:0;background:var(--gold);transition:width .8s}
+.stele:hover::after{width:100%}
+.stele .yr{font-family:var(--latin);color:var(--gold);letter-spacing:.2em;font-size:13px}
+.stele h3{font-size:24px;font-weight:700;letter-spacing:.08em;margin:12px 0 4px}
+.stele .en{font-family:var(--latin);font-style:italic;color:var(--dim);font-size:17px}
+.formula{font-family:var(--latin);font-size:26px;color:var(--gold2);margin:30px 0 24px;padding:20px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);text-align:center;white-space:nowrap;overflow-x:auto}
+.formula i{font-style:italic}
+.formula sup,.formula sub{font-size:.6em}
+.stele p{font-size:14.5px;color:#bdb6a5}
+
+@media(max-width:1000px){.steles{grid-template-columns:1fr 1fr}}@media(max-width:640px){.steles{grid-template-columns:1fr}}
+/* genealogy */
+#tree{width:100%;height:auto;display:block;max-width:1200px;margin:0 auto}
+#tree .edge{fill:none;stroke:var(--gold);stroke-opacity:.45;stroke-width:1}
+#tree text{fill:var(--text);font-family:var(--serif);font-size:15px}
+#tree .en{fill:var(--dim);font-family:var(--latin);font-style:italic;font-size:13px}
+#tree .node{fill:var(--ink);stroke:var(--gold)}
+#tree .root .node{fill:var(--gold)}
+#tree g.s{cursor:default;transition:opacity .3s}
+#tree g.s:hover text{fill:var(--gold2)}
+.note{font-size:12px;color:var(--dim);letter-spacing:.1em;text-align:center;margin-top:20px}
+
+/* institutions */
+.inst{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
+.card{border:1px solid var(--line);padding:30px 28px;position:relative;transition:border-color .5s,transform .5s}
+.card:hover{border-color:var(--gold);transform:translateY(-4px)}
+.card .yr{font-family:var(--latin);font-size:40px;color:var(--gold);line-height:1}
+.card h3{font-size:18px;font-weight:500;margin-top:16px;letter-spacing:.04em}
+.card p{font-size:13.5px;color:var(--dim);margin-top:6px}
+.card .here{position:absolute;top:18px;right:18px;font-size:10px;letter-spacing:.2em;color:var(--ink);background:var(--gold);padding:2px 8px}
+
+/* honors */
+.honors{display:flex;flex-wrap:wrap;gap:0;border-top:1px solid var(--line)}
+.honor{flex:1 1 200px;padding:30px 20px;border-bottom:1px solid var(--line);border-right:1px solid var(--line)}
+.honor .yr{font-family:var(--latin);color:var(--gold);font-size:22px}
+.honor .nm{font-size:16px;margin-top:4px}
+
+/* star wall */
+.wall{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow:hidden}
+#sky{position:absolute;inset:0;width:100%;height:100%}
+.wall .inner{position:relative;z-index:2;max-width:620px}
+.wall p.lead{color:var(--dim);margin-bottom:34px}
+.light{display:flex;gap:0;border:1px solid var(--gold);background:rgba(6,7,11,.7);max-width:520px;margin:0 auto}
+.light input{flex:1;background:none;border:none;outline:none;color:var(--text);font-family:var(--serif);font-size:15px;padding:16px 18px;min-width:0}
+.light input::placeholder{color:#6b6658}
+.light button{background:var(--gold);color:var(--ink);border:none;font-family:var(--serif);font-weight:700;font-size:15px;letter-spacing:.2em;padding:0 26px;cursor:pointer;transition:background .3s}
+.light button:hover{background:var(--gold2)}
+.count{margin-top:22px;font-family:var(--latin);letter-spacing:.24em;color:var(--gold);font-size:14px}
+.float{position:absolute;z-index:1;pointer-events:none;color:var(--gold2);font-size:14px;white-space:nowrap;text-shadow:0 0 12px rgba(216,180,106,.6);animation:rise 7s ease-out forwards}
+@keyframes rise{0%{opacity:0;transform:translate(-50%,0)}15%{opacity:1}100%{opacity:0;transform:translate(-50%,-160px)}}
+
+footer{padding:60px clamp(20px,7vw,110px);border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;font-size:12px;color:var(--dim);letter-spacing:.1em}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="mark">Master · Yau</div>
+  <ul>
+    <li><a href="#man">其人</a></li>
+    <li><a href="#life">年表</a></li>
+    <li><a href="#theorems">定理</a></li>
+    <li><a href="#lineage">师承</a></li>
+    <li><a href="#builder">筑基</a></li>
+    <li><a href="#stars">献辞</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <canvas id="cy" aria-label="可旋转的卡拉比–丘流形"></canvas>
+  <div class="hero-text">
+    <span class="tag">致敬作品 · DEMO</span>
+    <h1>丘成桐</h1>
+    <div class="latin">Shing-Tung Yau</div>
+    <p class="sub">以几何，丈量宇宙的形状</p>
+  </div>
+  <div class="caption">
+    <b>卡拉比–丘流形</b> · Calabi–Yau Manifold<br>
+    费马五次超曲面 z₁⁵ + z₂⁵ = 1 的实切片投影<br>
+    拖动旋转
+    <div class="alpha"><span>投影角 α</span><input id="alpha" type="range" min="0" max="628" value="80"></div>
+  </div>
+  <div class="scroll"></div>
+</header>
+
+<!-- EPIGRAPH -->
+<section class="epigraph">
+  <blockquote class="reveal">有些名字刻在石头上，<br>有些名字刻在<span>定理</span>里。</blockquote>
+  <div class="rule"></div>
+</section>
+
+
+<!-- PORTRAIT -->
+<section class="portrait" id="man">
+  <div class="pframe reveal">
+    <div class="glow"></div>
+    <svg class="halo" viewBox="0 0 400 400" aria-hidden="true">
+      <g class="spin" opacity=".35"><circle cx="200" cy="200" r="150"/><ellipse cx="200" cy="200" rx="150" ry="52"/><ellipse cx="200" cy="200" rx="52" ry="150"/></g>
+      <g class="spin2" opacity=".18"><circle cx="200" cy="200" r="182" stroke-dasharray="2 6"/><ellipse cx="200" cy="200" rx="182" ry="100" transform="rotate(35 200 200)"/><ellipse cx="200" cy="200" rx="182" ry="100" transform="rotate(-35 200 200)"/></g>
+    </svg>
+    <img id="pimg" src="assets/yau.webp" alt="丘成桐先生肖像" loading="lazy">
+  </div>
+  <div class="ptext reveal">
+    <div class="kicker">The Man</div>
+    <h2>几何学家<br><em>·</em>教育家<br><em>·</em>筑路人</h2>
+    <p>他从香港的困顿少年，走到伯克利陈省身门下；用偏微分方程打开几何的大门，让一类流形以他的名字被物理学家写进宇宙的方程。</p>
+    <p>后半生，他把更多的力气放在人身上——办学、建所、带学生，为中国数学一砖一瓦地铺路。</p>
+    <div class="sig">Shing-Tung Yau</div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section style="padding-top:0">
+  <div class="stats reveal">
+    <div class="stat"><div class="n">1949</div><div class="l">生于广东汕头 · 长于香港</div></div>
+    <div class="stat"><div class="n">1982</div><div class="l">菲尔兹奖 · 首位华人得主</div></div>
+    <div class="stat"><div class="n" data-count="70">0</div><div class="l">余位博士学生</div></div>
+    <div class="stat"><div class="n" data-count="8">0</div><div class="l">所以上创建的学术机构</div></div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="life">
+  <div class="kicker reveal">Chronicle</div>
+  <h2 class="reveal">一生<em>·</em>年表</h2>
+  <div class="timeline" id="timeline"></div>
+</section>
+
+<!-- THEOREMS -->
+<section id="theorems">
+  <div class="kicker reveal">Steles of Theorems</div>
+  <h2 class="reveal">定理<em>之</em>碑</h2>
+  <div class="steles reveal">
+    <div class="stele">
+      <div class="yr">1976 – 1978</div>
+      <h3>卡拉比猜想</h3>
+      <div class="en">The Calabi Conjecture</div>
+      <div class="formula">(<i>ω</i> + <i>i</i>∂∂̄<i>φ</i>)<sup><i>n</i></sup> = <i>e<sup>f</sup></i> <i>ω</i><sup><i>n</i></sup></div>
+      <p>解出复蒙日–安培方程，证明紧凯勒流形上可以预先指定里奇曲率。第一类陈类为零时便得到里奇平坦度量——后来被称为卡拉比–丘流形，也成了弦论里额外维度的候选形状。</p>
+    </div>
+    <div class="stele">
+      <div class="yr">1979 · 与 R. Schoen</div>
+      <h3>正质量定理</h3>
+      <div class="en">The Positive Mass Theorem</div>
+      <div class="formula"><i>m</i><sub>ADM</sub> ≥ 0</div>
+      <p>在广义相对论中，满足能量条件的孤立引力系统总质量不为负，且只有平直时空的质量为零。他们用极小曲面方法给出了证明，用几何回答了物理问题。</p>
+    </div>
+    <div class="stele">
+      <div class="yr">1986 · 与 李伟光</div>
+      <h3>李–丘估计</h3>
+      <div class="en">The Li–Yau Inequality</div>
+      <div class="formula">|∇<i>u</i>|²⁄<i>u</i>² − <i>u<sub>t</sub></i>⁄<i>u</i> ≤ <i>n</i>⁄2<i>t</i></div>
+      <p>里奇曲率非负的流形上，正热方程解的梯度估计。这个思路一路影响到后来的里奇流研究。</p>
+    </div>
+    <div class="stele">
+      <div class="yr">1986 · 与 K. Uhlenbeck</div>
+      <h3>唐纳森–乌伦贝克–丘定理</h3>
+      <div class="en">Donaldson–Uhlenbeck–Yau</div>
+      <div class="formula"><i>i</i>Λ<i>F<sub>h</sub></i> = <i>λ</i>·Id</div>
+      <p>紧凯勒流形上的全纯向量丛稳定，当且仅当它存在厄米–爱因斯坦度量。这一结果把代数几何与规范场论连在了一起。</p>
+    </div>
+    <div class="stele">
+      <div class="yr">1996 · 与 Strominger, Zaslow</div>
+      <h3>SYZ 猜想</h3>
+      <div class="en">Strominger–Yau–Zaslow</div>
+      <div class="formula">Mirror Symmetry = T-duality</div>
+      <p>镜像对称的几何图景：卡拉比–丘流形可以看成特殊拉格朗日环面的纤维化，把纤维对偶过来，就得到它的镜像。</p>
+    </div>
+    <div class="stele">
+      <div class="yr">1970s – </div>
+      <h3>几何分析</h3>
+      <div class="en">Geometric Analysis</div>
+      <div class="formula">PDE ⟷ Geometry</div>
+      <p>用偏微分方程研究几何，再用几何反过来理解方程。他是这门学科最重要的奠基人之一，培养了一代又一代几何分析学者。</p>
+    </div>
+  </div>
+</section>
+
+<!-- LINEAGE -->
+<section id="lineage">
+  <div class="kicker reveal">Lineage</div>
+  <h2 class="reveal">薪火<em>·</em>师承</h2>
+  <svg id="tree" viewBox="0 0 1200 720" class="reveal"></svg>
+  <div class="note">学生名单为部分示意，待核实与补全</div>
+</section>
+
+<!-- INSTITUTIONS -->
+<section id="builder">
+  <div class="kicker reveal">The Builder</div>
+  <h2 class="reveal">为数学<em>·</em>筑基</h2>
+  <div class="inst reveal" id="inst"></div>
+</section>
+
+<!-- HONORS -->
+<section style="padding-top:20px">
+  <div class="kicker reveal">Honors</div>
+  <div class="honors reveal" id="honors"></div>
+</section>
+
+<!-- STAR WALL -->
+<section class="wall" id="stars">
+  <canvas id="sky"></canvas>
+  <div class="inner">
+    <div class="kicker">Light a Star</div>
+    <h2 style="margin-bottom:22px">点亮<em>一颗星</em></h2>
+    <p class="lead">留一句话，为这片几何的星空添一点光。</p>
+    <form class="light" id="lightForm">
+      <input id="msg" maxlength="40" placeholder="写一句献辞（可留空）">
+      <button type="submit">点亮</button>
+    </form>
+    <div class="count" id="count"></div>
+  </div>
+</section>
+
+<footer>
+  <div>本页为学生自发制作的致敬作品 Demo，并非丘成桐先生官方网站。内容仍在核实中。</div>
+  <div>Made with reverence · Rancho Tao</div>
+</footer>
+
+<script>
+/* ===================== Calabi–Yau renderer ===================== */
+(() => {
+  const cv = document.getElementById('cy'), ctx = cv.getContext('2d');
+  const N = 5, G = innerWidth < 700 ? 9 : 13;
+  const XI = 1.15;
+  let W, H, dpr;
+  function resize(){ dpr = Math.min(devicePixelRatio||1, 2); W = cv.clientWidth; H = cv.clientHeight; cv.width = W*dpr; cv.height = H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); }
+  addEventListener('resize', resize); resize();
+
+  const cpow = (re, im, p) => { const r = Math.hypot(re, im), a = Math.atan2(im, re), rp = Math.pow(r, p); return [rp*Math.cos(p*a), rp*Math.sin(p*a)]; };
+  const cmul = (a, b) => [a[0]*b[0]-a[1]*b[1], a[0]*b[1]+a[1]*b[0]];
+
+  // precompute z1, z2 for every patch vertex
+  const patches = [];
+  for (let k1 = 0; k1 < N; k1++) for (let k2 = 0; k2 < N; k2++) {
+    const p1 = [Math.cos(2*Math.PI*k1/N), Math.sin(2*Math.PI*k1/N)];
+    const p2 = [Math.cos(2*Math.PI*k2/N), Math.sin(2*Math.PI*k2/N)];
+    const verts = [];
+    for (let i = 0; i <= G; i++) for (let j = 0; j <= G; j++) {
+      const x = -XI + 2*XI*i/G, y = (Math.PI/2)*j/G;
+      const ch = [Math.cosh(x)*Math.cos(y), Math.sinh(x)*Math.sin(y)];
+      const sh = [Math.sinh(x)*Math.cos(y), Math.cosh(x)*Math.sin(y)];
+      const msh = [sh[1], -sh[0]];               // -i * sinh
+      const z1 = cmul(p1, cpow(ch[0], ch[1], 2/N));
+      const z2 = cmul(p2, cpow(msh[0], msh[1], 2/N));
+      verts.push([z1[0], z1[1], z2[0], z2[1]]);
+    }
+    patches.push({ verts, k: k1*N + k2 });
+  }
+
+  let yaw = 0.6, pitch = 0.35, vyaw = 0.0025, dragging = false, lx = 0, ly = 0, idle = 0;
+  const alphaEl = document.getElementById('alpha');
+  let alpha = alphaEl.value/100, alphaTarget = alpha, autoAlpha = true;
+  alphaEl.addEventListener('input', () => { alphaTarget = alphaEl.value/100; autoAlpha = false; });
+
+  cv.addEventListener('pointerdown', e => { dragging = true; lx = e.clientX; ly = e.clientY; cv.setPointerCapture(e.pointerId); });
+  cv.addEventListener('pointermove', e => { if (!dragging) return; const dx = e.clientX-lx, dy = e.clientY-ly; lx = e.clientX; ly = e.clientY; yaw += dx*0.008; pitch = Math.max(-1.4, Math.min(1.4, pitch + dy*0.008)); vyaw = dx*0.0008; idle = 0; });
+  cv.addEventListener('pointerup', () => dragging = false);
+
+  const L = (() => { const v = [-0.4, -0.7, 0.6], n = Math.hypot(...v); return v.map(c => c/n); })();
+  const quads = [];
+  let visible = true;
+  new IntersectionObserver(es => visible = es[0].isIntersecting).observe(cv);
+
+  function frame(t){
+    requestAnimationFrame(frame);
+    if (!visible) return;
+    if (!dragging){ idle++; yaw += vyaw; vyaw += (0.0025 - vyaw)*0.01; }
+    if (autoAlpha) alphaTarget = 0.8 + 0.35*Math.sin(t*0.00018);
+    alpha += (alphaTarget - alpha)*0.05;
+    const ca = Math.cos(alpha), sa = Math.sin(alpha);
+    const cy = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    const cx0 = W > 900 ? W*0.62 : W*0.5, cy0 = W > 900 ? H*0.48 : H*0.38;
+    const S = Math.min(W, H) * (W > 900 ? 0.235 : 0.22), F = 4.2;
+
+    ctx.clearRect(0, 0, W, H);
+    quads.length = 0;
+    const R = G + 1;
+    for (const P of patches){
+      const pr = P.verts.map(v => {
+        let x = v[0], y = v[2], z = ca*v[1] + sa*v[3];
+        let x1 = cy*x + sy*z, z1 = -sy*x + cy*z;
+        let y1 = cp*y - sp*z1, z2 = sp*y + cp*z1;
+        const s = F/(F + z2);
+        return [x1, y1, z2, cx0 + x1*S*s, cy0 - y1*S*s];
+      });
+      for (let i = 0; i < G; i++) for (let j = 0; j < G; j++){
+        const a = pr[i*R+j], b = pr[(i+1)*R+j], c = pr[(i+1)*R+j+1], d = pr[i*R+j+1];
+        const ux = c[0]-a[0], uy = c[1]-a[1], uz = c[2]-a[2], vx = d[0]-b[0], vy = d[1]-b[1], vz = d[2]-b[2];
+        let nx = uy*vz-uz*vy, ny = uz*vx-ux*vz, nz = ux*vy-uy*vx; const nl = Math.hypot(nx,ny,nz) || 1;
+        const lam = Math.abs((nx*L[0]+ny*L[1]+nz*L[2])/nl);
+        quads.push({ z: (a[2]+b[2]+c[2]+d[2])/4, a, b, c, d, lam, k: P.k });
+      }
+    }
+    quads.sort((p, q) => q.z - p.z);
+    for (const Q of quads){
+      const depth = Math.max(0, Math.min(1, (1.6 - Q.z)/3.2));
+      const hue = 34 + (Q.k % 5)*3 - Math.floor(Q.k/5)*2;
+      const light = 14 + Q.lam*52 + depth*10;
+      ctx.beginPath();
+      ctx.moveTo(Q.a[3], Q.a[4]); ctx.lineTo(Q.b[3], Q.b[4]); ctx.lineTo(Q.c[3], Q.c[4]); ctx.lineTo(Q.d[3], Q.d[4]); ctx.closePath();
+      ctx.fillStyle = `hsla(${hue},${48+Q.lam*20}%,${light}%,${0.55+depth*0.4})`;
+      ctx.fill();
+      ctx.strokeStyle = `hsla(42,70%,${60+Q.lam*25}%,${0.10+depth*0.22})`;
+      ctx.lineWidth = 0.6;
+      ctx.stroke();
+    }
+  }
+  requestAnimationFrame(frame);
+})();
+
+/* ===================== Data ===================== */
+const EVENTS = [
+  ['1949','生于广东汕头','同年随家人迁居香港，在困顿中长大。'],
+  ['1966','入读香港中文大学崇基学院','修读数学，三年后提前离校赴美。'],
+  ['1969','赴加州大学伯克利分校','师从陈省身。'],
+  ['1971','获伯克利博士学位','随后在普林斯顿高等研究院、纽约州立大学石溪分校、斯坦福大学任职。'],
+  ['1976','证明卡拉比猜想',"卡拉比–丘流形由此得名。",1],
+  ['1979','与 Schoen 证明正质量定理','用几何方法解决广义相对论中的基本问题。',1],
+  ['1982','获菲尔兹奖','首位获此殊荣的华人数学家。',1],
+  ['1987','任教哈佛大学','在哈佛执教三十余年，培养了大批几何分析人才。'],
+  ['1993','创办香港中文大学数学科学研究所','此后数十年间陆续在两岸三地及海外创建学术机构。'],
+  ['1998','发起世界华人数学家大会 ICCM','把全球华人数学家联结在一起。'],
+  ['2010','获沃尔夫数学奖','同年出版科普著作《The Shape of Inner Space》。'],
+  ['2020','创建北京雁栖湖应用数学研究院 BIMSA',''],
+  ['2022','自哈佛荣休，全职回到清华','致力于在中国建设世界一流的数学中心。',1],
+  ['2023','获邵逸夫数学科学奖','']
+];
+const INST = [
+  ['1993','香港中文大学数学科学研究所','Institute of Mathematical Sciences, CUHK'],
+  ['1996','中国科学院晨兴数学中心','Morningside Center of Mathematics, CAS'],
+  ['1998','世界华人数学家大会','International Congress of Chinese Mathematicians'],
+  ['2002','浙江大学数学科学研究中心','Center of Mathematical Sciences, Zhejiang University'],
+  ['2009','清华大学丘成桐数学科学中心','Yau Mathematical Sciences Center, Tsinghua'],
+  ['2014','哈佛大学数学科学与应用中心','Harvard CMSA'],
+  ['2020','北京雁栖湖应用数学研究院','BIMSA',1],
+  ['2021','清华大学求真书院','Qiuzhen College, Tsinghua']
+];
+const HONORS = [['1981','维布伦几何奖'],['1982','菲尔兹奖'],['1985','麦克阿瑟奖'],['1994','克拉福德奖'],['1997','美国国家科学奖章'],['2010','沃尔夫数学奖'],['2023','邵逸夫数学科学奖']];
+const STUDENTS = [
+  ['Richard Schoen',''],['田刚','Gang Tian'],['李骏','Jun Li'],['曹怀东','Huai-Dong Cao'],
+  ['刘克峰','Kefeng Liu'],['王慕道','Mu-Tao Wang'],['梁乃聪','Conan Leung'],['刘秋菊','Chiu-Chu Melissa Liu'],
+  ['顾险峰','Xianfeng Gu'],['施皖雄','Wan-Xiong Shi'],['Robert Bartnik',''],['Valentino Tosatti','']
+];
+
+/* timeline */
+document.getElementById('timeline').innerHTML = EVENTS.map(e =>
+  `<div class="ev reveal${e[3]?' major':''}"><div class="y">${e[0]}</div><div class="d"><h3>${e[1]}</h3>${e[2]?`<p>${e[2]}</p>`:''}</div></div>`).join('');
+document.getElementById('inst').innerHTML = INST.map(e =>
+  `<div class="card">${e[3]?'<span class="here">BIMSA</span>':''}<div class="yr">${e[0]}</div><h3>${e[1]}</h3><p>${e[2]}</p></div>`).join('');
+document.getElementById('honors').innerHTML = HONORS.map(h => `<div class="honor"><div class="yr">${h[0]}</div><div class="nm">${h[1]}</div></div>`).join('');
+
+/* genealogy tree */
+(() => {
+  const svg = document.getElementById('tree'), NS = 'http://www.w3.org/2000/svg';
+  const el = (t, a, p = svg) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); p.appendChild(e); return e; };
+  const chain = [['Wilhelm Blaschke','布拉施克',50],['陈省身','Shiing-Shen Chern',170],['丘成桐','Shing-Tung Yau',300]];
+  const cx = 600;
+  const paths = [];
+  for (let i = 0; i < chain.length - 1; i++) paths.push(el('path', { class:'edge', d:`M${cx},${chain[i][2]+14} L${cx},${chain[i+1][2]-16}` }));
+  const n = STUDENTS.length, R = 230;
+  STUDENTS.forEach((s, i) => {
+    const a = Math.PI*(0.08 + 0.84*i/(n-1));
+    const x = cx - Math.cos(a)*500, y = 400 + Math.sin(a)*230;
+    paths.push(el('path', { class:'edge', d:`M${cx},${314} C${cx},${380} ${x},${y-90} ${x},${y-8}` }));
+    const g = el('g', { class:'s' });
+    el('circle', { class:'node', cx:x, cy:y, r:4 }, g);
+    const t = el('text', { x, y:y+24, 'text-anchor':'middle' }, g); t.textContent = s[0];
+    if (s[1]){ const e2 = el('text', { x, y:y+42, 'text-anchor':'middle', class:'en' }, g); e2.textContent = s[1]; }
+  });
+  chain.forEach(([a, b, y], i) => {
+    const g = el('g', { class: i === 2 ? 'root' : '' });
+    el('circle', { class:'node', cx, cy:y, r: i === 2 ? 9 : 6 }, g);
+    const t = el('text', { x: cx + 22, y: y + 6, style: i === 2 ? 'font-size:24px;font-weight:700;fill:#f1dba4' : 'font-size:17px' }, g); t.textContent = a;
+    const e2 = el('text', { x: cx + 22, y: y + 26, class:'en' }, g); e2.textContent = b;
+  });
+  const lbl = el('text', { x:cx, y:705, 'text-anchor':'middle', class:'en' }); lbl.textContent = '…… and generations to come';
+  paths.forEach(p => { const L = p.getTotalLength(); p.style.strokeDasharray = L; p.style.strokeDashoffset = L; p.style.transition = 'stroke-dashoffset 2.4s ease'; });
+  new IntersectionObserver((es, o) => { if (es[0].isIntersecting){ paths.forEach((p, i) => setTimeout(() => p.style.strokeDashoffset = 0, i*90)); o.disconnect(); } }, { threshold: .25 }).observe(svg);
+})();
+
+
+/* portrait parallax */
+(() => { const img = document.getElementById('pimg'), sec = document.getElementById('man');
+  addEventListener('scroll', () => { const r = sec.getBoundingClientRect(); const k = (r.top + r.height/2 - innerHeight/2)/innerHeight; img.style.transform = `translateY(${k*-40}px)`; }, { passive:true }); })();
+
+/* reveal + counters */
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  e.target.classList.add('on');
+  e.target.querySelectorAll('[data-count]').forEach(c => {
+    const to = +c.dataset.count, t0 = performance.now();
+    const step = t => { const k = Math.min(1, (t - t0)/1600); c.textContent = Math.round(to*(1 - Math.pow(1-k, 3))) + (k === 1 ? '+' : ''); if (k < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  });
+  io.unobserve(e.target);
+}), { threshold: .15 });
+document.querySelectorAll('.reveal').forEach(e => io.observe(e));
+
+/* ===================== Star wall ===================== */
+(() => {
+  const cv = document.getElementById('sky'), ctx = cv.getContext('2d'), sec = document.getElementById('stars');
+  let W, H, stars = [], mine = [];
+  const KEY = 'masteryau-stars';
+  try { mine = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch(e) {}
+  function resize(){ const d = Math.min(devicePixelRatio||1, 2); W = sec.clientWidth; H = sec.clientHeight; cv.width = W*d; cv.height = H*d; ctx.setTransform(d,0,0,d,0,0); }
+  addEventListener('resize', resize); resize();
+  for (let i = 0; i < 260; i++) stars.push({ x: Math.random(), y: Math.random(), r: Math.random()*1.1+.2, p: Math.random()*6, s: .4+Math.random(), lit:false });
+  mine.forEach(m => stars.push({ x:m.x, y:m.y, r:2.2, p:Math.random()*6, s:1, lit:true }));
+  const count = document.getElementById('count');
+  const upd = () => count.textContent = mine.length ? `你已点亮 ${mine.length} 颗星` : '';
+  upd();
+  function add(text){
+    const x = .08 + Math.random()*.84, y = .08 + Math.random()*.5;
+    stars.push({ x, y, r: 2.4, p: 0, s: 1, lit: true, born: performance.now() });
+    mine.push({ x, y }); try { localStorage.setItem(KEY, JSON.stringify(mine)); } catch(e) {}
+    if (text){ const f = document.createElement('div'); f.className = 'float'; f.textContent = text; f.style.left = x*100 + '%'; f.style.top = y*H + 'px'; sec.appendChild(f); setTimeout(() => f.remove(), 7200); }
+    upd();
+  }
+  document.getElementById('lightForm').addEventListener('submit', e => { e.preventDefault(); const m = document.getElementById('msg'); add(m.value.trim()); m.value = ''; });
+  let vis = false; new IntersectionObserver(es => vis = es[0].isIntersecting).observe(sec);
+  (function loop(t){
+    requestAnimationFrame(loop); if (!vis) return;
+    ctx.clearRect(0, 0, W, H);
+    for (const s of stars){
+      const tw = .55 + .45*Math.sin(t*0.001*s.s + s.p);
+      const x = s.x*W, y = s.y*H;
+      if (s.lit){
+        const age = s.born ? Math.min(1, (t - s.born)/1200) : 1;
+        const g = ctx.createRadialGradient(x, y, 0, x, y, 18*age + 4);
+        g.addColorStop(0, `rgba(241,219,164,${.9*tw})`); g.addColorStop(1, 'rgba(216,180,106,0)');
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, 18*age + 4, 0, 7); ctx.fill();
+      }
+      ctx.fillStyle = s.lit ? '#fff3d0' : `rgba(233,228,214,${.25 + .6*tw})`;
+      ctx.beginPath(); ctx.arc(x, y, s.r, 0, 7); ctx.fill();
+    }
+  })(0);
+})();
+</script>
+</body>
+</html>
