@@ -129,6 +129,11 @@ h2 em{font-style:normal;color:var(--gold)}
 .stele p{font-size:14.5px;color:#bdb6a5}
 
 @media(max-width:1000px){.steles{grid-template-columns:1fr 1fr}}@media(max-width:640px){.steles{grid-template-columns:1fr}}
+.stele.live{display:block;text-decoration:none;color:inherit;cursor:pointer}
+.stele.live h3{color:var(--gold2)}
+.stele .read{position:absolute;top:44px;right:34px;font-size:12px;letter-spacing:.18em;color:var(--ink);background:var(--gold);padding:3px 10px;transition:background .3s}
+.stele.live:hover .read{background:var(--gold2)}
+.stele.soon .yr::after{content:"  ·  讲解即将推出";color:var(--dim);letter-spacing:.1em}
 /* genealogy */
 #tree{width:100%;height:auto;display:block;max-width:1200px;margin:0 auto}
 #tree .edge{fill:none;stroke:var(--gold);stroke-opacity:.45;stroke-width:1}
@@ -252,42 +257,43 @@ footer{padding:60px clamp(20px,7vw,110px);border-top:1px solid var(--line);displ
   <div class="kicker reveal">Steles of Theorems</div>
   <h2 class="reveal">定理<em>之</em>碑</h2>
   <div class="steles reveal">
-    <div class="stele">
+    <a class="stele live" href="calabi-yau/">
+      <span class="read">读原文讲解 →</span>
       <div class="yr">1976 – 1978</div>
       <h3>卡拉比猜想</h3>
       <div class="en">The Calabi Conjecture</div>
       <div class="formula">(<i>ω</i> + <i>i</i>∂∂̄<i>φ</i>)<sup><i>n</i></sup> = <i>e<sup>f</sup></i> <i>ω</i><sup><i>n</i></sup></div>
       <p>解出复蒙日–安培方程，证明紧凯勒流形上可以预先指定里奇曲率。第一类陈类为零时便得到里奇平坦度量——后来被称为卡拉比–丘流形，也成了弦论里额外维度的候选形状。</p>
-    </div>
-    <div class="stele">
+    </a>
+    <div class="stele soon">
       <div class="yr">1979 · 与 R. Schoen</div>
       <h3>正质量定理</h3>
       <div class="en">The Positive Mass Theorem</div>
       <div class="formula"><i>m</i><sub>ADM</sub> ≥ 0</div>
       <p>在广义相对论中，满足能量条件的孤立引力系统总质量不为负，且只有平直时空的质量为零。他们用极小曲面方法给出了证明，用几何回答了物理问题。</p>
     </div>
-    <div class="stele">
+    <div class="stele soon">
       <div class="yr">1986 · 与 李伟光</div>
       <h3>李–丘估计</h3>
       <div class="en">The Li–Yau Inequality</div>
       <div class="formula">|∇<i>u</i>|²⁄<i>u</i>² − <i>u<sub>t</sub></i>⁄<i>u</i> ≤ <i>n</i>⁄2<i>t</i></div>
       <p>里奇曲率非负的流形上，正热方程解的梯度估计。这个思路一路影响到后来的里奇流研究。</p>
     </div>
-    <div class="stele">
+    <div class="stele soon">
       <div class="yr">1986 · 与 K. Uhlenbeck</div>
       <h3>唐纳森–乌伦贝克–丘定理</h3>
       <div class="en">Donaldson–Uhlenbeck–Yau</div>
       <div class="formula"><i>i</i>Λ<i>F<sub>h</sub></i> = <i>λ</i>·Id</div>
       <p>紧凯勒流形上的全纯向量丛稳定，当且仅当它存在厄米–爱因斯坦度量。这一结果把代数几何与规范场论连在了一起。</p>
     </div>
-    <div class="stele">
+    <div class="stele soon">
       <div class="yr">1996 · 与 Strominger, Zaslow</div>
       <h3>SYZ 猜想</h3>
       <div class="en">Strominger–Yau–Zaslow</div>
       <div class="formula">Mirror Symmetry = T-duality</div>
       <p>镜像对称的几何图景：卡拉比–丘流形可以看成特殊拉格朗日环面的纤维化，把纤维对偶过来，就得到它的镜像。</p>
     </div>
-    <div class="stele">
+    <div class="stele soon">
       <div class="yr">1970s – </div>
       <h3>几何分析</h3>
       <div class="en">Geometric Analysis</div>

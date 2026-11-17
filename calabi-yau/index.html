@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>卡拉比猜想 · The Calabi Conjecture — 丘成桐 · 数学世界</title>
+<meta name="description" content="从零读懂丘成桐 1978 年对卡拉比猜想的证明：曲率、凯勒流形、复蒙日–安培方程、连续性方法与先验估计。中英双语。">
+<meta name="theme-color" content="#06070b">
+<link rel="canonical" href="https://masteryau.com/calabi-yau/">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<meta property="og:type" content="article">
+<meta property="og:title" content="卡拉比猜想 · The Calabi Conjecture">
+<meta property="og:description" content="从零读懂丘成桐对卡拉比猜想的证明。A from-zero guide to Yau's proof of the Calabi conjecture.">
+<meta property="og:image" content="https://masteryau.com/assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<style>
+:root{
+  --ink:#06070b; --ink2:#0c0e15; --line:rgba(216,180,106,.18);
+  --gold:#d8b46a; --gold2:#f1dba4; --dim:#8c8676; --text:#e9e4d6; --body:#cfc8b6;
+  --serif:"Noto Serif SC","Songti SC","STSong",serif;
+  --latin:"Cormorant Garamond","Times New Roman",serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--text);font-family:var(--serif);font-weight:300;line-height:1.9;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:var(--gold2)}
+::selection{background:var(--gold);color:var(--ink)}
+html[data-lang="zh"] .en{display:none!important}
+html[data-lang="en"] .zh{display:none!important}
+html[data-lang="en"] body{font-family:var(--latin);font-size:18.5px}
+
+#progress{position:fixed;top:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--gold),var(--gold2));z-index:40}
+nav{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:20px clamp(20px,5vw,64px);background:linear-gradient(var(--ink),rgba(6,7,11,0))}
+nav .back{font-family:var(--latin);letter-spacing:.24em;font-size:13px;color:var(--text);text-decoration:none;opacity:.8}
+nav .back:hover{opacity:1;color:var(--gold2)}
+.lang{display:flex;border:1px solid var(--line)}
+.lang button{background:none;border:none;color:var(--dim);font-family:var(--serif);font-size:13px;padding:6px 14px;cursor:pointer;letter-spacing:.1em}
+.lang button.on{background:var(--gold);color:var(--ink)}
+
+/* hero */
+.hero{position:relative;min-height:92vh;display:flex;align-items:flex-end;padding:0 clamp(20px,7vw,110px) clamp(60px,12vh,130px);overflow:hidden}
+#cy{position:absolute;inset:0;width:100%;height:100%;cursor:grab;touch-action:pan-y}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 66% 45%,transparent 25%,rgba(6,7,11,.6) 65%,var(--ink) 100%)}
+.hero-text{position:relative;z-index:2;max-width:640px;pointer-events:none}
+.kicker{font-family:var(--latin);letter-spacing:.4em;font-size:12px;color:var(--gold);text-transform:uppercase;margin-bottom:18px}
+.hero h1{font-weight:900;font-size:clamp(52px,8vw,112px);line-height:1.05;letter-spacing:.06em;background:linear-gradient(180deg,#fff7e0 0%,var(--gold) 60%,#8a6a30 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+html[data-lang="en"] .hero h1{font-family:var(--latin);font-weight:500;letter-spacing:.01em}
+.hero .sub{font-family:var(--latin);font-style:italic;font-size:clamp(20px,2.6vw,30px);color:var(--gold2);margin:16px 0 26px}
+.meta{display:flex;flex-wrap:wrap;gap:10px 26px;font-size:13px;color:var(--dim);letter-spacing:.08em}
+.meta b{color:var(--gold);font-weight:500}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:240px minmax(0,720px);gap:clamp(30px,6vw,90px);justify-content:center;padding:0 clamp(20px,5vw,64px)}
+aside{position:sticky;top:90px;align-self:start;max-height:calc(100vh - 120px);overflow:auto;padding-top:80px}
+aside ol{list-style:none;border-left:1px solid var(--line)}
+aside a{display:block;padding:7px 0 7px 18px;font-size:13.5px;color:var(--dim);text-decoration:none;border-left:2px solid transparent;margin-left:-1px;transition:color .3s,border-color .3s;line-height:1.5}
+aside a:hover{color:var(--text)}
+aside a.on{color:var(--gold2);border-left-color:var(--gold)}
+aside .n{font-family:var(--latin);color:var(--gold);margin-right:8px}
+@media(max-width:980px){.wrap{grid-template-columns:1fr}aside{display:none}}
+
+article{padding:80px 0 60px}
+article section{padding:50px 0 30px;border-top:1px solid var(--line)}
+article section:first-child{border-top:none}
+.ch{font-family:var(--latin);letter-spacing:.34em;font-size:12px;color:var(--gold);text-transform:uppercase}
+article h2{font-weight:700;font-size:clamp(28px,3.6vw,40px);letter-spacing:.06em;line-height:1.35;margin:10px 0 28px}
+html[data-lang="en"] article h2{font-family:var(--latin);font-weight:500;letter-spacing:0}
+article h3{font-size:20px;font-weight:700;margin:34px 0 12px;color:var(--gold2);letter-spacing:.04em}
+html[data-lang="en"] article h3{font-family:var(--latin);font-weight:500;font-size:23px}
+article p{color:var(--body);margin:0 0 18px;font-size:16.5px}
+html[data-lang="en"] article p{font-size:19px;line-height:1.75}
+article ul,article ol.l{color:var(--body);margin:0 0 18px 1.3em}
+article li{margin-bottom:8px}
+.katex{font-size:1.06em;color:var(--gold2)}
+.katex-display{margin:24px 0;padding:22px 10px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow-x:auto;overflow-y:hidden}
+
+.tldr{border:1px solid var(--gold);padding:30px 32px;position:relative;background:linear-gradient(135deg,rgba(216,180,106,.07),transparent 60%)}
+.tldr .tag{position:absolute;top:-11px;left:24px;background:var(--ink);padding:0 10px;font-family:var(--latin);letter-spacing:.3em;font-size:11px;color:var(--gold)}
+.tldr p{margin-bottom:10px}
+.box{border-left:2px solid var(--gold);padding:18px 24px;margin:26px 0;background:rgba(216,180,106,.04)}
+.box .t{font-family:var(--latin);letter-spacing:.26em;font-size:11px;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+.box p:last-child{margin-bottom:0}
+.thm{border:1px solid var(--line);padding:24px 28px;margin:26px 0;background:var(--ink2)}
+.thm .t{font-weight:700;color:var(--gold);margin-bottom:8px;letter-spacing:.06em}
+.thm p:last-child{margin-bottom:0}
+.analogy{display:flex;gap:16px;align-items:flex-start;margin:22px 0;padding:18px 22px;border:1px dashed var(--line)}
+.analogy .i{font-size:22px;color:var(--gold);line-height:1.3}
+.analogy p{margin:0}
+
+/* proof map */
+.map{margin:30px 0;border:1px solid var(--line);background:var(--ink2);padding:18px}
+#pmap{width:100%;display:block}
+#pmap .nd rect{fill:var(--ink);stroke:var(--gold);stroke-opacity:.55;transition:fill .3s,stroke-opacity .3s}
+#pmap .nd{cursor:pointer}
+#pmap .nd:hover rect,#pmap .nd.on rect{fill:rgba(216,180,106,.16);stroke-opacity:1}
+#pmap text{fill:var(--text);font-family:var(--serif);font-size:14px;pointer-events:none}
+#pmap .sm{fill:var(--dim);font-family:var(--latin);font-style:italic;font-size:12px}
+#pmap .ed{stroke:var(--gold);stroke-opacity:.5;fill:none;marker-end:url(#arr)}
+#pmap .key rect{stroke-width:2;stroke-opacity:1}
+#pnote{min-height:5.5em;padding:16px 8px 4px;border-top:1px solid var(--line);margin-top:10px}
+#pnote b{color:var(--gold2)}
+
+/* timeline strip */
+.strip{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:26px 0}
+.strip div{padding:18px 14px;border-right:1px solid var(--line)}
+.strip div:last-child{border-right:none}
+.strip .y{font-family:var(--latin);font-size:30px;color:var(--gold);line-height:1}
+.strip .d{font-size:13px;color:var(--dim);margin-top:8px;line-height:1.6}
+@media(max-width:640px){.strip{grid-template-columns:1fr 1fr}.strip div:nth-child(2){border-right:none}.strip div:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+
+.refs{list-style:none;margin:0}
+.refs li{padding:16px 0;border-bottom:1px solid var(--line);font-size:15px;color:var(--body)}
+.refs .y{font-family:var(--latin);color:var(--gold);margin-right:10px}
+.next{display:flex;justify-content:space-between;gap:20px;margin-top:40px}
+.next a{flex:1;border:1px solid var(--line);padding:22px 24px;text-decoration:none;color:var(--text);transition:border-color .4s}
+.next a:hover{border-color:var(--gold)}
+.next small{display:block;font-family:var(--latin);letter-spacing:.26em;color:var(--gold);font-size:11px;margin-bottom:6px}
+footer{padding:50px clamp(20px,7vw,110px);border-top:1px solid var(--line);font-size:12px;color:var(--dim);letter-spacing:.06em;line-height:2;text-align:center}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<nav>
+  <a class="back" href="../#theorems">← <span class="zh">丘成桐 · 数学世界</span><span class="en">Shing-Tung Yau</span></a>
+  <div class="lang" role="group" aria-label="Language"><button data-l="zh">中文</button><button data-l="en">EN</button></div>
+</nav>
+
+<header class="hero">
+  <canvas id="cy" aria-label="Calabi–Yau manifold"></canvas>
+  <div class="hero-text">
+    <div class="kicker">Stele I · 1976 – 1978</div>
+    <h1><span class="zh">卡拉比猜想</span><span class="en">The Calabi Conjecture</span></h1>
+    <div class="sub"><span class="zh">从零读懂丘成桐的证明</span><span class="en">Yau's proof, explained from zero</span></div>
+    <div class="meta">
+      <span><span class="zh">原文</span><span class="en">Paper</span> · <b>Comm. Pure Appl. Math. 31 (1978)</b></span>
+      <span><span class="zh">阅读约 25 分钟</span><span class="en">~25 min read</span></span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+<aside><ol id="toc"></ol></aside>
+<article>
+
+<!-- 0 -->
+<section id="s0" data-t-zh="一句话版本" data-t-en="In one breath">
+  <div class="tldr">
+    <span class="tag">TL;DR</span>
+    <p class="zh">1954 年，卡拉比问：在一类叫"凯勒流形"的复几何空间上，能不能随心所欲地指定"里奇曲率"，只要它满足一个显然必要的拓扑条件？</p>
+    <p class="zh">1976 年，27 岁的丘成桐证明：<b>能</b>，而且答案唯一。他把这个几何问题化成一个极难的非线性偏微分方程，即复蒙日–安培方程，并且解出了它。</p>
+    <p class="zh">最著名的推论是：存在大量"里奇平坦"的空间，也就是今天的<b>卡拉比–丘流形</b>。它们后来成为弦论中额外维度的标准候选。</p>
+    <p class="en">In 1954 Eugenio Calabi asked: on a compact Kähler manifold, can you prescribe the Ricci curvature at will, subject only to an obvious topological constraint?</p>
+    <p class="en">In 1976, at 27, Shing-Tung Yau proved that you <b>can</b> — and that the answer is unique. He turned the geometric question into a hard nonlinear PDE, the complex Monge–Ampère equation, and solved it.</p>
+    <p class="en">The most famous consequence: an abundance of <b>Ricci-flat</b> spaces — today's <b>Calabi–Yau manifolds</b>, later adopted by string theory as candidate shapes for extra dimensions.</p>
+  </div>
+  <div class="strip">
+    <div><div class="y">1954</div><div class="d zh">卡拉比在国际数学家大会上提出猜想</div><div class="d en">Calabi poses the conjecture at the ICM</div></div>
+    <div><div class="y">1976</div><div class="d zh">丘成桐完成证明</div><div class="d en">Yau completes the proof</div></div>
+    <div><div class="y">1977–78</div><div class="d zh">PNAS 公告，CPAM 全文</div><div class="d en">PNAS announcement, CPAM full paper</div></div>
+    <div><div class="y">1982</div><div class="d zh">以此为核心工作之一获菲尔兹奖</div><div class="d en">Fields Medal, with this among the core works</div></div>
+  </div>
+</section>
+
+<!-- 1 -->
+<section id="s1" data-t-zh="曲率：空间怎样弯曲" data-t-en="Curvature: how space bends">
+  <div class="ch">Chapter 1</div>
+  <h2><span class="zh">曲率：空间怎样弯曲</span><span class="en">Curvature: how space bends</span></h2>
+  <p class="zh">想象一只蚂蚁生活在一个曲面上，它看不到曲面之外的世界，但它可以测量：在自己周围画一个半径为 $r$ 的小圆，量一量周长。平面上周长恰好是 $2\pi r$；球面上会<b>短一点</b>，马鞍面上会<b>长一点</b>。这个偏差就是"曲率"，是空间自己能感受到的弯曲。</p>
+  <p class="en">Picture an ant living on a surface. It cannot see outside, but it can measure: draw a small circle of radius $r$ around itself and measure the circumference. On a plane it is exactly $2\pi r$; on a sphere it comes out a little <b>shorter</b>, on a saddle a little <b>longer</b>. That defect is curvature — bending the space can feel from within.</p>
+  <p class="zh">在高维空间里，弯曲的方式要多得多。<b>里奇曲率</b>是其中一种"平均"：它衡量一小团粒子沿测地线一起运动时，<b>体积</b>是收缩还是膨胀。爱因斯坦方程说的正是：物质与能量决定时空的里奇曲率。</p>
+  <p class="en">In higher dimensions there are many more ways to bend. <b>Ricci curvature</b> is one kind of average: it measures whether a small ball of particles moving along geodesics shrinks or grows in <b>volume</b>. Einstein's equations say exactly this: matter and energy determine the Ricci curvature of spacetime.</p>
+  <div class="analogy"><span class="i">◈</span><p class="zh">"里奇平坦"意味着：没有物质的地方，体积在任何方向上都不被挤压或拉伸。这就是真空中的引力。卡拉比–丘流形就是一种弯曲但里奇平坦的空间，好比没有物质、却依然有形状的宇宙。</p><p class="en">"Ricci-flat" means: with no matter present, volumes are neither squeezed nor stretched. This is gravity in vacuum. A Calabi–Yau manifold is curved yet Ricci-flat — a universe with shape but no matter.</p></div>
+  <p class="zh">卡拉比的问题，就是在问反过来的事：<b>如果我先写下想要的里奇曲率，能不能找到一个空间形状，恰好具有它？</b></p>
+  <p class="en">Calabi's question asks the reverse: <b>if I write down the Ricci curvature I want first, can I find a shape of space that has exactly it?</b></p>
+</section>
+
+<!-- 2 -->
+<section id="s2" data-t-zh="凯勒流形与第一陈类" data-t-en="Kähler manifolds and c₁">
+  <div class="ch">Chapter 2</div>
+  <h2><span class="zh">舞台：凯勒流形与第一陈类</span><span class="en">The stage: Kähler manifolds and the first Chern class</span></h2>
+  <p class="zh">问题发生在<b>复流形</b>上：局部看起来像 $\mathbb{C}^n$，坐标是复数 $z^1,\dots,z^n$ 的空间。复流形上的<b>凯勒度量</b>是一种和复结构完美协调的度量，可以用一个 2-形式来记录：</p>
+  <p class="en">The problem lives on a <b>complex manifold</b>: a space that locally looks like $\mathbb{C}^n$, with complex coordinates $z^1,\dots,z^n$. A <b>Kähler metric</b> is a metric perfectly compatible with the complex structure, recorded by a 2-form:</p>
+  $$\omega=\sqrt{-1}\,g_{j\bar k}\,dz^j\wedge d\bar z^k,\qquad d\omega=0 .$$
+  <p class="zh">"凯勒"的条件 $d\omega=0$ 带来一个惊人的简化：整个里奇曲率可以由一个函数，也就是体积密度的对数算出来：</p>
+  <p class="en">The Kähler condition $d\omega=0$ brings an astonishing simplification: the whole Ricci curvature is computed from one function — the logarithm of the volume density:</p>
+  $$\operatorname{Ric}(\omega)=-\sqrt{-1}\,\partial\bar\partial\log\det\big(g_{j\bar k}\big).$$
+  <p class="zh">这个公式是整个故事的钥匙：<b>改变体积密度，就改变了里奇曲率</b>。</p>
+  <p class="en">This formula is the key to the whole story: <b>change the volume density, and you change the Ricci curvature</b>.</p>
+  <h3><span class="zh">拓扑的约束</span><span class="en">A topological constraint</span></h3>
+  <p class="zh">陈省身发现，$\operatorname{Ric}(\omega)$ 虽然依赖于度量，它所代表的上同调类却不依赖：无论怎么选凯勒度量，$\operatorname{Ric}(\omega)$ 总代表同一个类 $2\pi c_1(M)$，即流形的<b>第一陈类</b>。这是一个纯拓扑的不变量。</p>
+  <p class="en">Chern discovered that although $\operatorname{Ric}(\omega)$ depends on the metric, its cohomology class does not: for every Kähler metric, $\operatorname{Ric}(\omega)$ represents the same class $2\pi c_1(M)$ — the <b>first Chern class</b>, a purely topological invariant.</p>
+  <div class="box"><div class="t">So</div><p class="zh">如果想让某个 2-形式 $\rho$ 成为里奇曲率，它至少必须满足：$\rho$ 是闭的实 $(1,1)$-形式，并且 $[\rho]=2\pi c_1(M)$。卡拉比猜想说的是：<b>这个显然必要的条件，也是充分的。</b></p><p class="en">For a 2-form $\rho$ to be a Ricci form, it must at least be a closed real $(1,1)$-form with $[\rho]=2\pi c_1(M)$. The Calabi conjecture says: <b>this obviously necessary condition is also sufficient.</b></p></div>
+</section>
+
+<!-- 3 -->
+<section id="s3" data-t-zh="猜想的陈述" data-t-en="The statement">
+  <div class="ch">Chapter 3</div>
+  <h2><span class="zh">猜想的陈述</span><span class="en">The statement</span></h2>
+  <div class="thm">
+    <div class="t"><span class="zh">卡拉比猜想（丘成桐定理，1976）</span><span class="en">Calabi Conjecture (Yau's Theorem, 1976)</span></div>
+    <p class="zh">设 $M$ 是紧致凯勒流形，$\omega$ 是其上一个凯勒形式。若 $\rho$ 是闭的实 $(1,1)$-形式，且 $[\rho]=2\pi c_1(M)$，则在 $\omega$ 的凯勒类 $[\omega]$ 中<b>存在唯一</b>的凯勒形式 $\omega'$，使得</p>
+    <p class="en">Let $M$ be a compact Kähler manifold with Kähler form $\omega$. If $\rho$ is a closed real $(1,1)$-form with $[\rho]=2\pi c_1(M)$, then there <b>exists a unique</b> Kähler form $\omega'$ in the Kähler class $[\omega]$ with</p>
+    $$\operatorname{Ric}(\omega')=\rho .$$
+  </div>
+  <p class="zh">最重要的特例是 $c_1(M)=0$：此时可以取 $\rho=0$，于是<b>每个凯勒类里都恰好有一个里奇平坦的凯勒度量</b>。这些流形如今被称作卡拉比–丘流形。</p>
+  <p class="en">The most important special case is $c_1(M)=0$: take $\rho=0$, and <b>every Kähler class contains exactly one Ricci-flat Kähler metric</b>. These manifolds are now called Calabi–Yau manifolds.</p>
+  <div class="box"><div class="t"><span class="zh">一段插曲</span><span class="en">An interlude</span></div><p class="zh">丘先生在自传中回忆，他起初并不相信这个猜想，觉得它好得不像真的，甚至一度以为找到了反例。在那个"反例"被证明行不通之后，他转而全力证明它，前后花了数年。</p><p class="en">In his autobiography Yau recalls that at first he did not believe the conjecture — it seemed too good to be true — and for a while thought he had a counterexample. When that attempt failed, he turned to proving it, which took years.</p></div>
+</section>
+
+<!-- 4 -->
+<section id="s4" data-t-zh="化为一个方程" data-t-en="Turning it into one equation">
+  <div class="ch">Chapter 4</div>
+  <h2><span class="zh">从几何到分析：化为一个方程</span><span class="en">From geometry to analysis: one equation</span></h2>
+  <p class="zh"><b>第一步：只需找一个函数。</b>由 $\partial\bar\partial$-引理，同一凯勒类里的任何凯勒形式都可以写成</p>
+  <p class="en"><b>Step 1: only one function is unknown.</b> By the $\partial\bar\partial$-lemma, any Kähler form in the same class can be written as</p>
+  $$\omega_\varphi=\omega+\sqrt{-1}\,\partial\bar\partial\varphi>0,$$
+  <p class="zh">其中 $\varphi$ 是 $M$ 上的实函数。原本要找一整个度量（一个矩阵值的对象），现在只要找一个函数。</p>
+  <p class="en">for a real function $\varphi$ on $M$. Instead of an entire metric (a matrix-valued object), we seek a single function.</p>
+  <p class="zh"><b>第二步：把目标也写成函数。</b>$\rho$ 和 $\operatorname{Ric}(\omega)$ 在同一个上同调类里，所以它们之差也能写成 $\partial\bar\partial$ 的形式：存在实函数 $F$，使得 $\rho=\operatorname{Ric}(\omega)-\sqrt{-1}\,\partial\bar\partial F$。</p>
+  <p class="en"><b>Step 2: write the target as a function too.</b> Since $\rho$ and $\operatorname{Ric}(\omega)$ lie in the same class, their difference is also $\partial\bar\partial$-exact: there is a real function $F$ with $\rho=\operatorname{Ric}(\omega)-\sqrt{-1}\,\partial\bar\partial F$.</p>
+  <p class="zh"><b>第三步：用里奇曲率的公式比较两边。</b>由第 2 章的公式，$\operatorname{Ric}(\omega_\varphi)-\operatorname{Ric}(\omega)=-\sqrt{-1}\,\partial\bar\partial\log(\omega_\varphi^n/\omega^n)$。要求它等于 $-\sqrt{-1}\,\partial\bar\partial F$，在紧流形上只需两个函数相差一个常数。把常数吸收进 $F$，就得到：</p>
+  <p class="en"><b>Step 3: compare using the Ricci formula.</b> From Chapter 2, $\operatorname{Ric}(\omega_\varphi)-\operatorname{Ric}(\omega)=-\sqrt{-1}\,\partial\bar\partial\log(\omega_\varphi^n/\omega^n)$. Setting this equal to $-\sqrt{-1}\,\partial\bar\partial F$ on a compact manifold means the two functions differ by a constant. Absorbing the constant into $F$:</p>
+  $$\boxed{\;(\omega+\sqrt{-1}\,\partial\bar\partial\varphi)^n=e^{F}\,\omega^n\;}\qquad\int_M e^F\omega^n=\int_M\omega^n .$$
+  <p class="zh">这就是<b>复蒙日–安培方程</b>。在局部坐标里，它写作 $\det(g_{j\bar k}+\varphi_{j\bar k})=e^F\det(g_{j\bar k})$。右边的积分条件是必要的，因为同一凯勒类里的度量总体积相同。</p>
+  <p class="en">This is the <b>complex Monge–Ampère equation</b>. In local coordinates, $\det(g_{j\bar k}+\varphi_{j\bar k})=e^F\det(g_{j\bar k})$. The integral condition is necessary because metrics in one Kähler class have the same total volume.</p>
+  <div class="analogy"><span class="i">◈</span><p class="zh">这个方程为什么难？它是<b>完全非线性</b>的：未知函数的二阶导数出现在行列式里，而不是线性地出现。而且只有当 $\omega_\varphi$ 保持正定时，方程才是"椭圆的"（性质好的那一类）。解必须时刻待在一个凸锥里，不能越界。</p><p class="en">Why is it hard? It is <b>fully nonlinear</b>: second derivatives of the unknown appear inside a determinant, not linearly. And it is "elliptic" (the well-behaved kind) only while $\omega_\varphi$ stays positive — the solution must remain inside a convex cone at all times.</p></div>
+</section>
+
+<!-- 5 -->
+<section id="s5" data-t-zh="唯一性：卡拉比的论证" data-t-en="Uniqueness: Calabi's argument">
+  <div class="ch">Chapter 5</div>
+  <h2><span class="zh">唯一性：卡拉比的漂亮论证</span><span class="en">Uniqueness: Calabi's elegant argument</span></h2>
+  <p class="zh">唯一性是卡拉比本人在 1950 年代就证明了的。设 $\varphi_1,\varphi_2$ 都是解，记 $\psi=\varphi_1-\varphi_2$，$\omega_i=\omega+\sqrt{-1}\partial\bar\partial\varphi_i$。两边相减并因式分解：</p>
+  <p class="en">Uniqueness was proved by Calabi himself in the 1950s. Suppose $\varphi_1,\varphi_2$ both solve the equation; let $\psi=\varphi_1-\varphi_2$ and $\omega_i=\omega+\sqrt{-1}\partial\bar\partial\varphi_i$. Subtract and factor:</p>
+  $$0=\omega_1^n-\omega_2^n=\sqrt{-1}\,\partial\bar\partial\psi\wedge T,\qquad T=\sum_{k=0}^{n-1}\omega_1^{k}\wedge\omega_2^{\,n-1-k}>0 .$$
+  <p class="zh">两边乘以 $\psi$，在 $M$ 上积分，再分部积分（紧流形没有边界）：</p>
+  <p class="en">Multiply by $\psi$, integrate over $M$, and integrate by parts (a compact manifold has no boundary):</p>
+  $$0=\int_M\sqrt{-1}\,\partial\psi\wedge\bar\partial\psi\wedge T .$$
+  <p class="zh">被积函数处处非负，所以 $\partial\psi\equiv0$，$\psi$ 是常数，两个解给出同一个度量。</p>
+  <p class="en">The integrand is pointwise nonnegative, so $\partial\psi\equiv0$: $\psi$ is constant, and both solutions give the same metric.</p>
+  <p class="zh">真正困难的是<b>存在性</b>，这道难题悬置了二十多年。</p>
+  <p class="en">The real difficulty was <b>existence</b> — open for more than twenty years.</p>
+</section>
+
+<!-- 6 -->
+<section id="s6" data-t-zh="存在性：连续性方法" data-t-en="Existence: the continuity method">
+  <div class="ch">Chapter 6</div>
+  <h2><span class="zh">存在性：连续性方法</span><span class="en">Existence: the continuity method</span></h2>
+  <p class="zh">直接解方程太难。丘先生使用的策略是<b>连续性方法</b>：把一个容易的方程连续地变形成我们想要的方程，一路追踪解。考虑一族方程，$t\in[0,1]$：</p>
+  <p class="en">Solving the equation head-on is too hard. Yau's strategy is the <b>continuity method</b>: deform an easy equation continuously into the one we want, tracking the solution along the way. Consider a family, $t\in[0,1]$:</p>
+  $$(\omega+\sqrt{-1}\,\partial\bar\partial\varphi_t)^n=e^{\,tF+c_t}\,\omega^n ,$$
+  <p class="zh">其中常数 $c_t$ 用来保证总体积不变。$t=0$ 时 $\varphi_0=0$ 显然是解；$t=1$ 就是我们要的方程。令 $S=\{t\in[0,1]:\ \text{方程在 } t \text{ 处有光滑解}\}$。</p>
+  <p class="en">where the constant $c_t$ keeps the total volume fixed. At $t=0$, $\varphi_0=0$ obviously works; $t=1$ is our equation. Let $S=\{t\in[0,1]:\ \text{the equation at } t \text{ has a smooth solution}\}$.</p>
+  <div class="box"><div class="t">The logic</div><p class="zh">$[0,1]$ 是连通的。如果 $S$ 非空、<b>开</b>、并且<b>闭</b>，那么 $S=[0,1]$，特别地 $1\in S$。</p><p class="en">$[0,1]$ is connected. If $S$ is nonempty, <b>open</b>, and <b>closed</b>, then $S=[0,1]$ — in particular $1\in S$.</p></div>
+  <h3><span class="zh">开性：往前走一小步</span><span class="en">Openness: one small step forward</span></h3>
+  <p class="zh">若在 $t_0$ 处有解，把方程在解附近线性化，得到的是新度量 $\omega_{t_0}$ 的拉普拉斯算子 $\Delta_{t_0}$。在平均为零的函数上，它是可逆的。由隐函数定理（巴拿赫空间版本），对 $t_0$ 附近的 $t$ 也有解。这一步相对标准。</p>
+  <p class="en">If there is a solution at $t_0$, linearizing the equation there gives the Laplacian $\Delta_{t_0}$ of the new metric $\omega_{t_0}$, which is invertible on mean-zero functions. By the implicit function theorem (Banach-space version), solutions exist for all $t$ near $t_0$. This step is fairly standard.</p>
+  <h3><span class="zh">闭性：真正的战场</span><span class="en">Closedness: the real battlefield</span></h3>
+  <p class="zh">若 $t_k\to t_\infty$ 且每个 $t_k$ 处都有解 $\varphi_{t_k}$，我们需要它们收敛到 $t_\infty$ 处的一个解。为此需要<b>先验估计</b>：对 $\varphi_t$ 的各阶导数给出<b>与 $t$ 无关</b>的上界。有了一致的上界，阿尔泽拉–阿斯科利定理就能抽出收敛子列。</p>
+  <p class="en">If $t_k\to t_\infty$ with solutions $\varphi_{t_k}$, we need them to converge to a solution at $t_\infty$. That requires <b>a priori estimates</b>: bounds on $\varphi_t$ and its derivatives that are <b>independent of $t$</b>. With uniform bounds, Arzelà–Ascoli extracts a convergent subsequence.</p>
+  <p class="zh">下面这张图是整个证明的结构，点击方块查看每一步的作用。</p>
+  <p class="en">Below is the architecture of the whole proof. Click a box to see what each step does.</p>
+  <div class="map">
+    <svg id="pmap" viewBox="0 0 700 330" aria-label="proof map">
+      <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#d8b46a"/></marker></defs>
+    </svg>
+    <div id="pnote"></div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section id="s7" data-t-zh="先验估计" data-t-en="The a priori estimates">
+  <div class="ch">Chapter 7</div>
+  <h2><span class="zh">先验估计：一层一层的控制</span><span class="en">A priori estimates: control, layer by layer</span></h2>
+  <p class="zh">把解规范化（例如令 $\sup_M\varphi=0$），需要依次控制：$\varphi$ 本身、二阶导数、三阶导数。顺序上有一个巧妙的依赖关系：<b>二阶估计只依赖于零阶估计</b>，所以关键落在零阶估计上。</p>
+  <p class="en">Normalize the solution (say $\sup_M\varphi=0$). We must control $\varphi$ itself, its second derivatives, and its third derivatives. There is a clever dependency: <b>the second-order bound depends only on the zeroth-order bound</b>, so everything hinges on the latter.</p>
+  <h3><span class="zh">二阶估计：拉普拉斯控制</span><span class="en">Second order: controlling the Laplacian</span></h3>
+  <p class="zh">记 $\Delta$ 为原度量的拉普拉斯，$\Delta'$ 为新度量 $\omega_\varphi$ 的拉普拉斯。量 $n+\Delta\varphi=\operatorname{tr}_\omega\omega_\varphi$ 衡量新度量相对旧度量"有多大"。对 $e^{-C\varphi}(n+\Delta\varphi)$ 计算 $\Delta'$，并用到原度量的双截曲率下界，再在最大值点使用极大值原理，可以得到（丘成桐，与 Aubin 的工作独立）：</p>
+  <p class="en">Let $\Delta$ be the Laplacian of the original metric and $\Delta'$ that of $\omega_\varphi$. The quantity $n+\Delta\varphi=\operatorname{tr}_\omega\omega_\varphi$ measures how "large" the new metric is relative to the old. Computing $\Delta'$ of $e^{-C\varphi}(n+\Delta\varphi)$, using a lower bound for the bisectional curvature of the original metric, and applying the maximum principle at the maximum point gives (Yau; independently related work by Aubin):</p>
+  $$0<n+\Delta\varphi\;\le\;C\,e^{\,C(\varphi-\inf_M\varphi)} .$$
+  <p class="zh">由于 $\omega_\varphi^n/\omega^n=e^F$ 有上下界，迹有上界就意味着新旧两个度量<b>一致等价</b>。只要知道 $\varphi$ 的振幅 $\sup\varphi-\inf\varphi$ 有界，二阶就全部控制住了。</p>
+  <p class="en">Since $\omega_\varphi^n/\omega^n=e^F$ is bounded above and below, a bound on the trace means the old and new metrics are <b>uniformly equivalent</b>. As soon as the oscillation $\sup\varphi-\inf\varphi$ is bounded, second order is fully controlled.</p>
+  <h3><span class="zh">零阶估计：丘成桐的决定性一步</span><span class="en">Zeroth order: Yau's decisive step</span></h3>
+  <p class="zh">这是整个证明最核心、也最新颖的部分：证明 $\sup_M|\varphi|\le C$，而且 $C$ 与 $t$ 无关。困难在于，方程本身并不直接给出 $\varphi$ 的大小信息。</p>
+  <p class="en">This is the heart of the proof and its most original part: show $\sup_M|\varphi|\le C$ with $C$ independent of $t$. The difficulty is that the equation does not directly say how big $\varphi$ is.</p>
+  <p class="zh">丘先生的做法是：用方程两边相减后的形式 $(\omega_\varphi^n-\omega^n)$，乘以 $|\varphi|^{p}$ 类型的函数并分部积分，得到 $|\varphi|^{p/2}$ 梯度的 $L^2$ 控制；再结合索伯列夫不等式，从 $L^p$ 估计跳到 $L^{\kappa p}$（$\kappa>1$）估计，一层层往上迭代，最后取极限得到 $L^\infty$ 估计。这就是<b>莫泽迭代</b>的思想，丘先生把它用到了这个完全非线性的情形。</p>
+  <p class="en">Yau's approach: use the difference $(\omega_\varphi^n-\omega^n)$, multiply by functions like $|\varphi|^{p}$ and integrate by parts to control the $L^2$ norm of the gradient of $|\varphi|^{p/2}$; combine with the Sobolev inequality to jump from $L^p$ to $L^{\kappa p}$ ($\kappa>1$) bounds, iterate, and pass to the limit to reach an $L^\infty$ bound. This is the idea of <b>Moser iteration</b>, which Yau adapted to this fully nonlinear setting.</p>
+  <div class="analogy"><span class="i">◈</span><p class="zh">打个比方：$L^p$ 范数像是从远处看一座山的平均高度，$p$ 越大越在意山峰。莫泽迭代每一步把 $p$ 放大固定的倍数，同时证明平均高度不会失控；无穷多步之后，就控制住了最高的山峰，也就是 $\sup|\varphi|$。</p><p class="en">An analogy: the $L^p$ norm is like viewing a mountain range's average height from afar; the larger $p$, the more you care about peaks. Each Moser step multiplies $p$ by a fixed factor while keeping the average under control; after infinitely many steps you have controlled the highest peak — $\sup|\varphi|$.</p></div>
+  <h3><span class="zh">三阶估计与正则性</span><span class="en">Third order and regularity</span></h3>
+  <p class="zh">有了二阶控制，再用卡拉比早年发展的三阶导数估计：对量 $S=|\nabla\partial\bar\partial\varphi|^2$（在新度量下度量）计算 $\Delta' S$，得到 $\Delta' S\ge -CS-C$ 一类的不等式，再用极大值原理得到 $S$ 的上界。到这一步，方程对 $\varphi$ 的二阶导数而言系数是赫尔德连续的，经典的绍德尔理论可以一路自举到 $C^\infty$。</p>
+  <p class="en">With second order under control, apply the third-derivative estimate Calabi had developed earlier: compute $\Delta' S$ for $S=|\nabla\partial\bar\partial\varphi|^2$ (measured in the new metric), obtain an inequality of the form $\Delta' S\ge -CS-C$, and conclude by the maximum principle that $S$ is bounded. Now the equation has Hölder-continuous coefficients in the second derivatives of $\varphi$, and classical Schauder theory bootstraps all the way to $C^\infty$.</p>
+  <div class="box"><div class="t">Q.E.D.</div><p class="zh">所有估计与 $t$ 无关，所以 $S$ 是闭的。$S$ 既开又闭且非空，于是 $1\in S$：复蒙日–安培方程有光滑解，卡拉比猜想成立。</p><p class="en">All estimates are independent of $t$, so $S$ is closed. Nonempty, open and closed, $S$ contains $1$: the complex Monge–Ampère equation has a smooth solution, and the Calabi conjecture holds.</p></div>
+</section>
+
+<!-- 8 -->
+<section id="s8" data-t-zh="同一篇论文里的另一半" data-t-en="The other half of the paper">
+  <div class="ch">Chapter 8</div>
+  <h2><span class="zh">同一篇论文里的另一半：凯勒–爱因斯坦度量</span><span class="en">The other half: Kähler–Einstein metrics</span></h2>
+  <p class="zh">同样的方法还能求<b>凯勒–爱因斯坦度量</b>，即满足 $\operatorname{Ric}(\omega)=\lambda\,\omega$ 的度量。当 $c_1(M)<0$ 时，问题化为</p>
+  <p class="en">The same method finds <b>Kähler–Einstein metrics</b>, those with $\operatorname{Ric}(\omega)=\lambda\,\omega$. When $c_1(M)<0$ the problem becomes</p>
+  $$(\omega+\sqrt{-1}\,\partial\bar\partial\varphi)^n=e^{\,\varphi+F}\,\omega^n ,$$
+  <p class="zh">这里多出的 $e^{\varphi}$ 让零阶估计直接由极大值原理得到，比 $c_1=0$ 的情形容易。丘成桐与 Aubin 独立证明了这种情形下凯勒–爱因斯坦度量存在且唯一。</p>
+  <p class="en">The extra factor $e^{\varphi}$ makes the zeroth-order estimate follow directly from the maximum principle, easier than the $c_1=0$ case. Yau and Aubin independently proved existence and uniqueness of Kähler–Einstein metrics here.</p>
+  <h3><span class="zh">回到代数几何</span><span class="en">Back to algebraic geometry</span></h3>
+  <p class="zh">丘先生立刻用这些度量回答了代数几何中的经典问题，这正是 PNAS 公告的标题所说的"一些新结果"：</p>
+  <p class="en">Yau immediately used these metrics to answer classical questions in algebraic geometry — the "new results" in the title of the PNAS announcement:</p>
+  <ul>
+    <li class="zh"><b>陈数不等式</b>：一般型代数曲面满足 $c_1^2\le 3c_2$（宫冈洋一用代数方法独立得到），并且丘先生证明，等号成立当且仅当曲面是复球的商。</li>
+    <li class="en"><b>Chern number inequality</b>: surfaces of general type satisfy $c_1^2\le 3c_2$ (obtained independently by Miyaoka by algebraic methods), and Yau showed equality holds exactly for quotients of the complex ball.</li>
+    <li class="zh"><b>塞韦里猜想</b>：任何与复射影平面 $\mathbb{CP}^2$ 同伦等价的紧复曲面，都双全纯等价于 $\mathbb{CP}^2$。</li>
+    <li class="en"><b>Severi conjecture</b>: every compact complex surface homotopy equivalent to $\mathbb{CP}^2$ is biholomorphic to $\mathbb{CP}^2$.</li>
+  </ul>
+</section>
+
+<!-- 9 -->
+<section id="s9" data-t-zh="影响：从几何到弦论" data-t-en="Legacy: from geometry to strings">
+  <div class="ch">Chapter 9</div>
+  <h2><span class="zh">影响：从几何到弦论</span><span class="en">Legacy: from geometry to string theory</span></h2>
+  <p class="zh">1985 年，Candelas、Horowitz、Strominger 与 Witten 发现，超弦理论若要把十维时空紧化成我们看到的四维、同时保留一定的超对称，额外的六个维度恰好应该是一个复三维的<b>里奇平坦凯勒流形</b>。丘先生的定理保证了这样的空间大量存在，"卡拉比–丘流形"这个名字由此流传开来。</p>
+  <p class="en">In 1985 Candelas, Horowitz, Strominger and Witten found that for superstring theory to compactify ten dimensions down to the four we see while preserving some supersymmetry, the six extra dimensions should be precisely a complex three-dimensional <b>Ricci-flat Kähler manifold</b>. Yau's theorem guaranteed such spaces exist in abundance, and the name "Calabi–Yau manifold" spread from there.</p>
+  <p class="zh">首页和本页顶部那个金色的形状，就是一个卡拉比–丘流形（费马五次超曲面）的一个实二维切片在三维中的投影。</p>
+  <p class="en">The golden shape on the homepage and at the top of this page is a projection to three dimensions of a real two-dimensional slice of a Calabi–Yau manifold (the Fermat quintic).</p>
+  <p class="zh">在数学内部，这篇论文也开启了用非线性偏微分方程研究复几何的道路：复蒙日–安培方程的技术后来延伸到镜像对称、凯勒–里奇流、法诺流形上凯勒–爱因斯坦度量的存在性等一系列方向。</p>
+  <p class="en">Within mathematics, the paper opened the way to studying complex geometry through nonlinear PDE: complex Monge–Ampère techniques later spread to mirror symmetry, Kähler–Ricci flow, Kähler–Einstein metrics on Fano manifolds, and more.</p>
+</section>
+
+<!-- 10 -->
+<section id="s10" data-t-zh="原文与延伸阅读" data-t-en="Original papers & reading">
+  <div class="ch">References</div>
+  <h2><span class="zh">原文与延伸阅读</span><span class="en">Original papers &amp; further reading</span></h2>
+  <ul class="refs">
+    <li><span class="y">1977</span>S.-T. Yau, <i>Calabi's conjecture and some new results in algebraic geometry</i>, Proc. Natl. Acad. Sci. USA 74(5), 1798–1799. <a href="https://doi.org/10.1073/pnas.74.5.1798">DOI ↗</a></li>
+    <li><span class="y">1978</span>S.-T. Yau, <i>On the Ricci curvature of a compact Kähler manifold and the complex Monge–Ampère equation, I</i>, Comm. Pure Appl. Math. 31(3), 339–411. <a href="https://doi.org/10.1002/cpa.3160310304">DOI ↗</a></li>
+    <li><span class="y">1957</span>E. Calabi, <i>On Kähler manifolds with vanishing canonical class</i>, in <i>Algebraic Geometry and Topology: A Symposium in Honor of S. Lefschetz</i>, Princeton Univ. Press.</li>
+    <li><span class="y">1985</span>P. Candelas, G. Horowitz, A. Strominger, E. Witten, <i>Vacuum configurations for superstrings</i>, Nuclear Physics B 258, 46–74.</li>
+    <li><span class="y">2010</span>S.-T. Yau, S. Nadis, <i>The Shape of Inner Space</i>, Basic Books. <span class="zh">（面向大众的讲述）</span><span class="en">(for general readers)</span></li>
+  </ul>
+  <div class="next">
+    <a href="../#theorems"><small>BACK</small><span class="zh">回到定理之碑</span><span class="en">Back to the theorems</span></a>
+    <a href="../"><small>HOME</small><span class="zh">丘成桐 · 数学世界</span><span class="en">Shing-Tung Yau · Home</span></a>
+  </div>
+</section>
+
+</article>
+</div>
+
+<footer>
+  <span class="zh">本讲解由 AI 辅助撰写，力求通俗；涉及严格表述时，请以原始论文为准。欢迎在 GitHub 提出勘误。<br>学生自发制作的致敬作品，并非丘成桐先生官方网站。</span>
+  <span class="en">This explainer was written with AI assistance and aims for accessibility; for rigorous statements, consult the original papers. Corrections welcome on GitHub.<br>A student-made tribute; not an official website of Professor Yau.</span>
+</footer>
+
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script>
+/* ---------- language ---------- */
+const root = document.documentElement;
+function setLang(l){
+  root.dataset.lang = l; root.lang = l === 'zh' ? 'zh-CN' : 'en';
+  document.querySelectorAll('.lang button').forEach(b => b.classList.toggle('on', b.dataset.l === l));
+  try { localStorage.setItem('masteryau-lang', l); } catch(e) {}
+  if (location.hash !== '#' + l && (location.hash === '#zh' || location.hash === '#en' || l === 'en')) history.replaceState(null, '', l === 'en' ? '#en' : location.pathname);
+  buildToc(); renderNote();
+}
+let saved = null; try { saved = localStorage.getItem('masteryau-lang'); } catch(e) {}
+let initial = saved || (/^zh/i.test(navigator.language || 'zh') ? 'zh' : 'en');
+if (location.hash === '#en') initial = 'en'; else if (location.hash === '#zh') initial = 'zh';
+document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => setLang(b.dataset.l)));
+
+/* ---------- toc + progress ---------- */
+const secs = [...document.querySelectorAll('article section')];
+function buildToc(){
+  const l = root.dataset.lang;
+  document.getElementById('toc').innerHTML = secs.map((s, i) => `<li><a href="#${s.id}" data-s="${s.id}"><span class="n">${i === 0 ? '◈' : i === secs.length - 1 ? '∗' : i}</span>${s.dataset['t' + (l === 'zh' ? 'Zh' : 'En')]}</a></li>`).join('');
+}
+addEventListener('scroll', () => {
+  const h = document.documentElement; document.getElementById('progress').style.width = (h.scrollTop/(h.scrollHeight - h.clientHeight))*100 + '%';
+  let cur = secs[0].id; for (const s of secs) if (s.getBoundingClientRect().top < innerHeight*.35) cur = s.id;
+  document.querySelectorAll('#toc a').forEach(a => a.classList.toggle('on', a.dataset.s === cur));
+}, { passive: true });
+
+/* ---------- proof map ---------- */
+const NODES = [
+  { id:'eq',  x:20,  y:20,  w:200, zh:'复蒙日–安培方程', en:'Monge–Ampère eq.', s:'(ω+i∂∂̄φ)ⁿ = eᶠωⁿ',
+    nzh:'<b>目标。</b>几何问题（指定里奇曲率）通过 ∂∂̄-引理化为这一个关于函数 φ 的完全非线性椭圆方程。',
+    nen:'<b>The goal.</b> Via the ∂∂̄-lemma, the geometric problem (prescribing Ricci curvature) becomes this single fully nonlinear elliptic equation for a function φ.' },
+  { id:'path',x:250, y:20,  w:200, zh:'连续性路径', en:'Continuity path', s:'e^{tF+c_t}, t∈[0,1]',
+    nzh:'<b>策略。</b>把右边换成 e^{tF+c_t}：t=0 时 φ=0 是解，t=1 是原方程。证明可解的 t 构成的集合 S 既开又闭。',
+    nen:'<b>Strategy.</b> Replace the right side by e^{tF+c_t}: φ=0 solves t=0, and t=1 is the target. Show the solvable set S is open and closed.' },
+  { id:'open',x:480, y:20,  w:200, zh:'开性', en:'Openness', s:'implicit function thm.',
+    nzh:'<b>开性。</b>线性化算子是新度量的拉普拉斯，在平均为零的函数上可逆；由隐函数定理，解可以向两侧延伸一小段。',
+    nen:'<b>Openness.</b> The linearization is the Laplacian of the new metric, invertible on mean-zero functions; the implicit function theorem extends solutions a little in t.' },
+  { id:'c0',  x:20,  y:140, w:200, zh:'C⁰ 估计', en:'C⁰ estimate', s:'sup|φ| ≤ C', key:1,
+    nzh:'<b>丘成桐的关键突破。</b>用莫泽迭代，从积分估计一步步爬升到 sup|φ| 的一致上界，而且上界与 t 无关。这是此前所有尝试缺失的一环。',
+    nen:'<b>Yau\'s key breakthrough.</b> Moser iteration climbs from integral bounds to a uniform bound on sup|φ|, independent of t — the missing link in all earlier attempts.' },
+  { id:'c2',  x:250, y:140, w:200, zh:'C² 估计', en:'C² estimate', s:'n+Δφ ≤ Ce^{C osc φ}',
+    nzh:'<b>二阶估计。</b>对 e^{−Cφ}(n+Δφ) 用极大值原理，把二阶导数的上界归结为 φ 的振幅；结合 C⁰ 估计，新旧度量一致等价。',
+    nen:'<b>Second order.</b> The maximum principle applied to e^{−Cφ}(n+Δφ) reduces the second-derivative bound to the oscillation of φ; with C⁰, old and new metrics are uniformly equivalent.' },
+  { id:'c3',  x:480, y:140, w:200, zh:'C³ 估计', en:'C³ estimate', s:'Calabi',
+    nzh:'<b>三阶估计。</b>卡拉比早年的三阶导数估计：对 |∇∂∂̄φ|² 用极大值原理得到一致上界。',
+    nen:'<b>Third order.</b> Calabi\'s earlier third-derivative estimate: the maximum principle bounds |∇∂∂̄φ|² uniformly.' },
+  { id:'reg', x:250, y:250, w:200, zh:'闭性 + 正则性', en:'Closed + smooth', s:'Schauder · Arzelà–Ascoli',
+    nzh:'<b>收尾。</b>一致的高阶估计配合绍德尔理论自举到 C^∞，再用阿尔泽拉–阿斯科利定理取极限，得到 S 是闭集。于是 1∈S，证明完成。',
+    nen:'<b>Closing.</b> Uniform estimates plus Schauder theory bootstrap to C^∞; Arzelà–Ascoli passes to the limit, so S is closed. Hence 1∈S and the proof is complete.' }
+];
+const EDGES = [['eq','path'],['path','open'],['path','c0'],['c0','c2'],['c2','c3'],['c3','reg'],['open','reg']];
+let activeNode = 'c0';
+(function buildMap(){
+  const svg = document.getElementById('pmap'), NS = 'http://www.w3.org/2000/svg', H = 64;
+  const el = (t, a, p = svg) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); p.appendChild(e); return e; };
+  const by = Object.fromEntries(NODES.map(n => [n.id, n]));
+  for (const [a, b] of EDGES){
+    const A = by[a], B = by[b]; let x1, y1, x2, y2;
+    if (A.y === B.y){ x1 = A.x + A.w; y1 = A.y + H/2; x2 = B.x - 4; y2 = y1; }
+    else if (b === 'reg' && a === 'open'){ x1 = A.x + A.w/2; y1 = A.y + H; x2 = B.x + B.w - 10; y2 = B.y - 4; }
+    else if (b === 'reg'){ x1 = A.x + A.w/2; y1 = A.y + H; x2 = B.x + B.w - 30; y2 = B.y - 4; }
+    else { x1 = A.x + A.w/2; y1 = A.y + H; x2 = B.x + B.w/2; y2 = B.y - 4; }
+    if (a === 'path' && b === 'c0'){ x1 = A.x + 30; x2 = B.x + B.w/2 + 30; }
+    if (a === 'open' && b === 'reg'){ el('path', { class:'ed', d:`M${x1},${y1} C${x1},${y1+150} ${x2+40},${y2-40} ${x2},${y2}` }); continue; }
+    el('path', { class:'ed', d:`M${x1},${y1} L${x2},${y2}` });
+  }
+  for (const n of NODES){
+    const g = el('g', { class:'nd' + (n.key ? ' key' : ''), 'data-id':n.id, tabindex:0 });
+    el('rect', { x:n.x, y:n.y, width:n.w, height:H, rx:2 }, g);
+    const t = el('text', { x:n.x + n.w/2, y:n.y + 27, 'text-anchor':'middle', class:'lbl' }, g); t.dataset.zh = n.zh; t.dataset.en = n.en;
+    const s = el('text', { x:n.x + n.w/2, y:n.y + 48, 'text-anchor':'middle', class:'sm' }, g); s.textContent = n.s;
+    const pick = () => { activeNode = n.id; renderNote(); };
+    g.addEventListener('click', pick); g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); pick(); } });
+  }
+})();
+function renderNote(){
+  const l = root.dataset.lang || 'zh';
+  document.querySelectorAll('#pmap .lbl').forEach(t => t.textContent = t.dataset[l]);
+  document.querySelectorAll('#pmap .nd').forEach(g => g.classList.toggle('on', g.dataset.id === activeNode));
+  const n = NODES.find(n => n.id === activeNode); document.getElementById('pnote').innerHTML = l === 'zh' ? n.nzh : n.nen;
+}
+setLang(initial);
+
+/* ---------- KaTeX ---------- */
+addEventListener('DOMContentLoaded', () => {
+  const go = () => window.renderMathInElement ? renderMathInElement(document.querySelector('article'), { delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}], throwOnError:false }) : setTimeout(go, 50);
+  go();
+});
+
+/* ---------- Calabi–Yau hero (same renderer as homepage) ---------- */
+(() => {
+  const cv = document.getElementById('cy'), ctx = cv.getContext('2d');
+  const N = 5, G = innerWidth < 700 ? 9 : 12, XI = 1.15;
+  let W, H;
+  function resize(){ const d = Math.min(devicePixelRatio||1, 2); W = cv.clientWidth; H = cv.clientHeight; cv.width = W*d; cv.height = H*d; ctx.setTransform(d,0,0,d,0,0); }
+  addEventListener('resize', resize); resize();
+  const cpow = (re, im, p) => { const r = Math.hypot(re, im), a = Math.atan2(im, re), rp = Math.pow(r, p); return [rp*Math.cos(p*a), rp*Math.sin(p*a)]; };
+  const cmul = (a, b) => [a[0]*b[0]-a[1]*b[1], a[0]*b[1]+a[1]*b[0]];
+  const patches = [];
+  for (let k1 = 0; k1 < N; k1++) for (let k2 = 0; k2 < N; k2++){
+    const p1 = [Math.cos(2*Math.PI*k1/N), Math.sin(2*Math.PI*k1/N)], p2 = [Math.cos(2*Math.PI*k2/N), Math.sin(2*Math.PI*k2/N)], verts = [];
+    for (let i = 0; i <= G; i++) for (let j = 0; j <= G; j++){
+      const x = -XI + 2*XI*i/G, y = (Math.PI/2)*j/G;
+      const ch = [Math.cosh(x)*Math.cos(y), Math.sinh(x)*Math.sin(y)], sh = [Math.sinh(x)*Math.cos(y), Math.cosh(x)*Math.sin(y)];
+      const z1 = cmul(p1, cpow(ch[0], ch[1], 2/N)), z2 = cmul(p2, cpow(sh[1], -sh[0], 2/N));
+      verts.push([z1[0], z1[1], z2[0], z2[1]]);
+    }
+    patches.push({ verts, k: k1*N + k2 });
+  }
+  let yaw = 0.9, pitch = 0.3, vy = 0.002, drag = false, lx = 0, ly = 0, vis = true;
+  new IntersectionObserver(es => vis = es[0].isIntersecting).observe(cv);
+  cv.addEventListener('pointerdown', e => { drag = true; lx = e.clientX; ly = e.clientY; cv.setPointerCapture(e.pointerId); });
+  cv.addEventListener('pointermove', e => { if (!drag) return; yaw += (e.clientX-lx)*.008; pitch = Math.max(-1.4, Math.min(1.4, pitch + (e.clientY-ly)*.008)); vy = (e.clientX-lx)*.0008; lx = e.clientX; ly = e.clientY; });
+  cv.addEventListener('pointerup', () => drag = false);
+  const L = [-0.4, -0.7, 0.6].map(c => c/Math.hypot(-0.4, -0.7, 0.6)), Q = [];
+  (function frame(t){
+    requestAnimationFrame(frame); if (!vis) return;
+    if (!drag){ yaw += vy; vy += (0.002 - vy)*.01; }
+    const al = 0.8 + 0.35*Math.sin(t*.00018), ca = Math.cos(al), sa = Math.sin(al);
+    const cy = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    const cx0 = W > 900 ? W*.7 : W*.5, cy0 = W > 900 ? H*.44 : H*.3, S = Math.min(W, H)*(W > 900 ? .18 : .16), F = 4.2, R = G + 1;
+    ctx.clearRect(0, 0, W, H); Q.length = 0;
+    for (const P of patches){
+      const pr = P.verts.map(v => { const x = v[0], y = v[2], z = ca*v[1] + sa*v[3]; const x1 = cy*x + sy*z, z1 = -sy*x + cy*z, y1 = cp*y - sp*z1, z2 = sp*y + cp*z1, s = F/(F + z2); return [x1, y1, z2, cx0 + x1*S*s, cy0 - y1*S*s]; });
+      for (let i = 0; i < G; i++) for (let j = 0; j < G; j++){
+        const a = pr[i*R+j], b = pr[(i+1)*R+j], c = pr[(i+1)*R+j+1], d = pr[i*R+j+1];
+        const ux = c[0]-a[0], uy = c[1]-a[1], uz = c[2]-a[2], vx = d[0]-b[0], vy2 = d[1]-b[1], vz = d[2]-b[2];
+        const nx = uy*vz-uz*vy2, ny = uz*vx-ux*vz, nz = ux*vy2-uy*vx, nl = Math.hypot(nx, ny, nz) || 1;
+        Q.push({ z:(a[2]+b[2]+c[2]+d[2])/4, a, b, c, d, lam:Math.abs((nx*L[0]+ny*L[1]+nz*L[2])/nl), k:P.k });
+      }
+    }
+    Q.sort((p, q) => q.z - p.z);
+    for (const q of Q){
+      const dep = Math.max(0, Math.min(1, (1.6 - q.z)/3.2)), hue = 34 + (q.k%5)*3 - Math.floor(q.k/5)*2;
+      ctx.beginPath(); ctx.moveTo(q.a[3], q.a[4]); ctx.lineTo(q.b[3], q.b[4]); ctx.lineTo(q.c[3], q.c[4]); ctx.lineTo(q.d[3], q.d[4]); ctx.closePath();
+      ctx.fillStyle = `hsla(${hue},${48+q.lam*20}%,${14+q.lam*52+dep*10}%,${.5+dep*.4})`; ctx.fill();
+      ctx.strokeStyle = `hsla(42,70%,${60+q.lam*25}%,${.08+dep*.2})`; ctx.lineWidth = .6; ctx.stroke();
+    }
+  })(0);
+})();
+</script>
+</body>
+</html>
