@@ -170,6 +170,10 @@ h2 em{font-style:normal;color:var(--gold)}
 .light button{background:var(--gold);color:var(--ink);border:none;font-family:var(--serif);font-weight:700;font-size:15px;letter-spacing:.2em;padding:0 26px;cursor:pointer;transition:background .3s}
 .light button:hover{background:var(--gold2)}
 .count{margin-top:22px;font-family:var(--latin);letter-spacing:.24em;color:var(--gold);font-size:14px}
+.wall-note{margin:16px 0 0;min-height:1.6em;font-size:14px;color:var(--dim);transition:color .3s}
+.wall-note.ok{color:var(--gold2)}
+.tip{position:absolute;z-index:3;pointer-events:none;transform:translate(-50%,calc(-100% - 16px));max-width:min(320px,80vw);padding:8px 14px;border:1px solid var(--line);background:rgba(6,7,11,.86);color:var(--text);font-size:14px;line-height:1.6;white-space:normal;opacity:0;transition:opacity .2s}
+.tip.on{opacity:1}
 .float{position:absolute;z-index:1;pointer-events:none;color:var(--gold2);font-size:14px;white-space:nowrap;text-shadow:0 0 12px rgba(216,180,106,.6);animation:rise 7s ease-out forwards}
 @keyframes rise{0%{opacity:0;transform:translate(-50%,0)}15%{opacity:1}100%{opacity:0;transform:translate(-50%,-160px)}}
 
@@ -334,11 +338,12 @@ footer{padding:60px clamp(20px,7vw,110px);border-top:1px solid var(--line);displ
   <div class="inner">
     <div class="kicker">Light a Star</div>
     <h2 style="margin-bottom:22px">点亮<em>一颗星</em></h2>
-    <p class="lead">留一句话，为这片几何的星空添一点光。</p>
+    <p class="lead" id="wallLead">留一句话，为这片几何的星空添一点光。</p>
     <form class="light" id="lightForm">
       <input id="msg" maxlength="40" placeholder="写一句献辞（可留空）">
       <button type="submit">点亮</button>
     </form>
+    <p class="wall-note" id="note" role="status" aria-live="polite"></p>
     <div class="count" id="count"></div>
   </div>
 </section>
@@ -530,37 +535,113 @@ document.querySelectorAll('.reveal').forEach(e => io.observe(e));
 
 /* ===================== Star wall ===================== */
 (() => {
+  // Dedications are reviewed before they appear (see worker/). The review flow
+  // switches on by itself once the API answers; until then (or if it is
+  // unreachable) the wall behaves as before: words float only on the visitor's
+  // own screen. Nothing a visitor types is shown to anyone else unless approved.
+  const API = 'https://api.masteryau.com/api/dedications';
   const cv = document.getElementById('sky'), ctx = cv.getContext('2d'), sec = document.getElementById('stars');
-  let W, H, stars = [], mine = [];
+  const note = document.getElementById('note'), count = document.getElementById('count');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let W, H, stars = [], mine = [], approved = [], online = false;
   const KEY = 'masteryau-stars';
   try { mine = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch(e) {}
   function resize(){ const d = Math.min(devicePixelRatio||1, 2); W = sec.clientWidth; H = sec.clientHeight; cv.width = W*d; cv.height = H*d; ctx.setTransform(d,0,0,d,0,0); }
   addEventListener('resize', resize); resize();
   for (let i = 0; i < 260; i++) stars.push({ x: Math.random(), y: Math.random(), r: Math.random()*1.1+.2, p: Math.random()*6, s: .4+Math.random(), lit:false });
   mine.forEach(m => stars.push({ x:m.x, y:m.y, r:2.2, p:Math.random()*6, s:1, lit:true }));
-  const count = document.getElementById('count');
-  const upd = () => count.textContent = mine.length ? `你已点亮 ${mine.length} 颗星` : '';
+
+  const upd = () => {
+    const parts = [];
+    if (approved.length) parts.push(`星空中已有 ${approved.length} 句献辞`);
+    if (mine.length) parts.push(`你已点亮 ${mine.length} 颗星`);
+    count.textContent = parts.join('　');
+  };
   upd();
-  function add(text){
+
+  function floatText(text, x, y){
+    const f = document.createElement('div'); f.className = 'float'; f.textContent = text;
+    f.style.left = x*100 + '%'; f.style.top = y*H + 'px'; sec.appendChild(f); setTimeout(() => f.remove(), 7200);
+  }
+
+  // Approved dedications: lit stars that reveal their words on hover or tap.
+  fetch(API, { headers: { accept: 'application/json' } })
+    .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+    .then(({ items = [] }) => {
+      online = true;
+      approved = items.filter(d => d && typeof d.text === 'string');
+      approved.forEach(d => stars.push({ x: d.x, y: d.y, r: 2.2, p: Math.random()*6, s: 1, lit: true, text: d.text }));
+      upd();
+      document.getElementById('wallLead').textContent = '留一句话，为这片几何的星空添一点光。献辞经审核后展示在星空中。';
+    })
+    .catch(() => {});
+
+  // Hover / tap a dedication star to read it.
+  const tip = document.createElement('div'); tip.className = 'tip'; tip.setAttribute('aria-hidden', 'true'); sec.appendChild(tip);
+  let tipStar = null;
+  function nearest(clientX, clientY){
+    const rect = sec.getBoundingClientRect(), px = clientX - rect.left, py = clientY - rect.top;
+    let best = null, bd = 22*22;
+    for (const s of stars){ if (!s.text) continue; const dx = s.x*W - px, dy = s.y*H - py, d = dx*dx + dy*dy; if (d < bd){ bd = d; best = s; } }
+    return best;
+  }
+  function showTip(s){
+    tipStar = s;
+    if (!s){ tip.classList.remove('on'); sec.style.cursor = ''; return; }
+    tip.textContent = s.text; tip.style.left = s.x*100 + '%'; tip.style.top = s.y*H + 'px'; tip.classList.add('on'); sec.style.cursor = 'pointer';
+  }
+  sec.addEventListener('pointermove', e => { if (e.target.closest('.inner')) return showTip(null); const s = nearest(e.clientX, e.clientY); if (s !== tipStar) showTip(s); });
+  sec.addEventListener('pointerleave', () => showTip(null));
+  sec.addEventListener('click', e => { if (e.target.closest('.inner')) return; showTip(nearest(e.clientX, e.clientY)); });
+
+  // Every few seconds, one approved dedication drifts up from its star.
+  let vis = false, lastFloat = 0, floatIdx = 0;
+
+  function lightLocal(){
     const x = .08 + Math.random()*.84, y = .08 + Math.random()*.5;
     stars.push({ x, y, r: 2.4, p: 0, s: 1, lit: true, born: performance.now() });
     mine.push({ x, y }); try { localStorage.setItem(KEY, JSON.stringify(mine)); } catch(e) {}
-    if (text){ const f = document.createElement('div'); f.className = 'float'; f.textContent = text; f.style.left = x*100 + '%'; f.style.top = y*H + 'px'; sec.appendChild(f); setTimeout(() => f.remove(), 7200); }
     upd();
+    return { x, y };
   }
-  document.getElementById('lightForm').addEventListener('submit', e => { e.preventDefault(); const m = document.getElementById('msg'); add(m.value.trim()); m.value = ''; });
-  let vis = false; new IntersectionObserver(es => vis = es[0].isIntersecting).observe(sec);
+
+  const form = document.getElementById('lightForm'), input = document.getElementById('msg'), btn = form.querySelector('button');
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const text = input.value.trim();
+    const { x, y } = lightLocal();
+    if (!text){ note.className = 'wall-note'; note.textContent = '你点亮了一颗星。'; return; }
+    if (!online){ floatText(text, x, y); input.value = ''; note.className = 'wall-note'; note.textContent = '你点亮了一颗星。'; return; }
+    btn.disabled = true;
+    try {
+      const res = await fetch(API, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ text, x, y }) });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || '');
+      input.value = '';
+      note.className = 'wall-note ok';
+      note.textContent = '已收到你的献辞，审核通过后会出现在这片星空里。';
+    } catch (err) {
+      note.className = 'wall-note';
+      note.textContent = err.message ? err.message : '暂时无法提交献辞，请稍后再试。';
+    } finally { btn.disabled = false; }
+  });
+
+  new IntersectionObserver(es => vis = es[0].isIntersecting).observe(sec);
   (function loop(t){
     requestAnimationFrame(loop); if (!vis) return;
+    if (!reduced && approved.length && t - lastFloat > 6500){
+      lastFloat = t; const d = approved[floatIdx++ % approved.length]; floatText(d.text, d.x, d.y);
+    }
     ctx.clearRect(0, 0, W, H);
     for (const s of stars){
-      const tw = .55 + .45*Math.sin(t*0.001*s.s + s.p);
+      const tw = reduced ? 1 : .55 + .45*Math.sin(t*0.001*s.s + s.p);
       const x = s.x*W, y = s.y*H;
       if (s.lit){
         const age = s.born ? Math.min(1, (t - s.born)/1200) : 1;
-        const g = ctx.createRadialGradient(x, y, 0, x, y, 18*age + 4);
+        const R = (s === tipStar ? 26 : 18)*age + 4;
+        const g = ctx.createRadialGradient(x, y, 0, x, y, R);
         g.addColorStop(0, `rgba(241,219,164,${.9*tw})`); g.addColorStop(1, 'rgba(216,180,106,0)');
-        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, 18*age + 4, 0, 7); ctx.fill();
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, R, 0, 7); ctx.fill();
       }
       ctx.fillStyle = s.lit ? '#fff3d0' : `rgba(233,228,214,${.25 + .6*tw})`;
       ctx.beginPath(); ctx.arc(x, y, s.r, 0, 7); ctx.fill();
