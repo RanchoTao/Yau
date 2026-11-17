@@ -1,0 +1,144 @@
+title_zh: 李–丘估计
+title_en: The Li–Yau Inequality
+kicker: Stele III · 1986 · with Peter Li
+sub_zh: 热怎样在弯曲空间里扩散
+sub_en: How heat spreads on a curved space
+paper: Acta Math. 156 (1986)
+mins: 18
+desc: 从零读懂李伟光–丘成桐梯度估计：热方程、Bochner 公式、极大值原理与 Harnack 不等式。中英双语。
+canvas_label: A heat kernel spreading out over time
+---
+<section id="s0" data-t-zh="一句话版本" data-t-en="In one breath">
+  <div class="tldr">
+    <span class="tag">TL;DR</span>
+    <p class="zh">在一块金属板上点一下热，热量会扩散开来。如果"板"是一个弯曲的空间呢？李伟光与丘成桐在 1986 年证明：只要空间的里奇曲率非负，热方程的任何正解都满足一个<b>与空间无关的</b>精确梯度估计：</p>
+    <p class="en">Touch a metal plate with heat and it spreads out. What if the "plate" is a curved space? In 1986 Peter Li and Shing-Tung Yau proved that when Ricci curvature is nonnegative, every positive solution of the heat equation obeys a sharp gradient estimate <b>independent of the space</b>:</p>
+    $$\frac{|\nabla u|^2}{u^2}-\frac{u_t}{u}\;\le\;\frac{n}{2t}.$$
+    <p class="zh">它的威力在于：从这个<b>逐点</b>的不等式出发，沿路径积分就能比较不同时刻、不同地点的温度（Harnack 不等式），进而得到热核的高斯型上下界。这个思路后来深刻影响了里奇流。</p>
+    <p class="en">Its power: integrating this <b>pointwise</b> inequality along paths compares temperatures at different times and places (a Harnack inequality), which in turn gives Gaussian upper and lower bounds for the heat kernel. The idea later shaped Ricci flow profoundly.</p>
+  </div>
+</section>
+
+<section id="s1" data-t-zh="热方程" data-t-en="The heat equation">
+  <div class="ch">Chapter 1</div>
+  <h2><span class="zh">热方程：最自然的扩散</span><span class="en">The heat equation: the most natural diffusion</span></h2>
+  <p class="zh">温度 $u(x,t)$ 随时间的变化率，等于它与周围平均温度的差。写成方程就是</p>
+  <p class="en">The rate at which temperature $u(x,t)$ changes equals how much it differs from the average around it. As an equation:</p>
+  $$\frac{\partial u}{\partial t}=\Delta u .$$
+  <p class="zh">在弯曲的黎曼流形上，$\Delta$ 换成拉普拉斯–贝尔特拉米算子，方程的形式不变。在平直的 $\mathbb{R}^n$ 上，从一点出发的热扩散是一个越来越扁的高斯钟形，这就是<b>热核</b>：</p>
+  <p class="en">On a curved Riemannian manifold, $\Delta$ becomes the Laplace–Beltrami operator and the equation keeps its form. On flat $\mathbb{R}^n$, heat released at a point spreads as an ever flatter Gaussian bell — the <b>heat kernel</b>:</p>
+  $$H(x,t)=\frac{1}{(4\pi t)^{n/2}}\,e^{-|x|^2/4t}.$$
+  <p class="zh">首屏那个起伏的金色曲面，正是二维热核随时间展开、收拢的样子。</p>
+  <p class="en">The rising and settling golden surface at the top is exactly the two-dimensional heat kernel unfolding over time.</p>
+</section>
+
+<section id="s2" data-t-zh="定理" data-t-en="The theorem">
+  <div class="ch">Chapter 2</div>
+  <h2><span class="zh">定理</span><span class="en">The theorem</span></h2>
+  <div class="thm">
+    <div class="t"><span class="zh">李–丘梯度估计（1986）</span><span class="en">Li–Yau gradient estimate (1986)</span></div>
+    <p class="zh">设 $M^n$ 是完备黎曼流形，里奇曲率 $\operatorname{Ric}\ge0$。若 $u>0$ 在 $M\times(0,\infty)$ 上满足热方程，则</p>
+    <p class="en">Let $M^n$ be a complete Riemannian manifold with $\operatorname{Ric}\ge0$. If $u>0$ solves the heat equation on $M\times(0,\infty)$, then</p>
+    $$\frac{|\nabla u|^2}{u^2}-\frac{u_t}{u}\le\frac{n}{2t}\quad\Longleftrightarrow\quad|\nabla f|^2-f_t\le\frac{n}{2t},\qquad f=\log u .$$
+  </div>
+  <p class="zh">论文还处理了里奇曲率有下界 $-K$ 的一般情形，以及带势函数的薛定谔算子，估计的右边会多出依赖于 $K$ 的项。</p>
+  <p class="en">The paper also treats the general case $\operatorname{Ric}\ge-K$ and Schrödinger operators with potentials; the right-hand side then gains terms depending on $K$.</p>
+  <h3><span class="zh">为什么是 $n/2t$？等号恰好取到</span><span class="en">Why $n/2t$? Equality is attained</span></h3>
+  <p class="zh">对欧氏热核验证一下：$f=\log H=-\frac n2\log(4\pi t)-\frac{|x|^2}{4t}$，于是 $|\nabla f|^2=\frac{|x|^2}{4t^2}$，$f_t=-\frac{n}{2t}+\frac{|x|^2}{4t^2}$，所以</p>
+  <p class="en">Check on the Euclidean heat kernel: $f=\log H=-\frac n2\log(4\pi t)-\frac{|x|^2}{4t}$, so $|\nabla f|^2=\frac{|x|^2}{4t^2}$ and $f_t=-\frac{n}{2t}+\frac{|x|^2}{4t^2}$, giving</p>
+  $$|\nabla f|^2-f_t=\frac{n}{2t}\quad\text{exactly.}$$
+  <div class="box"><div class="t">Sharp</div><p class="zh">平直空间的热核恰好让不等式取等号，所以常数 $n/2$ 不能再改进。直观地说，非负里奇曲率的空间里，热扩散"不会比平直空间更剧烈"。</p><p class="en">The flat heat kernel makes the inequality an equality, so the constant $n/2$ cannot be improved. Intuitively, on a space with nonnegative Ricci curvature, heat diffuses "no more violently than in flat space".</p></div>
+</section>
+
+<section id="s3" data-t-zh="证明的思路" data-t-en="How the proof goes">
+  <div class="ch">Chapter 3</div>
+  <h2><span class="zh">证明：Bochner 公式 + 极大值原理</span><span class="en">The proof: Bochner formula + maximum principle</span></h2>
+  <p class="zh">令 $f=\log u$，它满足 $f_t=\Delta f+|\nabla f|^2$。考虑量</p>
+  <p class="en">Let $f=\log u$; it satisfies $f_t=\Delta f+|\nabla f|^2$. Consider</p>
+  $$F=t\big(|\nabla f|^2-f_t\big)=-t\,\Delta f .$$
+  <p class="zh">目标是证明 $F\le n/2$。</p>
+  <p class="en">The goal is $F\le n/2$.</p>
+  <h3><span class="zh">Bochner 公式：曲率登场的地方</span><span class="en">Bochner's formula: where curvature enters</span></h3>
+  $$\tfrac12\Delta|\nabla f|^2=|\nabla^2 f|^2+\langle\nabla f,\nabla\Delta f\rangle+\operatorname{Ric}(\nabla f,\nabla f).$$
+  <p class="zh">$\operatorname{Ric}\ge0$ 让最后一项可以丢掉；柯西–施瓦茨不等式给出 $|\nabla^2 f|^2\ge\frac1n(\Delta f)^2$。把这些代入 $F$ 的演化方程，得到（这里 $\mathcal L=\Delta-\partial_t$）</p>
+  <p class="en">$\operatorname{Ric}\ge0$ lets us drop the last term; Cauchy–Schwarz gives $|\nabla^2 f|^2\ge\frac1n(\Delta f)^2$. Substituting into the evolution of $F$ yields (with $\mathcal L=\Delta-\partial_t$)</p>
+  $$\mathcal L F+2\langle\nabla f,\nabla F\rangle\;\ge\;\frac{2}{nt}F^2-\frac{F}{t}=\frac{F}{t}\Big(\frac{2F}{n}-1\Big).$$
+  <h3><span class="zh">极大值原理</span><span class="en">The maximum principle</span></h3>
+  <p class="zh">在 $F$ 取最大值的点，$\nabla F=0$，$\Delta F\le0$，$F_t\ge0$，所以左边 $\le0$。于是在那一点 $\frac{2F}{n}-1\le0$，即 $F\le\frac n2$。紧流形上这就结束了。</p>
+  <p class="en">At a maximum point of $F$: $\nabla F=0$, $\Delta F\le0$, $F_t\ge0$, so the left side is $\le0$. Hence $\frac{2F}{n}-1\le0$ there, i.e. $F\le\frac n2$. On a compact manifold, done.</p>
+  <p class="zh">完备非紧的情形是论文技术上的难点：要乘一个精心设计的截断函数，借助拉普拉斯比较定理控制它的导数，再让截断半径趋于无穷。</p>
+  <p class="en">The complete noncompact case is the paper's technical heart: multiply by a carefully built cutoff function, control its derivatives with the Laplacian comparison theorem, and let the radius go to infinity.</p>
+  <div class="map">
+    <svg id="pmap" aria-label="proof map"></svg>
+    <div id="pnote"></div>
+  </div>
+</section>
+
+<section id="s4" data-t-zh="Harnack 不等式与热核" data-t-en="Harnack and the heat kernel">
+  <div class="ch">Chapter 4</div>
+  <h2><span class="zh">从逐点估计到 Harnack 不等式</span><span class="en">From a pointwise bound to Harnack</span></h2>
+  <p class="zh">沿着从 $(x_1,t_1)$ 到 $(x_2,t_2)$（$t_1&lt;t_2$）的时空路径对 $\frac{d}{ds}f$ 积分，用梯度估计控制被积函数，再对路径取最优，就得到<b>抛物型 Harnack 不等式</b>：</p>
+  <p class="en">Integrate $\frac{d}{ds}f$ along a space-time path from $(x_1,t_1)$ to $(x_2,t_2)$ with $t_1&lt;t_2$, bound the integrand with the gradient estimate, and optimize over paths. The result is the <b>parabolic Harnack inequality</b>:</p>
+  $$u(x_1,t_1)\;\le\;u(x_2,t_2)\Big(\frac{t_2}{t_1}\Big)^{n/2}\exp\!\Big(\frac{d(x_1,x_2)^2}{4(t_2-t_1)}\Big).$$
+  <div class="analogy"><span class="i">◈</span><p class="zh">含义：此刻这里很热，那么稍后附近的地方也不会太冷。温度不可能在短时间、短距离内凭空消失。</p><p class="en">Meaning: if it is hot here now, then a little later, nearby, it cannot be too cold. Heat cannot vanish over short times and distances.</p></div>
+  <p class="zh">进一步可以得到热核 $H(x,y,t)$ 的双边高斯估计：用 $x$ 处半径 $\sqrt t$ 的测地球体积 $V_x(\sqrt t)$ 作归一化，对任意 $\varepsilon>0$，</p>
+  <p class="en">Further, one obtains two-sided Gaussian bounds for the heat kernel $H(x,y,t)$, normalized by the volume $V_x(\sqrt t)$ of the geodesic ball of radius $\sqrt t$: for any $\varepsilon>0$,</p>
+  $$\frac{C^{-1}}{V_x(\sqrt t)}\,e^{-\frac{d(x,y)^2}{(4-\varepsilon)t}}\;\le\;H(x,y,t)\;\le\;\frac{C}{V_x(\sqrt t)}\,e^{-\frac{d(x,y)^2}{(4+\varepsilon)t}}.$$
+  <p class="zh">这里 $C$ 只依赖于 $n$ 和 $\varepsilon$。弯曲空间上的热核，在定量意义上"像"平直空间的高斯核。</p>
+  <p class="en">Here $C$ depends only on $n$ and $\varepsilon$. On a curved space the heat kernel quantitatively "looks like" the flat Gaussian.</p>
+</section>
+
+<section id="s5" data-t-zh="影响" data-t-en="Legacy">
+  <div class="ch">Chapter 5</div>
+  <h2><span class="zh">影响：通往里奇流的路</span><span class="en">Legacy: a road to Ricci flow</span></h2>
+  <ul>
+    <li class="zh"><b>Hamilton 的矩阵 Harnack 不等式（1993）</b>：Hamilton 把李–丘估计推广到里奇流本身，得到曲率的 Harnack 估计。这是分析里奇流奇点的关键工具。</li>
+    <li class="en"><b>Hamilton's matrix Harnack inequality (1993)</b>: Hamilton extended Li–Yau to Ricci flow itself, obtaining a Harnack estimate for curvature — a key tool for analyzing singularities.</li>
+    <li class="zh"><b>Perelman（2002–03）</b>：Perelman 证明庞加莱猜想时引入的约化距离与约化体积，在形式上和李–丘的路径积分一脉相承，他在论文中也明确提到了这种联系。</li>
+    <li class="en"><b>Perelman (2002–03)</b>: the reduced distance and reduced volume Perelman introduced on the way to the Poincaré conjecture are formally descended from the Li–Yau path integral, a connection he notes himself.</li>
+    <li class="zh"><b>更广的世界</b>：李–丘型估计被推广到图、度量测度空间、非线性扩散等各种情形，"微分 Harnack 不等式"成为一个独立的研究方向。</li>
+    <li class="en"><b>Wider world</b>: Li–Yau-type estimates have been extended to graphs, metric measure spaces, nonlinear diffusions and more; "differential Harnack inequalities" became a field of their own.</li>
+  </ul>
+</section>
+
+<section id="s6" data-t-zh="原文与延伸阅读" data-t-en="Original papers & reading">
+  <div class="ch">References</div>
+  <h2><span class="zh">原文与延伸阅读</span><span class="en">Original papers &amp; further reading</span></h2>
+  <ul class="refs">
+    <li><span class="y">1986</span>P. Li, S.-T. Yau, <i>On the parabolic kernel of the Schrödinger operator</i>, Acta Math. 156, 153–201. <a href="https://doi.org/10.1007/BF02399203">DOI ↗</a></li>
+    <li><span class="y">1975</span>S.-T. Yau, <i>Harmonic functions on complete Riemannian manifolds</i>, Comm. Pure Appl. Math. 28, 201–228.<span class="zh">（梯度估计方法的前身）</span><span class="en">(precursor of the gradient-estimate method)</span></li>
+    <li><span class="y">1993</span>R. Hamilton, <i>The Harnack estimate for the Ricci flow</i>, J. Differential Geom. 37, 225–243.</li>
+    <li><span class="y">2002</span>G. Perelman, <i>The entropy formula for the Ricci flow and its geometric applications</i>, arXiv:math/0211159.</li>
+  </ul>
+  <div class="next">
+    <a href="../positive-mass/"><small>PREVIOUS</small><span class="zh">正质量定理</span><span class="en">The Positive Mass Theorem</span></a>
+    <a href="../duy/"><small>NEXT</small><span class="zh">唐纳森–乌伦贝克–丘定理</span><span class="en">Donaldson–Uhlenbeck–Yau</span></a>
+  </div>
+</section>
+===
+  surface: 'heat',
+  active: 'boch',
+  nodes: [
+    { id:'log', x:20, y:20, w:200, zh:'取对数', en:'Take logarithm', s:'f = log u',
+      nzh:'<b>变量替换。</b>f = log u 把线性热方程变成 f_t = Δf + |∇f|²，梯度项自然出现。',
+      nen:'<b>Change of variables.</b> f = log u turns the linear heat equation into f_t = Δf + |∇f|², making the gradient term appear naturally.' },
+    { id:'F', x:250, y:20, w:200, zh:'辅助量 F', en:'Auxiliary F', s:'F = t(|∇f|² − f_t)',
+      nzh:'<b>要控制的量。</b>乘上 t 是为了让估计在 t → 0 时也有意义；目标是 F ≤ n/2。',
+      nen:'<b>The quantity to control.</b> Multiplying by t makes the estimate meaningful as t → 0; the goal is F ≤ n/2.' },
+    { id:'boch', x:480, y:20, w:200, zh:'Bochner 公式', en:'Bochner formula', s:'Ric ≥ 0 enters here', key:1,
+      nzh:'<b>曲率登场。</b>Bochner 公式里出现 Ric(∇f,∇f)，非负里奇曲率让它可以丢掉；再用 |∇²f|² ≥ (Δf)²/n。',
+      nen:'<b>Curvature enters.</b> Bochner\'s formula contains Ric(∇f,∇f), which nonnegative Ricci lets us drop; then use |∇²f|² ≥ (Δf)²/n.' },
+    { id:'mp', x:250, y:140, w:200, zh:'极大值原理', en:'Maximum principle', s:'at max of F',
+      nzh:'<b>逐点结论。</b>F 满足的微分不等式在最大值点给出 F(2F/n − 1) ≤ 0，所以 F ≤ n/2。',
+      nen:'<b>Pointwise conclusion.</b> At the maximum of F, its differential inequality forces F(2F/n − 1) ≤ 0, so F ≤ n/2.' },
+    { id:'cut', x:480, y:140, w:200, zh:'截断函数', en:'Cutoff function', s:'noncompact M',
+      nzh:'<b>非紧情形。</b>乘以截断函数，用拉普拉斯比较定理控制它的导数，再让半径趋于无穷。',
+      nen:'<b>Noncompact case.</b> Multiply by a cutoff, control its derivatives via Laplacian comparison, then send the radius to infinity.' },
+    { id:'har', x:20, y:250, w:200, zh:'Harnack 不等式', en:'Harnack inequality', s:'integrate along paths',
+      nzh:'<b>积分。</b>沿时空路径积分梯度估计，比较不同时刻、不同地点的温度。',
+      nen:'<b>Integrate.</b> Integrating the gradient estimate along space-time paths compares temperatures at different times and places.' },
+    { id:'hk', x:250, y:250, w:200, zh:'热核高斯估计', en:'Gaussian heat-kernel bounds', s:'(4 ± ε)t',
+      nzh:'<b>应用。</b>由 Harnack 不等式得到热核的上下界，形状与平直空间的高斯核一致。',
+      nen:'<b>Application.</b> Harnack yields upper and lower heat-kernel bounds with the same Gaussian shape as flat space.' }
+  ],
+  edges: [['log','F'],['F','boch'],['boch','mp'],['mp','cut'],['mp','har'],['har','hk']]

@@ -1,0 +1,146 @@
+title_zh: SYZ 猜想
+title_en: The SYZ Conjecture
+kicker: Stele V · 1996 · with A. Strominger, E. Zaslow
+sub_zh: 镜像对称，就是把环面翻过来
+sub_en: Mirror symmetry is T-duality
+paper: Nuclear Physics B 479 (1996)
+mins: 18
+desc: 从零读懂 Strominger–丘–Zaslow 猜想：镜像对称、特殊拉格朗日环面纤维化与 T-对偶。中英双语。
+canvas_label: A torus fibration whose fibres degenerate at the ends of the base
+---
+<section id="s0" data-t-zh="一句话版本" data-t-en="In one breath">
+  <div class="tldr">
+    <span class="tag">TL;DR</span>
+    <p class="zh">弦论学家在 1990 年前后发现了一件怪事：卡拉比–丘流形似乎总是成对出现，两个形状截然不同的空间，给出完全相同的物理。这就是<b>镜像对称</b>。它甚至能用来解决古老的计数问题，可是没人知道这两个空间在<b>几何上</b>到底是什么关系。</p>
+    <p class="zh">1996 年，Strominger、丘成桐与 Zaslow 给出了一个几何解释：卡拉比–丘流形可以看成一族<b>特殊拉格朗日环面</b>铺在一个底空间上；把每个环面换成它的<b>对偶环面</b>，就得到镜像。一句话：<b>镜像对称就是 T-对偶。</b></p>
+    <p class="en">Around 1990 string theorists noticed something strange: Calabi–Yau manifolds seemed to come in pairs — two very different shapes giving identical physics. This is <b>mirror symmetry</b>. It could even solve classical counting problems, yet nobody knew what the two spaces had to do with each other <b>geometrically</b>.</p>
+    <p class="en">In 1996 Strominger, Yau and Zaslow proposed a geometric answer: a Calabi–Yau manifold is a family of <b>special Lagrangian tori</b> spread over a base; replace each torus by its <b>dual torus</b> and you get the mirror. In one line: <b>mirror symmetry is T-duality.</b></p>
+  </div>
+  <div class="strip">
+    <div><div class="y">1989–90</div><div class="d zh">物理学家发现镜像对称</div><div class="d en">Physicists discover mirror symmetry</div></div>
+    <div><div class="y">1991</div><div class="d zh">Candelas 等人用镜像数出五次曲面上的有理曲线</div><div class="d en">Candelas et al. count rational curves via the mirror</div></div>
+    <div><div class="y">1994</div><div class="d zh">Kontsevich 提出同调镜像对称</div><div class="d en">Kontsevich proposes homological mirror symmetry</div></div>
+    <div><div class="y">1996</div><div class="d zh">SYZ：镜像对称的几何图景</div><div class="d en">SYZ: a geometric picture</div></div>
+  </div>
+</section>
+
+<section id="s1" data-t-zh="镜像对称是什么" data-t-en="What mirror symmetry is">
+  <div class="ch">Chapter 1</div>
+  <h2><span class="zh">镜像对称是什么</span><span class="en">What mirror symmetry is</span></h2>
+  <p class="zh">一个复三维卡拉比–丘流形 $X$ 有两个重要的数：$h^{1,1}(X)$ 大致数"能改变大小的方式"（凯勒形变），$h^{2,1}(X)$ 数"能改变形状的方式"（复结构形变）。物理学家发现，常常存在另一个卡拉比–丘流形 $\check X$，使得这两个数<b>恰好互换</b>：</p>
+  <p class="en">A complex three-dimensional Calabi–Yau manifold $X$ has two important numbers: $h^{1,1}(X)$ roughly counts ways to change its size (Kähler deformations), $h^{2,1}(X)$ counts ways to change its shape (complex deformations). Physicists found that there is often another Calabi–Yau $\check X$ for which these numbers are <b>exactly swapped</b>:</p>
+  $$h^{1,1}(X)=h^{2,1}(\check X),\qquad h^{2,1}(X)=h^{1,1}(\check X).$$
+  <p class="zh">更深的层面上，$X$ 的"辛几何"（大小、曲线的计数）等价于 $\check X$ 的"复几何"（形状、周期积分）。一边很难算的东西，在另一边可能很容易。</p>
+  <p class="en">At a deeper level, the "symplectic geometry" of $X$ (sizes, curve counts) is equivalent to the "complex geometry" of $\check X$ (shapes, period integrals). What is hard to compute on one side may be easy on the other.</p>
+  <div class="box"><div class="t">A famous success</div><p class="zh">五次三维流形上有 2875 条直线、609250 条二次曲线……代数几何学家花了很大力气才算出前几项。1991 年，Candelas、de la Ossa、Green、Parkes 在镜像那一侧算一个周期积分，一次性给出了所有次数的有理曲线数目的预言，后来被数学家证明。</p><p class="en">The quintic threefold contains 2875 lines and 609,250 conics… algebraic geometers struggled to compute even the first terms. In 1991 Candelas, de la Ossa, Green and Parkes computed a period integral on the mirror side and predicted the number of rational curves of every degree at once — later proved by mathematicians.</p></div>
+</section>
+
+<section id="s2" data-t-zh="T-对偶：最简单的例子" data-t-en="T-duality: the simplest case">
+  <div class="ch">Chapter 2</div>
+  <h2><span class="zh">T-对偶：最简单的例子</span><span class="en">T-duality: the simplest example</span></h2>
+  <p class="zh">在弦论里，一根弦在半径为 $R$ 的圆周上运动，和一根弦在半径为 $1/R$ 的圆周上运动，给出<b>完全相同的物理</b>：动量模式和缠绕模式互换了角色。这叫 <b>T-对偶</b>。</p>
+  <p class="en">In string theory, a string moving on a circle of radius $R$ gives <b>exactly the same physics</b> as one on a circle of radius $1/R$: momentum modes and winding modes swap roles. This is <b>T-duality</b>.</p>
+  <p class="zh">一维复卡拉比–丘流形就是椭圆曲线，也就是环面 $T^2=S^1\times S^1$。把其中一个圆周换成对偶圆周，得到的仍然是一个环面，但"大小"和"形状"的参数互换了。这就是最简单的镜像对称。</p>
+  <p class="en">A one-dimensional Calabi–Yau is an elliptic curve — a torus $T^2=S^1\times S^1$. Dualize one circle and you get another torus with its "size" and "shape" parameters exchanged. That is the simplest mirror symmetry.</p>
+  <div class="analogy"><span class="i">◈</span><p class="zh">SYZ 的想法就是：高维的情形，其实是把这个最简单的例子"一族一族"地做。</p><p class="en">The SYZ idea: the higher-dimensional case is this simplest example done "in families".</p></div>
+</section>
+
+<section id="s3" data-t-zh="猜想的陈述" data-t-en="The statement">
+  <div class="ch">Chapter 3</div>
+  <h2><span class="zh">猜想的陈述</span><span class="en">The statement</span></h2>
+  <p class="zh">卡拉比–丘流形 $X$ 上有凯勒形式 $\omega$ 和处处非零的全纯体积形式 $\Omega$。一个实 $n$ 维子流形 $L$ 称为<b>特殊拉格朗日</b>的，如果</p>
+  <p class="en">A Calabi–Yau manifold $X$ carries a Kähler form $\omega$ and a nowhere-vanishing holomorphic volume form $\Omega$. A real $n$-dimensional submanifold $L$ is <b>special Lagrangian</b> if</p>
+  $$\omega|_L=0,\qquad \operatorname{Im}\Omega|_L=0 .$$
+  <p class="zh">这样的子流形在它的同调类里体积最小，是高维的"极小曲面"。McLean 证明，紧特殊拉格朗日子流形 $L$ 的形变空间维数等于 $b_1(L)$；对三维环面 $T^3$，恰好是 3。</p>
+  <p class="en">Such submanifolds minimize volume in their homology class — higher-dimensional "minimal surfaces". McLean proved that compact special Lagrangians $L$ deform in a family of dimension $b_1(L)$; for a three-torus $T^3$, exactly 3.</p>
+  <div class="thm">
+    <div class="t"><span class="zh">SYZ 猜想（1996）</span><span class="en">SYZ Conjecture (1996)</span></div>
+    <p class="zh">若 $X$ 和 $\check X$ 是一对镜像卡拉比–丘三维流形（在适当的极限下），则</p>
+    <p class="en">If $X$ and $\check X$ are a mirror pair of Calabi–Yau threefolds (near a suitable limit), then</p>
+    <ol class="l">
+      <li class="zh">$X$ 有一个以<b>特殊拉格朗日 $T^3$</b> 为一般纤维的纤维化 $f:X\to B$；$\check X$ 也有一个，$\check f:\check X\to B$，底空间相同；</li>
+      <li class="en">$X$ admits a fibration $f:X\to B$ whose generic fibres are <b>special Lagrangian $T^3$s</b>; so does $\check X$, $\check f:\check X\to B$, over the same base;</li>
+      <li class="zh">在一般点 $b\in B$ 上，纤维 $\check f^{-1}(b)$ 是 $f^{-1}(b)$ 的<b>对偶环面</b>；</li>
+      <li class="en">over a generic point $b\in B$, the fibre $\check f^{-1}(b)$ is the <b>dual torus</b> of $f^{-1}(b)$;</li>
+      <li class="zh">$\check X$ 的复结构，由 $X$ 的辛几何加上全纯圆盘带来的"瞬子修正"决定。</li>
+      <li class="en">the complex structure of $\check X$ is determined by the symplectic geometry of $X$ together with "instanton corrections" from holomorphic discs.</li>
+    </ol>
+  </div>
+  <p class="zh">首屏的金色图形是这种纤维化的示意：沿着底空间排开的一串环面纤维，到两端时退化收缩，就像真正的纤维化在奇异纤维处发生的那样。</p>
+  <p class="en">The golden figure at the top sketches such a fibration: a row of torus fibres along the base, degenerating at the ends as real fibrations do at singular fibres.</p>
+</section>
+
+<section id="s4" data-t-zh="为什么应该成立：D-膜论证" data-t-en="Why it should be true">
+  <div class="ch">Chapter 4</div>
+  <h2><span class="zh">为什么应该成立：D-膜论证</span><span class="en">Why it should hold: the D-brane argument</span></h2>
+  <p class="zh">论文的论证来自物理，却有一个漂亮的几何内核。镜像对称应当把 $\check X$ 上的物体一一对应到 $X$ 上的物体。看最简单的物体：<b>$\check X$ 上的一个点</b>（D0-膜）。所有点构成的模空间就是 $\check X$ 本身。</p>
+  <p class="en">The paper's argument comes from physics but has a beautiful geometric core. Mirror symmetry should match objects on $\check X$ with objects on $X$. Take the simplest object: <b>a point of $\check X$</b> (a D0-brane). The moduli space of all points is $\check X$ itself.</p>
+  <p class="zh">在 $X$ 一侧，它应当对应一个特殊拉格朗日子流形 $L$，再配上 $L$ 上一个平坦 $U(1)$ 联络（D3-膜）。这个模空间要和 $\check X$ 一样是复三维（实六维）的，所以：</p>
+  <p class="en">On the $X$ side, it should correspond to a special Lagrangian $L$ with a flat $U(1)$ connection on it (a D3-brane). This moduli space must be complex three-dimensional (real six), like $\check X$. Hence:</p>
+  <ul>
+    <li class="zh">$L$ 的形变给出 $b_1(L)$ 个实维度，平坦联络又给出 $b_1(L)$ 个，所以 $2b_1(L)=6$，$b_1(L)=3$；最自然的候选是 $L\cong T^3$；</li>
+    <li class="en">deformations of $L$ give $b_1(L)$ real dimensions and flat connections another $b_1(L)$, so $2b_1(L)=6$ and $b_1(L)=3$; the natural candidate is $L\cong T^3$;</li>
+    <li class="zh">$L$ 的形变扫出 $X$，即 $X$ 被这些 $T^3$ 纤维化，底空间就是 $L$ 的模空间 $B$；</li>
+    <li class="en">deformations of $L$ sweep out $X$, so $X$ is fibred by these $T^3$s over their moduli space $B$;</li>
+    <li class="zh">固定 $L$ 时，平坦 $U(1)$ 联络构成的空间正是对偶环面 $\check T^3$，于是 $\check X$ 被对偶环面纤维化。</li>
+    <li class="en">for fixed $L$, the flat $U(1)$ connections form exactly the dual torus $\check T^3$, so $\check X$ is fibred by dual tori.</li>
+  </ul>
+  <div class="map">
+    <svg id="pmap" aria-label="argument map"></svg>
+    <div id="pnote"></div>
+  </div>
+</section>
+
+<section id="s5" data-t-zh="后来的故事" data-t-en="What happened next">
+  <div class="ch">Chapter 5</div>
+  <h2><span class="zh">后来的故事</span><span class="en">What happened next</span></h2>
+  <p class="zh">SYZ 猜想在完全一般的形式下仍然是开放问题，主要困难在于奇异纤维和特殊拉格朗日子流形的存在性。但它已经深刻地改变了这个领域：</p>
+  <p class="en">In full generality the SYZ conjecture remains open — singular fibres and the existence of special Lagrangians are the main difficulties. But it has reshaped the field:</p>
+  <ul>
+    <li class="zh"><b>拓扑与辛版本</b>：Gross 等人对五次三维流形等例子构造了拓扑和辛意义下的 SYZ 纤维化。</li>
+    <li class="en"><b>Topological and symplectic versions</b>: Gross and others constructed topological and symplectic SYZ fibrations for examples such as the quintic threefold.</li>
+    <li class="zh"><b>Gross–Siebert 纲领</b>与 Kontsevich–Soibelman 的工作，把 SYZ 的思想代数化，发展出用"热带几何"和"墙穿越"系统构造镜像的方法。</li>
+    <li class="en">The <b>Gross–Siebert program</b> and the work of Kontsevich–Soibelman algebraized the SYZ idea, building mirrors systematically from tropical geometry and wall-crossing.</li>
+    <li class="zh"><b>瞬子修正</b>：全纯圆盘如何修正镜像的复结构，成为 Fukaya、Auroux 等人工作的核心问题，也连接到 Kontsevich 的同调镜像对称。</li>
+    <li class="en"><b>Instanton corrections</b>: how holomorphic discs correct the mirror's complex structure became central in the work of Fukaya, Auroux and others, linking to Kontsevich's homological mirror symmetry.</li>
+  </ul>
+</section>
+
+<section id="s6" data-t-zh="原文与延伸阅读" data-t-en="Original papers & reading">
+  <div class="ch">References</div>
+  <h2><span class="zh">原文与延伸阅读</span><span class="en">Original papers &amp; further reading</span></h2>
+  <ul class="refs">
+    <li><span class="y">1996</span>A. Strominger, S.-T. Yau, E. Zaslow, <i>Mirror symmetry is T-duality</i>, Nuclear Phys. B 479, 243–259. <a href="https://arxiv.org/abs/hep-th/9606040">arXiv ↗</a></li>
+    <li><span class="y">1991</span>P. Candelas, X. de la Ossa, P. Green, L. Parkes, <i>A pair of Calabi–Yau manifolds as an exactly soluble superconformal theory</i>, Nuclear Phys. B 359, 21–74.</li>
+    <li><span class="y">1998</span>R. C. McLean, <i>Deformations of calibrated submanifolds</i>, Comm. Anal. Geom. 6, 705–747.</li>
+    <li><span class="y">1994</span>M. Kontsevich, <i>Homological algebra of mirror symmetry</i>, Proc. ICM Zürich, arXiv:alg-geom/9411018.</li>
+  </ul>
+  <div class="next">
+    <a href="../duy/"><small>PREVIOUS</small><span class="zh">唐纳森–乌伦贝克–丘定理</span><span class="en">Donaldson–Uhlenbeck–Yau</span></a>
+    <a href="../geometric-analysis/"><small>NEXT</small><span class="zh">几何分析</span><span class="en">Geometric Analysis</span></a>
+  </div>
+</section>
+===
+  surface: 'syz',
+  active: 'count',
+  nodes: [
+    { id:'d0', x:20, y:20, w:200, zh:'X̌ 上的一个点', en:'A point of X̌', s:'D0-brane · moduli = X̌',
+      nzh:'<b>出发点。</b>镜像 X̌ 上最简单的物体是一个点，所有点的模空间就是 X̌ 本身，复三维。',
+      nen:'<b>Start.</b> The simplest object on the mirror X̌ is a point; the moduli space of all points is X̌ itself, complex 3-dimensional.' },
+    { id:'d3', x:250, y:20, w:200, zh:'X 上的对应物', en:'Its partner on X', s:'sLag L + flat U(1)',
+      nzh:'<b>镜像映射。</b>在 X 一侧，它应对应一个特殊拉格朗日子流形 L，配上 L 上的一个平坦 U(1) 联络。',
+      nen:'<b>Under the mirror map.</b> On X it should be a special Lagrangian L carrying a flat U(1) connection.' },
+    { id:'count', x:480, y:20, w:200, zh:'数维度', en:'Count dimensions', s:'2·b₁(L) = 6', key:1,
+      nzh:'<b>关键一步。</b>McLean：L 的形变有 b₁(L) 维；平坦联络又有 b₁(L) 维。总数必须是 6，所以 b₁(L) = 3，L 最自然是 T³。',
+      nen:'<b>The key step.</b> McLean: L deforms in b₁(L) dimensions; flat connections add b₁(L) more. The total must be 6, so b₁(L) = 3 — naturally L ≅ T³.' },
+    { id:'fib', x:250, y:140, w:200, zh:'X 被 T³ 纤维化', en:'X fibred by T³', s:'f : X → B',
+      nzh:'<b>几何结论一。</b>L 的形变扫满 X，于是 X 是以特殊拉格朗日 T³ 为纤维、以 L 的模空间 B 为底的纤维化。',
+      nen:'<b>Geometric conclusion I.</b> Deformations of L sweep out X, so X fibres over the moduli space B with special Lagrangian T³ fibres.' },
+    { id:'dual', x:480, y:140, w:200, zh:'X̌ 被对偶环面纤维化', en:'X̌ fibred by dual tori', s:'flat U(1) on T³ = Ť³',
+      nzh:'<b>几何结论二。</b>固定 L 时，平坦 U(1) 联络构成对偶环面，所以 X̌ 是同一个底上的对偶环面纤维化。这就是 T-对偶。',
+      nen:'<b>Geometric conclusion II.</b> For fixed L, flat U(1) connections form the dual torus, so X̌ is the dual-torus fibration over the same base — T-duality.' },
+    { id:'corr', x:20, y:140, w:200, zh:'瞬子修正', en:'Instanton corrections', s:'holomorphic discs',
+      nzh:'<b>微妙之处。</b>直接做对偶只在"大复结构极限"附近近似成立；准确的镜像需要用全纯圆盘修正复结构。',
+      nen:'<b>The subtlety.</b> Naive dualization is only approximately right near the large complex structure limit; the true mirror needs corrections from holomorphic discs.' }
+  ],
+  edges: [['d0','d3'],['d3','count'],['count','fib'],['count','dual'],['fib','corr']]

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>几何分析 · Geometric Analysis — 丘成桐 · 数学世界</title>
+<meta name="description" content="从零认识丘成桐开创的几何分析：调和函数的梯度估计、极小曲面、蒙日–安培方程，以及它们如何解决几何与拓扑问题。中英双语。">
+<meta name="theme-color" content="#06070b">
+<link rel="canonical" href="https://masteryau.com/geometric-analysis/">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<meta property="og:type" content="article">
+<meta property="og:title" content="几何分析 · Geometric Analysis">
+<meta property="og:description" content="从零认识丘成桐开创的几何分析：调和函数的梯度估计、极小曲面、蒙日–安培方程，以及它们如何解决几何与拓扑问题。中英双语。">
+<meta property="og:image" content="https://masteryau.com/assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<link rel="stylesheet" href="../assets/explainer.css">
+</head>
+<body>
+<div id="progress"></div>
+<nav>
+  <a class="back" href="../#theorems">← <span class="zh">丘成桐 · 数学世界</span><span class="en">Shing-Tung Yau</span></a>
+  <div class="lang" role="group" aria-label="Language"><button data-l="zh">中文</button><button data-l="en">EN</button></div>
+</nav>
+
+<header class="hero">
+  <canvas id="cy" aria-label="A catenoid deforming into a helicoid through minimal surfaces"></canvas>
+  <div class="hero-text">
+    <div class="kicker">Stele VI · 1970s –</div>
+    <h1><span class="zh">几何分析</span><span class="en">Geometric Analysis</span></h1>
+    <div class="sub"><span class="zh">用方程理解形状，用形状理解方程</span><span class="en">Understanding shape through equations, and equations through shape</span></div>
+    <div class="meta">
+      <span><span class="zh">原文</span><span class="en">Paper</span> · <b>Seminar on Differential Geometry (1982) and more</b></span>
+      <span><span class="zh">阅读约 16 分钟</span><span class="en">~16 min read</span></span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+<aside><ol id="toc"></ol></aside>
+<article>
+<section id="s0" data-t-zh="一句话版本" data-t-en="In one breath">
+  <div class="tldr">
+    <span class="tag">TL;DR</span>
+    <p class="zh">前面五块碑，其实都是同一种思想的不同侧面：<b>把一个几何问题翻译成一个偏微分方程，用分析的力量解出它，再把答案翻译回几何。</b>这种思想就是"几何分析"。</p>
+    <p class="zh">丘成桐不是第一个用方程研究几何的人，但他把它变成了一门系统的学科：发展出一整套通用工具（梯度估计、极大值原理、先验估计、极小曲面），培养了大批学生，并在 1982 年整理出一份影响深远的公开问题清单。</p>
+    <p class="en">The other five steles are really facets of one idea: <b>translate a geometric problem into a PDE, solve it with the power of analysis, and translate the answer back into geometry.</b> That idea is "geometric analysis".</p>
+    <p class="en">Yau was not the first to study geometry through equations, but he turned it into a systematic discipline — developing a general toolkit (gradient estimates, maximum principles, a priori estimates, minimal surfaces), training generations of students, and compiling in 1982 an enormously influential list of open problems.</p>
+  </div>
+</section>
+
+<section id="s1" data-t-zh="核心思想" data-t-en="The core idea">
+  <div class="ch">Chapter 1</div>
+  <h2><span class="zh">核心思想：形状即方程</span><span class="en">The core idea: shape is an equation</span></h2>
+  <p class="zh">几何对象的很多"最优"状态，都由一个方程刻画：</p>
+  <p class="en">Many "optimal" states of geometric objects are described by an equation:</p>
+  <ul>
+    <li class="zh"><b>肥皂膜</b>面积最小 ⟺ 平均曲率 $H=0$（极小曲面方程）；</li>
+    <li class="en"><b>Soap films</b> minimize area ⟺ mean curvature $H=0$ (the minimal surface equation);</li>
+    <li class="zh"><b>温度平衡</b> ⟺ 调和函数 $\Delta u=0$；</li>
+    <li class="en"><b>Thermal equilibrium</b> ⟺ harmonic functions $\Delta u=0$;</li>
+    <li class="zh"><b>真空中的引力</b> ⟺ 里奇平坦 $\operatorname{Ric}=0$（卡拉比猜想正是在解它）；</li>
+    <li class="en"><b>Gravity in vacuum</b> ⟺ Ricci-flat $\operatorname{Ric}=0$ (exactly what the Calabi conjecture solves);</li>
+    <li class="zh"><b>规定曲率的凸体</b> ⟺ 实蒙日–安培方程 $\det(\nabla^2 u)=f$（闵可夫斯基问题）。</li>
+    <li class="en"><b>Convex bodies with prescribed curvature</b> ⟺ the real Monge–Ampère equation $\det(\nabla^2 u)=f$ (the Minkowski problem).</li>
+  </ul>
+  <p class="zh">首屏那个不断变形的金色曲面，是从悬链面到螺旋面的"伴随族"。变形过程中的每一个瞬间都是极小曲面，而且度量保持不变，就像一张不可伸缩的肥皂膜在扭转。</p>
+  <p class="en">The golden surface morphing at the top is the "associate family" from a catenoid to a helicoid: every instant is a minimal surface, and the metric never changes — like an unstretchable soap film twisting.</p>
+</section>
+
+<section id="s2" data-t-zh="工具箱" data-t-en="The toolkit">
+  <div class="ch">Chapter 2</div>
+  <h2><span class="zh">工具箱</span><span class="en">The toolkit</span></h2>
+  <h3><span class="zh">梯度估计与刘维尔定理（1975）</span><span class="en">Gradient estimates and Liouville (1975)</span></h3>
+  <p class="zh">丘先生证明：在里奇曲率非负的完备流形上，正调和函数满足一个只依赖于维数的梯度估计。在半径为 $R$ 的测地球 $B(x,R)$ 上，若 $u>0$ 调和，则在 $B(x,R/2)$ 上</p>
+  <p class="en">Yau proved that on a complete manifold with nonnegative Ricci curvature, positive harmonic functions obey a gradient estimate depending only on dimension: if $u>0$ is harmonic on the geodesic ball $B(x,R)$, then on $B(x,R/2)$</p>
+  $$\frac{|\nabla u|}{u}\le\frac{C(n)}{R}.$$
+  <p class="zh">令 $R\to\infty$，立刻得到：<b>这样的流形上，正调和函数一定是常数。</b>这一方法后来发展成李–丘估计，以及大量梯度估计的工作。</p>
+  <p class="en">Let $R\to\infty$: <b>on such a manifold, every positive harmonic function is constant.</b> The method grew into the Li–Yau estimate and a vast literature of gradient estimates.</p>
+  <h3><span class="zh">广义极大值原理</span><span class="en">The generalized maximum principle</span></h3>
+  <p class="zh">紧流形上，函数在最大值点梯度为零、拉普拉斯非正。非紧流形上最大值可能取不到。大森英树与丘成桐发展的极大值原理说：在里奇曲率有下界的完备流形上，有界函数总有一列点"近似"满足这些性质。这是把紧流形上的论证推广到非紧情形的标准工具，后来在丘先生的施瓦茨引理中起了关键作用。</p>
+  <p class="en">On a compact manifold, a function's maximum point has zero gradient and nonpositive Laplacian. On a noncompact one the maximum may not be attained. The Omori–Yau maximum principle says: on a complete manifold with Ricci curvature bounded below, a bounded function has a sequence of points "approximately" satisfying these properties — the standard tool for carrying compact arguments to noncompact settings, and key to Yau's Schwarz lemma.</p>
+  <h3><span class="zh">先验估计与连续性方法</span><span class="en">A priori estimates and the continuity method</span></h3>
+  <p class="zh">卡拉比猜想的证明把这套工具推到极致：一个完全非线性方程，用一层层的先验估计（$C^0$、$C^2$、$C^3$）配合连续性方法解出。这一模式后来被反复用于各种几何方程。</p>
+  <p class="en">The proof of the Calabi conjecture pushed this toolkit to the limit: a fully nonlinear equation solved with layered a priori estimates ($C^0$, $C^2$, $C^3$) and the continuity method — a pattern reused for countless geometric equations.</p>
+  <h3><span class="zh">极小曲面作为探针</span><span class="en">Minimal surfaces as probes</span></h3>
+  <p class="zh">把极小曲面放进一个空间，看它被迫怎样弯曲，就能读出空间的曲率和拓扑。正质量定理、正数量曲率流形的结构，以及 Meeks–丘对三维拓扑的工作，都用了这一思想。</p>
+  <p class="en">Place a minimal surface inside a space and see how it is forced to bend: it reveals the space's curvature and topology. The positive mass theorem, the structure of positive scalar curvature manifolds, and Meeks–Yau's work on 3-manifold topology all use this idea.</p>
+</section>
+
+<section id="s3" data-t-zh="代表性成果" data-t-en="Landmark results">
+  <div class="ch">Chapter 3</div>
+  <h2><span class="zh">代表性成果地图</span><span class="en">A map of landmark results</span></h2>
+  <p class="zh">上排是工具，下排是成果。点击任意方块查看它的内容。</p>
+  <p class="en">Tools on top, results below. Click any box to read about it.</p>
+  <div class="map">
+    <svg id="pmap" aria-label="results map"></svg>
+    <div id="pnote"></div>
+  </div>
+</section>
+
+<section id="s4" data-t-zh="一门学科的建立" data-t-en="Building a discipline">
+  <div class="ch">Chapter 4</div>
+  <h2><span class="zh">一门学科的建立</span><span class="en">Building a discipline</span></h2>
+  <p class="zh">1979–80 年在普林斯顿高等研究院，丘先生组织了微分几何特别年。成果汇编成 1982 年出版的《Seminar on Differential Geometry》，其中的 <b>"Problem Section"</b> 列出了一百多个公开问题，影响了此后几十年的几何分析研究，其中许多问题已被他的学生和后继者解决。</p>
+  <p class="en">In 1979–80 at the Institute for Advanced Study, Yau organized a special year in differential geometry. The resulting volume, <i>Seminar on Differential Geometry</i> (1982), contains a <b>"Problem Section"</b> of more than a hundred open problems that shaped geometric analysis for decades; many have since been solved by his students and successors.</p>
+  <p class="zh">他也积极推动 Hamilton 的里奇流纲领，鼓励学生进入这个方向。里奇流后来成为 Perelman 证明庞加莱猜想和几何化猜想的工具。</p>
+  <p class="en">He also championed Hamilton's Ricci flow program and encouraged students to enter it; Ricci flow later became Perelman's tool for the Poincaré and geometrization conjectures.</p>
+  <div class="box"><div class="t">Legacy</div><p class="zh">今天，几何分析已经是数学的一个主要分支，从广义相对论、弦论到图像处理（例如丘先生学生顾险峰发展的计算共形几何），到处都能看到它的影子。主页的"薪火·师承"一章，就是这门学科的一部分家谱。</p><p class="en">Today geometric analysis is a major branch of mathematics, visible from general relativity and string theory to image processing (e.g. the computational conformal geometry developed by Yau's student Xianfeng Gu). The "Lineage" chapter on the homepage is a piece of this discipline's family tree.</p></div>
+</section>
+
+<section id="s5" data-t-zh="原文与延伸阅读" data-t-en="Original papers & reading">
+  <div class="ch">References</div>
+  <h2><span class="zh">原文与延伸阅读</span><span class="en">Original papers &amp; further reading</span></h2>
+  <ul class="refs">
+    <li><span class="y">1975</span>S.-T. Yau, <i>Harmonic functions on complete Riemannian manifolds</i>, Comm. Pure Appl. Math. 28, 201–228.</li>
+    <li><span class="y">1975</span>S. Y. Cheng, S.-T. Yau, <i>Differential equations on Riemannian manifolds and their geometric applications</i>, Comm. Pure Appl. Math. 28, 333–354.</li>
+    <li><span class="y">1976</span>S. Y. Cheng, S.-T. Yau, <i>On the regularity of the solution of the n-dimensional Minkowski problem</i>, Comm. Pure Appl. Math. 29, 495–516.</li>
+    <li><span class="y">1978</span>S.-T. Yau, <i>A general Schwarz lemma for Kähler manifolds</i>, Amer. J. Math. 100, 197–203.</li>
+    <li><span class="y">1980</span>W. H. Meeks III, S.-T. Yau, <i>Topology of three dimensional manifolds and the embedding problems in minimal surface theory</i>, Ann. of Math. 112, 441–484.</li>
+    <li><span class="y">1982</span>S.-T. Yau (ed.), <i>Seminar on Differential Geometry</i>, Annals of Mathematics Studies 102, Princeton Univ. Press.</li>
+  </ul>
+  <div class="next">
+    <a href="../syz/"><small>PREVIOUS</small><span class="zh">SYZ 猜想</span><span class="en">The SYZ Conjecture</span></a>
+    <a href="../calabi-yau/"><small>BACK TO THE FIRST</small><span class="zh">卡拉比猜想</span><span class="en">The Calabi Conjecture</span></a>
+  </div>
+</section>
+</article>
+</div>
+
+<footer>
+  <span class="zh">本讲解由 AI 辅助撰写，力求通俗；涉及严格表述时，请以原始论文为准。欢迎在 GitHub 提出勘误。<br>学生自发制作的致敬作品，并非丘成桐先生官方网站。</span>
+  <span class="en">This explainer was written with AI assistance and aims for accessibility; for rigorous statements, consult the original papers. Corrections welcome on GitHub.<br>A student-made tribute; not an official website of Professor Yau.</span>
+</footer>
+
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script>
+window.EXPLAINER = {
+surface: 'catenoid',
+  active: 'grad',
+  nodes: [
+    { id:'grad', x:20, y:20, w:150, zh:'梯度估计', en:'Gradient estimates', s:'|∇u|/u ≤ C/R', key:1,
+      nzh:'<b>工具 · 梯度估计（1975）。</b>正调和函数的梯度被半径控制。推论：里奇曲率非负的完备流形上，正调和函数是常数。后来发展为李–丘估计。',
+      nen:'<b>Tool · gradient estimates (1975).</b> The gradient of a positive harmonic function is controlled by the radius. Corollary: on complete manifolds with Ric ≥ 0, positive harmonic functions are constant. Later grew into Li–Yau.' },
+    { id:'max', x:190, y:20, w:150, zh:'极大值原理', en:'Maximum principle', s:'Omori–Yau',
+      nzh:'<b>工具 · 广义极大值原理。</b>在非紧完备流形上"近似地"取到最大值，使许多紧流形上的论证得以推广。',
+      nen:'<b>Tool · generalized maximum principle.</b> "Approximately" attain a maximum on complete noncompact manifolds, extending many compact arguments.' },
+    { id:'ma', x:360, y:20, w:150, zh:'蒙日–安培', en:'Monge–Ampère', s:'det(∇²u) = f',
+      nzh:'<b>工具 · 完全非线性方程。</b>实与复蒙日–安培方程的先验估计理论，是闵可夫斯基问题和卡拉比猜想的共同基础。',
+      nen:'<b>Tool · fully nonlinear equations.</b> A priori estimates for real and complex Monge–Ampère equations underlie both the Minkowski problem and the Calabi conjecture.' },
+    { id:'min', x:530, y:20, w:150, zh:'极小曲面', en:'Minimal surfaces', s:'H = 0',
+      nzh:'<b>工具 · 极小曲面。</b>用面积最小的曲面作为探针，读出空间的曲率与拓扑。',
+      nen:'<b>Tool · minimal surfaces.</b> Area-minimizing surfaces as probes that read off curvature and topology.' },
+    { id:'liou', x:20, y:160, w:150, zh:'刘维尔 · 李–丘', en:'Liouville · Li–Yau', s:'1975 · 1986',
+      nzh:'<b>成果。</b>调和函数的刘维尔定理（1975），以及热方程的李–丘估计（1986，见第三块碑）。',
+      nen:'<b>Results.</b> The Liouville theorem for harmonic functions (1975) and the Li–Yau heat estimate (1986, see Stele III).' },
+    { id:'schw', x:190, y:160, w:150, zh:'施瓦茨引理', en:'Schwarz lemma', s:'Yau 1978',
+      nzh:'<b>成果 · 丘的施瓦茨引理（1978）。</b>把复分析中的经典施瓦茨引理推广到凯勒流形之间的全纯映射，在双曲复几何中被广泛使用。',
+      nen:'<b>Result · Yau\'s Schwarz lemma (1978).</b> Extends the classical Schwarz lemma to holomorphic maps between Kähler manifolds; widely used in hyperbolic complex geometry.' },
+    { id:'mink', x:360, y:160, w:150, zh:'闵可夫斯基 · 卡拉比', en:'Minkowski · Calabi', s:'Cheng–Yau 1976 · Yau 1976',
+      nzh:'<b>成果。</b>与郑绍远合作解决高维闵可夫斯基问题的正则性（1976）；同年证明卡拉比猜想（见第一块碑）。',
+      nen:'<b>Results.</b> With S. Y. Cheng, regularity for the higher-dimensional Minkowski problem (1976); the same year, the Calabi conjecture (Stele I).' },
+    { id:'pmt', x:530, y:160, w:150, zh:'正质量 · 三维拓扑', en:'Positive mass · 3-manifolds', s:'Schoen–Yau · Meeks–Yau',
+      nzh:'<b>成果。</b>与舍恩证明正质量定理并研究正数量曲率流形（1979，见第二块碑）；与 Meeks 用极小曲面证明三维拓扑中的等变 Dehn 引理等结果（1980）。',
+      nen:'<b>Results.</b> With Schoen, the positive mass theorem and positive scalar curvature (1979, Stele II); with Meeks, equivariant Dehn\'s lemma and related 3-manifold results via minimal surfaces (1980).' }
+  ],
+  edges: [['grad','liou'],['max','liou'],['max','schw'],['ma','mink'],['min','pmt']]
+};
+</script>
+<script src="../assets/explainer.js"></script>
+</body>
+</html>

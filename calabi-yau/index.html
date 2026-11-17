@@ -18,110 +18,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
-<style>
-:root{
-  --ink:#06070b; --ink2:#0c0e15; --line:rgba(216,180,106,.18);
-  --gold:#d8b46a; --gold2:#f1dba4; --dim:#8c8676; --text:#e9e4d6; --body:#cfc8b6;
-  --serif:"Noto Serif SC","Songti SC","STSong",serif;
-  --latin:"Cormorant Garamond","Times New Roman",serif;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--ink);color:var(--text);font-family:var(--serif);font-weight:300;line-height:1.9;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-a{color:var(--gold2)}
-::selection{background:var(--gold);color:var(--ink)}
-html[data-lang="zh"] .en{display:none!important}
-html[data-lang="en"] .zh{display:none!important}
-html[data-lang="en"] body{font-family:var(--latin);font-size:18.5px}
-
-#progress{position:fixed;top:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--gold),var(--gold2));z-index:40}
-nav{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:20px clamp(20px,5vw,64px);background:linear-gradient(var(--ink),rgba(6,7,11,0))}
-nav .back{font-family:var(--latin);letter-spacing:.24em;font-size:13px;color:var(--text);text-decoration:none;opacity:.8}
-nav .back:hover{opacity:1;color:var(--gold2)}
-.lang{display:flex;border:1px solid var(--line)}
-.lang button{background:none;border:none;color:var(--dim);font-family:var(--serif);font-size:13px;padding:6px 14px;cursor:pointer;letter-spacing:.1em}
-.lang button.on{background:var(--gold);color:var(--ink)}
-
-/* hero */
-.hero{position:relative;min-height:92vh;display:flex;align-items:flex-end;padding:0 clamp(20px,7vw,110px) clamp(60px,12vh,130px);overflow:hidden}
-#cy{position:absolute;inset:0;width:100%;height:100%;cursor:grab;touch-action:pan-y}
-.hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 66% 45%,transparent 25%,rgba(6,7,11,.6) 65%,var(--ink) 100%)}
-.hero-text{position:relative;z-index:2;max-width:640px;pointer-events:none}
-.kicker{font-family:var(--latin);letter-spacing:.4em;font-size:12px;color:var(--gold);text-transform:uppercase;margin-bottom:18px}
-.hero h1{font-weight:900;font-size:clamp(52px,8vw,112px);line-height:1.05;letter-spacing:.06em;background:linear-gradient(180deg,#fff7e0 0%,var(--gold) 60%,#8a6a30 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-html[data-lang="en"] .hero h1{font-family:var(--latin);font-weight:500;letter-spacing:.01em}
-.hero .sub{font-family:var(--latin);font-style:italic;font-size:clamp(20px,2.6vw,30px);color:var(--gold2);margin:16px 0 26px}
-.meta{display:flex;flex-wrap:wrap;gap:10px 26px;font-size:13px;color:var(--dim);letter-spacing:.08em}
-.meta b{color:var(--gold);font-weight:500}
-
-/* layout */
-.wrap{display:grid;grid-template-columns:240px minmax(0,720px);gap:clamp(30px,6vw,90px);justify-content:center;padding:0 clamp(20px,5vw,64px)}
-aside{position:sticky;top:90px;align-self:start;max-height:calc(100vh - 120px);overflow:auto;padding-top:80px}
-aside ol{list-style:none;border-left:1px solid var(--line)}
-aside a{display:block;padding:7px 0 7px 18px;font-size:13.5px;color:var(--dim);text-decoration:none;border-left:2px solid transparent;margin-left:-1px;transition:color .3s,border-color .3s;line-height:1.5}
-aside a:hover{color:var(--text)}
-aside a.on{color:var(--gold2);border-left-color:var(--gold)}
-aside .n{font-family:var(--latin);color:var(--gold);margin-right:8px}
-@media(max-width:980px){.wrap{grid-template-columns:1fr}aside{display:none}}
-
-article{padding:80px 0 60px}
-article section{padding:50px 0 30px;border-top:1px solid var(--line)}
-article section:first-child{border-top:none}
-.ch{font-family:var(--latin);letter-spacing:.34em;font-size:12px;color:var(--gold);text-transform:uppercase}
-article h2{font-weight:700;font-size:clamp(28px,3.6vw,40px);letter-spacing:.06em;line-height:1.35;margin:10px 0 28px}
-html[data-lang="en"] article h2{font-family:var(--latin);font-weight:500;letter-spacing:0}
-article h3{font-size:20px;font-weight:700;margin:34px 0 12px;color:var(--gold2);letter-spacing:.04em}
-html[data-lang="en"] article h3{font-family:var(--latin);font-weight:500;font-size:23px}
-article p{color:var(--body);margin:0 0 18px;font-size:16.5px}
-html[data-lang="en"] article p{font-size:19px;line-height:1.75}
-article ul,article ol.l{color:var(--body);margin:0 0 18px 1.3em}
-article li{margin-bottom:8px}
-.katex{font-size:1.06em;color:var(--gold2)}
-.katex-display{margin:24px 0;padding:22px 10px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow-x:auto;overflow-y:hidden}
-
-.tldr{border:1px solid var(--gold);padding:30px 32px;position:relative;background:linear-gradient(135deg,rgba(216,180,106,.07),transparent 60%)}
-.tldr .tag{position:absolute;top:-11px;left:24px;background:var(--ink);padding:0 10px;font-family:var(--latin);letter-spacing:.3em;font-size:11px;color:var(--gold)}
-.tldr p{margin-bottom:10px}
-.box{border-left:2px solid var(--gold);padding:18px 24px;margin:26px 0;background:rgba(216,180,106,.04)}
-.box .t{font-family:var(--latin);letter-spacing:.26em;font-size:11px;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
-.box p:last-child{margin-bottom:0}
-.thm{border:1px solid var(--line);padding:24px 28px;margin:26px 0;background:var(--ink2)}
-.thm .t{font-weight:700;color:var(--gold);margin-bottom:8px;letter-spacing:.06em}
-.thm p:last-child{margin-bottom:0}
-.analogy{display:flex;gap:16px;align-items:flex-start;margin:22px 0;padding:18px 22px;border:1px dashed var(--line)}
-.analogy .i{font-size:22px;color:var(--gold);line-height:1.3}
-.analogy p{margin:0}
-
-/* proof map */
-.map{margin:30px 0;border:1px solid var(--line);background:var(--ink2);padding:18px}
-#pmap{width:100%;display:block}
-#pmap .nd rect{fill:var(--ink);stroke:var(--gold);stroke-opacity:.55;transition:fill .3s,stroke-opacity .3s}
-#pmap .nd{cursor:pointer}
-#pmap .nd:hover rect,#pmap .nd.on rect{fill:rgba(216,180,106,.16);stroke-opacity:1}
-#pmap text{fill:var(--text);font-family:var(--serif);font-size:14px;pointer-events:none}
-#pmap .sm{fill:var(--dim);font-family:var(--latin);font-style:italic;font-size:12px}
-#pmap .ed{stroke:var(--gold);stroke-opacity:.5;fill:none;marker-end:url(#arr)}
-#pmap .key rect{stroke-width:2;stroke-opacity:1}
-#pnote{min-height:5.5em;padding:16px 8px 4px;border-top:1px solid var(--line);margin-top:10px}
-#pnote b{color:var(--gold2)}
-
-/* timeline strip */
-.strip{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:26px 0}
-.strip div{padding:18px 14px;border-right:1px solid var(--line)}
-.strip div:last-child{border-right:none}
-.strip .y{font-family:var(--latin);font-size:30px;color:var(--gold);line-height:1}
-.strip .d{font-size:13px;color:var(--dim);margin-top:8px;line-height:1.6}
-@media(max-width:640px){.strip{grid-template-columns:1fr 1fr}.strip div:nth-child(2){border-right:none}.strip div:nth-child(-n+2){border-bottom:1px solid var(--line)}}
-
-.refs{list-style:none;margin:0}
-.refs li{padding:16px 0;border-bottom:1px solid var(--line);font-size:15px;color:var(--body)}
-.refs .y{font-family:var(--latin);color:var(--gold);margin-right:10px}
-.next{display:flex;justify-content:space-between;gap:20px;margin-top:40px}
-.next a{flex:1;border:1px solid var(--line);padding:22px 24px;text-decoration:none;color:var(--text);transition:border-color .4s}
-.next a:hover{border-color:var(--gold)}
-.next small{display:block;font-family:var(--latin);letter-spacing:.26em;color:var(--gold);font-size:11px;margin-bottom:6px}
-footer{padding:50px clamp(20px,7vw,110px);border-top:1px solid var(--line);font-size:12px;color:var(--dim);letter-spacing:.06em;line-height:2;text-align:center}
-</style>
+<link rel="stylesheet" href="../assets/explainer.css">
 </head>
 <body>
 <div id="progress"></div>
@@ -266,9 +163,7 @@ footer{padding:50px clamp(20px,7vw,110px);border-top:1px solid var(--line);font-
   <p class="zh">下面这张图是整个证明的结构，点击方块查看每一步的作用。</p>
   <p class="en">Below is the architecture of the whole proof. Click a box to see what each step does.</p>
   <div class="map">
-    <svg id="pmap" viewBox="0 0 700 330" aria-label="proof map">
-      <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#d8b46a"/></marker></defs>
-    </svg>
+    <svg id="pmap" aria-label="proof map"></svg>
     <div id="pnote"></div>
   </div>
 </section>
@@ -342,7 +237,7 @@ footer{padding:50px clamp(20px,7vw,110px);border-top:1px solid var(--line);font-
   </ul>
   <div class="next">
     <a href="../#theorems"><small>BACK</small><span class="zh">回到定理之碑</span><span class="en">Back to the theorems</span></a>
-    <a href="../"><small>HOME</small><span class="zh">丘成桐 · 数学世界</span><span class="en">Shing-Tung Yau · Home</span></a>
+    <a href="../positive-mass/"><small>NEXT</small><span class="zh">正质量定理</span><span class="en">The Positive Mass Theorem</span></a>
   </div>
 </section>
 
@@ -357,34 +252,10 @@ footer{padding:50px clamp(20px,7vw,110px);border-top:1px solid var(--line);font-
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
 <script>
-/* ---------- language ---------- */
-const root = document.documentElement;
-function setLang(l){
-  root.dataset.lang = l; root.lang = l === 'zh' ? 'zh-CN' : 'en';
-  document.querySelectorAll('.lang button').forEach(b => b.classList.toggle('on', b.dataset.l === l));
-  try { localStorage.setItem('masteryau-lang', l); } catch(e) {}
-  if (location.hash !== '#' + l && (location.hash === '#zh' || location.hash === '#en' || l === 'en')) history.replaceState(null, '', l === 'en' ? '#en' : location.pathname);
-  buildToc(); renderNote();
-}
-let saved = null; try { saved = localStorage.getItem('masteryau-lang'); } catch(e) {}
-let initial = saved || (/^zh/i.test(navigator.language || 'zh') ? 'zh' : 'en');
-if (location.hash === '#en') initial = 'en'; else if (location.hash === '#zh') initial = 'zh';
-document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => setLang(b.dataset.l)));
-
-/* ---------- toc + progress ---------- */
-const secs = [...document.querySelectorAll('article section')];
-function buildToc(){
-  const l = root.dataset.lang;
-  document.getElementById('toc').innerHTML = secs.map((s, i) => `<li><a href="#${s.id}" data-s="${s.id}"><span class="n">${i === 0 ? '◈' : i === secs.length - 1 ? '∗' : i}</span>${s.dataset['t' + (l === 'zh' ? 'Zh' : 'En')]}</a></li>`).join('');
-}
-addEventListener('scroll', () => {
-  const h = document.documentElement; document.getElementById('progress').style.width = (h.scrollTop/(h.scrollHeight - h.clientHeight))*100 + '%';
-  let cur = secs[0].id; for (const s of secs) if (s.getBoundingClientRect().top < innerHeight*.35) cur = s.id;
-  document.querySelectorAll('#toc a').forEach(a => a.classList.toggle('on', a.dataset.s === cur));
-}, { passive: true });
-
-/* ---------- proof map ---------- */
-const NODES = [
+window.EXPLAINER = {
+  surface: 'calabi-yau',
+  active: 'c0',
+  nodes: [
   { id:'eq',  x:20,  y:20,  w:200, zh:'复蒙日–安培方程', en:'Monge–Ampère eq.', s:'(ω+i∂∂̄φ)ⁿ = eᶠωⁿ',
     nzh:'<b>目标。</b>几何问题（指定里奇曲率）通过 ∂∂̄-引理化为这一个关于函数 φ 的完全非线性椭圆方程。',
     nen:'<b>The goal.</b> Via the ∂∂̄-lemma, the geometric problem (prescribing Ricci curvature) becomes this single fully nonlinear elliptic equation for a function φ.' },
@@ -406,97 +277,10 @@ const NODES = [
   { id:'reg', x:250, y:250, w:200, zh:'闭性 + 正则性', en:'Closed + smooth', s:'Schauder · Arzelà–Ascoli',
     nzh:'<b>收尾。</b>一致的高阶估计配合绍德尔理论自举到 C^∞，再用阿尔泽拉–阿斯科利定理取极限，得到 S 是闭集。于是 1∈S，证明完成。',
     nen:'<b>Closing.</b> Uniform estimates plus Schauder theory bootstrap to C^∞; Arzelà–Ascoli passes to the limit, so S is closed. Hence 1∈S and the proof is complete.' }
-];
-const EDGES = [['eq','path'],['path','open'],['path','c0'],['c0','c2'],['c2','c3'],['c3','reg'],['open','reg']];
-let activeNode = 'c0';
-(function buildMap(){
-  const svg = document.getElementById('pmap'), NS = 'http://www.w3.org/2000/svg', H = 64;
-  const el = (t, a, p = svg) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); p.appendChild(e); return e; };
-  const by = Object.fromEntries(NODES.map(n => [n.id, n]));
-  for (const [a, b] of EDGES){
-    const A = by[a], B = by[b]; let x1, y1, x2, y2;
-    if (A.y === B.y){ x1 = A.x + A.w; y1 = A.y + H/2; x2 = B.x - 4; y2 = y1; }
-    else if (b === 'reg' && a === 'open'){ x1 = A.x + A.w/2; y1 = A.y + H; x2 = B.x + B.w - 10; y2 = B.y - 4; }
-    else if (b === 'reg'){ x1 = A.x + A.w/2; y1 = A.y + H; x2 = B.x + B.w - 30; y2 = B.y - 4; }
-    else { x1 = A.x + A.w/2; y1 = A.y + H; x2 = B.x + B.w/2; y2 = B.y - 4; }
-    if (a === 'path' && b === 'c0'){ x1 = A.x + 30; x2 = B.x + B.w/2 + 30; }
-    if (a === 'open' && b === 'reg'){ el('path', { class:'ed', d:`M${x1},${y1} C${x1},${y1+150} ${x2+40},${y2-40} ${x2},${y2}` }); continue; }
-    el('path', { class:'ed', d:`M${x1},${y1} L${x2},${y2}` });
-  }
-  for (const n of NODES){
-    const g = el('g', { class:'nd' + (n.key ? ' key' : ''), 'data-id':n.id, tabindex:0 });
-    el('rect', { x:n.x, y:n.y, width:n.w, height:H, rx:2 }, g);
-    const t = el('text', { x:n.x + n.w/2, y:n.y + 27, 'text-anchor':'middle', class:'lbl' }, g); t.dataset.zh = n.zh; t.dataset.en = n.en;
-    const s = el('text', { x:n.x + n.w/2, y:n.y + 48, 'text-anchor':'middle', class:'sm' }, g); s.textContent = n.s;
-    const pick = () => { activeNode = n.id; renderNote(); };
-    g.addEventListener('click', pick); g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); pick(); } });
-  }
-})();
-function renderNote(){
-  const l = root.dataset.lang || 'zh';
-  document.querySelectorAll('#pmap .lbl').forEach(t => t.textContent = t.dataset[l]);
-  document.querySelectorAll('#pmap .nd').forEach(g => g.classList.toggle('on', g.dataset.id === activeNode));
-  const n = NODES.find(n => n.id === activeNode); document.getElementById('pnote').innerHTML = l === 'zh' ? n.nzh : n.nen;
-}
-setLang(initial);
-
-/* ---------- KaTeX ---------- */
-addEventListener('DOMContentLoaded', () => {
-  const go = () => window.renderMathInElement ? renderMathInElement(document.querySelector('article'), { delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}], throwOnError:false }) : setTimeout(go, 50);
-  go();
-});
-
-/* ---------- Calabi–Yau hero (same renderer as homepage) ---------- */
-(() => {
-  const cv = document.getElementById('cy'), ctx = cv.getContext('2d');
-  const N = 5, G = innerWidth < 700 ? 9 : 12, XI = 1.15;
-  let W, H;
-  function resize(){ const d = Math.min(devicePixelRatio||1, 2); W = cv.clientWidth; H = cv.clientHeight; cv.width = W*d; cv.height = H*d; ctx.setTransform(d,0,0,d,0,0); }
-  addEventListener('resize', resize); resize();
-  const cpow = (re, im, p) => { const r = Math.hypot(re, im), a = Math.atan2(im, re), rp = Math.pow(r, p); return [rp*Math.cos(p*a), rp*Math.sin(p*a)]; };
-  const cmul = (a, b) => [a[0]*b[0]-a[1]*b[1], a[0]*b[1]+a[1]*b[0]];
-  const patches = [];
-  for (let k1 = 0; k1 < N; k1++) for (let k2 = 0; k2 < N; k2++){
-    const p1 = [Math.cos(2*Math.PI*k1/N), Math.sin(2*Math.PI*k1/N)], p2 = [Math.cos(2*Math.PI*k2/N), Math.sin(2*Math.PI*k2/N)], verts = [];
-    for (let i = 0; i <= G; i++) for (let j = 0; j <= G; j++){
-      const x = -XI + 2*XI*i/G, y = (Math.PI/2)*j/G;
-      const ch = [Math.cosh(x)*Math.cos(y), Math.sinh(x)*Math.sin(y)], sh = [Math.sinh(x)*Math.cos(y), Math.cosh(x)*Math.sin(y)];
-      const z1 = cmul(p1, cpow(ch[0], ch[1], 2/N)), z2 = cmul(p2, cpow(sh[1], -sh[0], 2/N));
-      verts.push([z1[0], z1[1], z2[0], z2[1]]);
-    }
-    patches.push({ verts, k: k1*N + k2 });
-  }
-  let yaw = 0.9, pitch = 0.3, vy = 0.002, drag = false, lx = 0, ly = 0, vis = true;
-  new IntersectionObserver(es => vis = es[0].isIntersecting).observe(cv);
-  cv.addEventListener('pointerdown', e => { drag = true; lx = e.clientX; ly = e.clientY; cv.setPointerCapture(e.pointerId); });
-  cv.addEventListener('pointermove', e => { if (!drag) return; yaw += (e.clientX-lx)*.008; pitch = Math.max(-1.4, Math.min(1.4, pitch + (e.clientY-ly)*.008)); vy = (e.clientX-lx)*.0008; lx = e.clientX; ly = e.clientY; });
-  cv.addEventListener('pointerup', () => drag = false);
-  const L = [-0.4, -0.7, 0.6].map(c => c/Math.hypot(-0.4, -0.7, 0.6)), Q = [];
-  (function frame(t){
-    requestAnimationFrame(frame); if (!vis) return;
-    if (!drag){ yaw += vy; vy += (0.002 - vy)*.01; }
-    const al = 0.8 + 0.35*Math.sin(t*.00018), ca = Math.cos(al), sa = Math.sin(al);
-    const cy = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
-    const cx0 = W > 900 ? W*.7 : W*.5, cy0 = W > 900 ? H*.44 : H*.3, S = Math.min(W, H)*(W > 900 ? .18 : .16), F = 4.2, R = G + 1;
-    ctx.clearRect(0, 0, W, H); Q.length = 0;
-    for (const P of patches){
-      const pr = P.verts.map(v => { const x = v[0], y = v[2], z = ca*v[1] + sa*v[3]; const x1 = cy*x + sy*z, z1 = -sy*x + cy*z, y1 = cp*y - sp*z1, z2 = sp*y + cp*z1, s = F/(F + z2); return [x1, y1, z2, cx0 + x1*S*s, cy0 - y1*S*s]; });
-      for (let i = 0; i < G; i++) for (let j = 0; j < G; j++){
-        const a = pr[i*R+j], b = pr[(i+1)*R+j], c = pr[(i+1)*R+j+1], d = pr[i*R+j+1];
-        const ux = c[0]-a[0], uy = c[1]-a[1], uz = c[2]-a[2], vx = d[0]-b[0], vy2 = d[1]-b[1], vz = d[2]-b[2];
-        const nx = uy*vz-uz*vy2, ny = uz*vx-ux*vz, nz = ux*vy2-uy*vx, nl = Math.hypot(nx, ny, nz) || 1;
-        Q.push({ z:(a[2]+b[2]+c[2]+d[2])/4, a, b, c, d, lam:Math.abs((nx*L[0]+ny*L[1]+nz*L[2])/nl), k:P.k });
-      }
-    }
-    Q.sort((p, q) => q.z - p.z);
-    for (const q of Q){
-      const dep = Math.max(0, Math.min(1, (1.6 - q.z)/3.2)), hue = 34 + (q.k%5)*3 - Math.floor(q.k/5)*2;
-      ctx.beginPath(); ctx.moveTo(q.a[3], q.a[4]); ctx.lineTo(q.b[3], q.b[4]); ctx.lineTo(q.c[3], q.c[4]); ctx.lineTo(q.d[3], q.d[4]); ctx.closePath();
-      ctx.fillStyle = `hsla(${hue},${48+q.lam*20}%,${14+q.lam*52+dep*10}%,${.5+dep*.4})`; ctx.fill();
-      ctx.strokeStyle = `hsla(42,70%,${60+q.lam*25}%,${.08+dep*.2})`; ctx.lineWidth = .6; ctx.stroke();
-    }
-  })(0);
-})();
+],
+  edges: [['eq','path'],['path','open'],['path','c0'],['c0','c2'],['c2','c3'],['c3','reg'],['open','reg']]
+};
 </script>
+<script src="../assets/explainer.js"></script>
 </body>
 </html>

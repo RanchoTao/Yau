@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>正质量定理 · The Positive Mass Theorem — 丘成桐 · 数学世界</title>
+<meta name="description" content="从零读懂舍恩–丘成桐对正质量定理的证明：ADM 质量、数量曲率、稳定极小曲面与高斯–博内。中英双语。">
+<meta name="theme-color" content="#06070b">
+<link rel="canonical" href="https://masteryau.com/positive-mass/">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正质量定理 · The Positive Mass Theorem">
+<meta property="og:description" content="从零读懂舍恩–丘成桐对正质量定理的证明：ADM 质量、数量曲率、稳定极小曲面与高斯–博内。中英双语。">
+<meta property="og:image" content="https://masteryau.com/assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<link rel="stylesheet" href="../assets/explainer.css">
+</head>
+<body>
+<div id="progress"></div>
+<nav>
+  <a class="back" href="../#theorems">← <span class="zh">丘成桐 · 数学世界</span><span class="en">Shing-Tung Yau</span></a>
+  <div class="lang" role="group" aria-label="Language"><button data-l="zh">中文</button><button data-l="en">EN</button></div>
+</nav>
+
+<header class="hero">
+  <canvas id="cy" aria-label="Einstein–Rosen bridge, a spatial slice of the Schwarzschild spacetime"></canvas>
+  <div class="hero-text">
+    <div class="kicker">Stele II · 1979 · with R. Schoen</div>
+    <h1><span class="zh">正质量定理</span><span class="en">The Positive Mass Theorem</span></h1>
+    <div class="sub"><span class="zh">用极小曲面证明引力的总能量非负</span><span class="en">Why gravity's total energy is never negative — proved with minimal surfaces</span></div>
+    <div class="meta">
+      <span><span class="zh">原文</span><span class="en">Paper</span> · <b>Comm. Math. Phys. 65 (1979)</b></span>
+      <span><span class="zh">阅读约 20 分钟</span><span class="en">~20 min read</span></span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+<aside><ol id="toc"></ol></aside>
+<article>
+<section id="s0" data-t-zh="一句话版本" data-t-en="In one breath">
+  <div class="tldr">
+    <span class="tag">TL;DR</span>
+    <p class="zh">广义相对论里有一个看似显然、却几十年没人能证明的问题：一个孤立的引力系统，它的<b>总质量（总能量）会不会是负的？</b>引力能本身是负的，相互抵消之后会不会把总量拉到零以下？</p>
+    <p class="zh">1979 年，舍恩（Richard Schoen）与丘成桐证明：<b>不会。</b>只要物质满足合理的能量条件，总质量 $m\ge0$；并且 $m=0$ 当且仅当时空是平直的。他们的工具不是物理，而是几何中的<b>极小曲面</b>。</p>
+    <p class="en">General relativity had a question that looked obvious yet resisted proof for decades: can the <b>total mass (energy) of an isolated gravitating system be negative?</b> Gravitational binding energy is negative — could it drag the total below zero?</p>
+    <p class="en">In 1979 Richard Schoen and Shing-Tung Yau proved: <b>no.</b> If matter satisfies a reasonable energy condition, the total mass satisfies $m\ge0$, and $m=0$ only for flat space. Their tool was not physics but geometry — <b>minimal surfaces</b>.</p>
+  </div>
+  <div class="strip">
+    <div><div class="y">1961</div><div class="d zh">Arnowitt–Deser–Misner 定义总质量</div><div class="d en">Arnowitt–Deser–Misner define total mass</div></div>
+    <div><div class="y">1979</div><div class="d zh">舍恩–丘：时间对称情形</div><div class="d en">Schoen–Yau: time-symmetric case</div></div>
+    <div><div class="y">1981</div><div class="d zh">舍恩–丘：一般情形；Witten 给出旋量证明</div><div class="d en">Schoen–Yau: general case; Witten's spinor proof</div></div>
+    <div><div class="y">2017+</div><div class="d zh">高维情形的进一步工作</div><div class="d en">Further work in higher dimensions</div></div>
+  </div>
+</section>
+
+<section id="s1" data-t-zh="引力的能量问题" data-t-en="The energy of gravity">
+  <div class="ch">Chapter 1</div>
+  <h2><span class="zh">引力的能量问题</span><span class="en">The energy problem of gravity</span></h2>
+  <p class="zh">在牛顿力学里，能量可以在每一点上定义并加起来。可在广义相对论中，引力本身就是时空的弯曲。根据等效原理，在任何一点附近都可以选一个自由下落的参考系，让引力"局部消失"。于是<b>引力场的能量密度没法在一点上定义</b>。</p>
+  <p class="en">In Newtonian mechanics, energy can be defined at every point and summed. In general relativity, gravity <i>is</i> the curvature of spacetime, and by the equivalence principle you can always choose a freely falling frame where gravity "vanishes" locally. So <b>the energy density of the gravitational field cannot be defined at a point</b>.</p>
+  <p class="zh">但对一个<b>孤立系统</b>（比如一颗星、一个星系，远处的时空越来越接近平直）来说，可以站在无穷远处，看时空度量偏离平直的程度，读出一个总质量。这就是 1961 年 Arnowitt、Deser、Misner 定义的 <b>ADM 质量</b>。</p>
+  <p class="en">But for an <b>isolated system</b> (a star, a galaxy — spacetime becoming flat far away) one can stand at infinity, look at how the metric deviates from flat, and read off a total mass. This is the <b>ADM mass</b> of Arnowitt, Deser and Misner (1961).</p>
+  <div class="analogy"><span class="i">◈</span><p class="zh">就像你不必数清一座城市里每个人的体重，只要站在远处，看它让周围的地面陷下去多少，就能称出它的总重量。</p><p class="en">Like weighing a city without counting each person: stand far away and see how much it makes the ground sag around it.</p></div>
+</section>
+
+<section id="s2" data-t-zh="精确的陈述" data-t-en="The precise statement">
+  <div class="ch">Chapter 2</div>
+  <h2><span class="zh">精确的陈述</span><span class="en">The precise statement</span></h2>
+  <p class="zh">取时空在某一时刻的空间切片。在"时间对称"的情形下，它是一个三维黎曼流形 $(M^3,g)$，在无穷远处渐近于欧氏空间：在某个紧集外，$g_{ij}=\delta_{ij}+O(r^{-1})$，导数衰减得更快。这时 ADM 质量为</p>
+  <p class="en">Take a spatial slice of spacetime at one moment. In the "time-symmetric" case it is a Riemannian 3-manifold $(M^3,g)$, asymptotically Euclidean: outside a compact set, $g_{ij}=\delta_{ij}+O(r^{-1})$ with faster-decaying derivatives. The ADM mass is</p>
+  $$m=\frac{1}{16\pi}\lim_{r\to\infty}\oint_{S_r}\big(\partial_i g_{ij}-\partial_j g_{ii}\big)\,\nu^j\,dA .$$
+  <p class="zh">在时间对称情形下，爱因斯坦方程把"物质能量密度非负"翻译成一个纯几何条件：<b>数量曲率</b> $R_g\ge0$。</p>
+  <p class="en">In the time-symmetric case, Einstein's equations translate "matter energy density is nonnegative" into a purely geometric condition: <b>scalar curvature</b> $R_g\ge0$.</p>
+  <div class="thm">
+    <div class="t"><span class="zh">正质量定理（舍恩–丘成桐，1979）</span><span class="en">Positive Mass Theorem (Schoen–Yau, 1979)</span></div>
+    <p class="zh">设 $(M^3,g)$ 是完备、渐近平坦的三维黎曼流形，且数量曲率 $R_g\ge0$。则其 ADM 质量 $m\ge0$；并且 $m=0$ 当且仅当 $(M,g)$ 等距于欧氏空间 $\mathbb{R}^3$。</p>
+    <p class="en">Let $(M^3,g)$ be a complete, asymptotically flat Riemannian 3-manifold with scalar curvature $R_g\ge0$. Then its ADM mass satisfies $m\ge0$, and $m=0$ if and only if $(M,g)$ is isometric to Euclidean $\mathbb{R}^3$.</p>
+  </div>
+  <p class="zh">1981 年，他们利用 Jang 方程把一般（非时间对称）情形归结为这一情形，证明了在主导能量条件下的完整结论。同年 Witten 用旋量给出了另一个完全不同的证明。</p>
+  <p class="en">In 1981 they reduced the general (non-time-symmetric) case to this one using Jang's equation, proving the full statement under the dominant energy condition. The same year Witten gave an entirely different proof using spinors.</p>
+</section>
+
+<section id="s3" data-t-zh="极小曲面：肥皂膜的几何" data-t-en="Minimal surfaces: soap-film geometry">
+  <div class="ch">Chapter 3</div>
+  <h2><span class="zh">工具：极小曲面</span><span class="en">The tool: minimal surfaces</span></h2>
+  <p class="zh">把铁丝圈浸进肥皂水，拿出来就是一张膜。表面张力让它面积尽量小，这就是<b>极小曲面</b>：平均曲率 $H=0$。如果一张极小曲面在微小扰动下面积不会减小，就称为<b>稳定</b>的。</p>
+  <p class="en">Dip a wire loop into soapy water and lift it out: surface tension makes the film as small as possible. That is a <b>minimal surface</b>, with mean curvature $H=0$. If small perturbations never decrease its area, it is <b>stable</b>.</p>
+  <p class="zh">稳定性可以写成一个积分不等式（第二变分公式）：对曲面 $\Sigma$ 上任何紧支函数 $f$，</p>
+  <p class="en">Stability can be written as an integral inequality (the second variation formula): for every compactly supported function $f$ on $\Sigma$,</p>
+  $$\int_\Sigma |\nabla f|^2 \;\ge\; \int_\Sigma\big(\operatorname{Ric}(\nu,\nu)+|A|^2\big)f^2 ,$$
+  <p class="zh">其中 $\nu$ 是单位法向量，$A$ 是第二基本形式。舍恩和丘先生的关键观察，是用高斯方程把右边改写，让<b>数量曲率</b>和曲面自身的<b>高斯曲率</b> $K$ 出现：</p>
+  <p class="en">where $\nu$ is the unit normal and $A$ the second fundamental form. Schoen and Yau's key observation was to rewrite the right side using the Gauss equation so that the <b>scalar curvature</b> and the surface's own <b>Gauss curvature</b> $K$ appear:</p>
+  $$\operatorname{Ric}(\nu,\nu)+|A|^2=\tfrac12 R_g-K+\tfrac12|A|^2 \qquad(\text{on a minimal surface}).$$
+  <p class="zh">于是稳定性变成：</p>
+  <p class="en">So stability becomes:</p>
+  $$\int_\Sigma |\nabla f|^2+K f^2\;\ge\;\tfrac12\int_\Sigma\big(R_g+|A|^2\big)f^2\;\ge\;0 .$$
+  <div class="box"><div class="t">Insight</div><p class="zh">数量曲率非负，会迫使稳定极小曲面"整体上偏正弯曲"。而拓扑（高斯–博内定理）又严格限制了一张曲面的总弯曲。两者的冲突就是证明的引擎。</p><p class="en">Nonnegative scalar curvature forces a stable minimal surface to be "positively curved on balance". Topology (Gauss–Bonnet) strictly limits the total curvature a surface can have. The clash between the two drives the proof.</p></div>
+</section>
+
+<section id="s4" data-t-zh="证明的思路" data-t-en="How the proof goes">
+  <div class="ch">Chapter 4</div>
+  <h2><span class="zh">证明的思路：反证法</span><span class="en">The proof: by contradiction</span></h2>
+  <h3><span class="zh">第一步：化简</span><span class="en">Step 1: simplify</span></h3>
+  <p class="zh">假设 $m<0$。通过一个小的共形变换，可以让度量在无穷远处变成"调和平坦"的标准形式 $g=u^4\delta$（$u$ 是调和函数，$u=1+\tfrac{m}{2r}+\dots$），同时保持 $R_g\ge0$、$m<0$，并在适当情形下让 $R_g>0$。</p>
+  <p class="en">Suppose $m<0$. A small conformal change makes the metric "harmonically flat" near infinity, $g=u^4\delta$ with $u$ harmonic and $u=1+\tfrac{m}{2r}+\dots$, while keeping $R_g\ge0$ and $m<0$, and arranging $R_g>0$ where needed.</p>
+  <h3><span class="zh">第二步：负质量造出一张"平面状"的极小曲面</span><span class="en">Step 2: negative mass produces a plane-like minimal surface</span></h3>
+  <p class="zh">在无穷远处看坐标平面 $\{x^3=\pm h\}$。当 $m<0$ 时，它们相对度量 $g$ 的平均曲率恰好指向"合适"的方向，可以当作<b>障碍</b>，把面积极小化的曲面夹在中间。在越来越大的圆周上解普拉托问题，再取极限，就得到一张<b>完备、稳定、渐近于平面</b>的面积极小曲面 $\Sigma$。</p>
+  <p class="en">Look at the coordinate planes $\{x^3=\pm h\}$ near infinity. When $m<0$, their mean curvature with respect to $g$ points in just the right direction for them to act as <b>barriers</b>, trapping area-minimizing surfaces between them. Solving Plateau problems on ever larger circles and passing to the limit yields a <b>complete, stable, asymptotically planar</b> area-minimizing surface $\Sigma$.</p>
+  <h3><span class="zh">第三步：曲率与拓扑的冲突</span><span class="en">Step 3: curvature versus topology</span></h3>
+  <p class="zh">在稳定性不等式里取 $f$ 为对数截断函数（在半径 $\rho$ 内为 1，到 $\rho^2$ 处降为 0）。令 $\rho\to\infty$，$\int|\nabla f|^2\to0$，于是</p>
+  <p class="en">In the stability inequality take $f$ to be a logarithmic cutoff (equal to 1 inside radius $\rho$, decaying to 0 at $\rho^2$). As $\rho\to\infty$, $\int|\nabla f|^2\to0$, so</p>
+  $$\int_\Sigma K\,dA\;\ge\;\tfrac12\int_\Sigma\big(R_g+|A|^2\big)\,dA\;>\;0 .$$
+  <p class="zh">但 $\Sigma$ 渐近于平面。由高斯–博内定理，大圆盘边界的测地曲率积分趋近 $2\pi$，所以总曲率 $\int_\Sigma K\,dA\le 0$。两个不等式矛盾，所以 $m\ge0$。</p>
+  <p class="en">But $\Sigma$ is asymptotic to a plane. By Gauss–Bonnet, the geodesic curvature integral over the boundary of large discs tends to $2\pi$, so the total curvature satisfies $\int_\Sigma K\,dA\le 0$. Contradiction — hence $m\ge0$.</p>
+  <div class="map">
+    <svg id="pmap" aria-label="proof map"></svg>
+    <div id="pnote"></div>
+  </div>
+  <h3><span class="zh">刚性：$m=0$ 时为什么一定平直</span><span class="en">Rigidity: why $m=0$ forces flatness</span></h3>
+  <p class="zh">如果 $m=0$ 但度量不平直，可以对度量做一个小扰动，使数量曲率仍然非负、而质量变成负的，这又与刚证明的结论矛盾。所以 $m=0$ 时 $(M,g)$ 只能是 $\mathbb{R}^3$。</p>
+  <p class="en">If $m=0$ but the metric is not flat, a small perturbation keeps the scalar curvature nonnegative while making the mass negative — contradicting what was just proved. So $m=0$ forces $(M,g)=\mathbb{R}^3$.</p>
+</section>
+
+<section id="s5" data-t-zh="意义与影响" data-t-en="Meaning and legacy">
+  <div class="ch">Chapter 5</div>
+  <h2><span class="zh">意义与影响</span><span class="en">Meaning and legacy</span></h2>
+  <ul>
+    <li class="zh"><b>物理</b>：平直的闵可夫斯基时空是引力的"基态"，不可能通过释放能量衰变到更低的状态。这是广义相对论自洽性的一块基石。</li>
+    <li class="en"><b>Physics</b>: flat Minkowski spacetime is the "ground state" of gravity — it cannot decay to anything lower by releasing energy. A cornerstone of the consistency of general relativity.</li>
+    <li class="zh"><b>几何</b>：同一时期，舍恩和丘先生用同样的极小曲面方法研究<b>正数量曲率流形的拓扑</b>，例如证明三维环面 $T^3$ 上不存在正数量曲率度量。用极小曲面逐维下降的思想，至今仍是这个领域的核心技术。</li>
+    <li class="en"><b>Geometry</b>: in the same period Schoen and Yau used the minimal-surface method to study <b>the topology of manifolds with positive scalar curvature</b>, e.g. showing that the 3-torus $T^3$ admits no metric of positive scalar curvature. Dimension descent via minimal surfaces remains a core technique.</li>
+    <li class="zh"><b>后续</b>：彭罗斯不等式（把质量与黑洞视界面积联系起来）、准局部质量（包括刘秋菊–丘、王慕道–丘的质量定义）等方向，都是沿着这条路发展起来的。</li>
+    <li class="en"><b>Afterwards</b>: the Penrose inequality (relating mass to black-hole horizon area) and quasi-local mass (including the Liu–Yau and Wang–Yau definitions) grew along this road.</li>
+  </ul>
+  <p class="zh">首屏那个金色的形状是史瓦西黑洞在某一时刻的空间切片（Flamm 抛物面）：两张渐近平坦的"薄片"被一个喉部连起来，也就是爱因斯坦–罗森桥。它的 ADM 质量为正，正是定理所说的情形。</p>
+  <p class="en">The golden shape at the top is a spatial slice of the Schwarzschild black hole (Flamm's paraboloid): two asymptotically flat sheets joined by a throat — the Einstein–Rosen bridge. Its ADM mass is positive, just as the theorem says.</p>
+</section>
+
+<section id="s6" data-t-zh="原文与延伸阅读" data-t-en="Original papers & reading">
+  <div class="ch">References</div>
+  <h2><span class="zh">原文与延伸阅读</span><span class="en">Original papers &amp; further reading</span></h2>
+  <ul class="refs">
+    <li><span class="y">1979</span>R. Schoen, S.-T. Yau, <i>On the proof of the positive mass conjecture in general relativity</i>, Comm. Math. Phys. 65, 45–76. <a href="https://doi.org/10.1007/BF01940959">DOI ↗</a></li>
+    <li><span class="y">1981</span>R. Schoen, S.-T. Yau, <i>Proof of the positive mass theorem. II</i>, Comm. Math. Phys. 79, 231–260. <a href="https://doi.org/10.1007/BF01942062">DOI ↗</a></li>
+    <li><span class="y">1979</span>R. Schoen, S.-T. Yau, <i>On the structure of manifolds with positive scalar curvature</i>, Manuscripta Math. 28, 159–183.</li>
+    <li><span class="y">1981</span>E. Witten, <i>A new proof of the positive energy theorem</i>, Comm. Math. Phys. 80, 381–402.</li>
+    <li><span class="y">1961</span>R. Arnowitt, S. Deser, C. Misner, <i>Coordinate invariance and energy expressions in general relativity</i>, Phys. Rev. 122, 997–1006.</li>
+  </ul>
+  <div class="next">
+    <a href="../calabi-yau/"><small>PREVIOUS</small><span class="zh">卡拉比猜想</span><span class="en">The Calabi Conjecture</span></a>
+    <a href="../li-yau/"><small>NEXT</small><span class="zh">李–丘估计</span><span class="en">The Li–Yau Inequality</span></a>
+  </div>
+</section>
+</article>
+</div>
+
+<footer>
+  <span class="zh">本讲解由 AI 辅助撰写，力求通俗；涉及严格表述时，请以原始论文为准。欢迎在 GitHub 提出勘误。<br>学生自发制作的致敬作品，并非丘成桐先生官方网站。</span>
+  <span class="en">This explainer was written with AI assistance and aims for accessibility; for rigorous statements, consult the original papers. Corrections welcome on GitHub.<br>A student-made tribute; not an official website of Professor Yau.</span>
+</footer>
+
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script>
+window.EXPLAINER = {
+surface: 'flamm',
+  active: 'surf',
+  nodes: [
+    { id:'neg', x:20, y:20, w:200, zh:'假设 m < 0', en:'Assume m < 0', s:'R ≥ 0, asymptotically flat',
+      nzh:'<b>反证法的起点。</b>假设存在一个数量曲率非负、但 ADM 质量为负的渐近平坦流形。',
+      nen:'<b>Start of the contradiction.</b> Suppose an asymptotically flat manifold has nonnegative scalar curvature but negative ADM mass.' },
+    { id:'conf', x:250, y:20, w:200, zh:'共形化简', en:'Conformal reduction', s:'g = u⁴δ near ∞',
+      nzh:'<b>化简。</b>小的共形变换让度量在无穷远处成为调和平坦的标准形式，便于精确计算坐标平面的平均曲率。',
+      nen:'<b>Simplify.</b> A small conformal change makes the metric harmonically flat near infinity, so the mean curvature of coordinate planes can be computed exactly.' },
+    { id:'bar', x:480, y:20, w:200, zh:'平面作障碍', en:'Planes as barriers', s:'x³ = ± h',
+      nzh:'<b>负质量的作用。</b>m < 0 时，远处的坐标平面的平均曲率方向恰好能把面积极小化曲面"夹住"，不让它跑到无穷远。',
+      nen:'<b>What negative mass does.</b> With m < 0, distant coordinate planes have mean curvature pointing the right way to trap area-minimizing surfaces so they cannot escape to infinity.' },
+    { id:'surf', x:250, y:140, w:200, zh:'稳定极小曲面 Σ', en:'Stable minimal Σ', s:'complete · plane-like', key:1,
+      nzh:'<b>核心构造。</b>在越来越大的圆周上解普拉托问题并取极限，得到一张完备、稳定、渐近于平面的面积极小曲面。',
+      nen:'<b>The key construction.</b> Solve Plateau problems on ever larger circles and take a limit: a complete, stable, asymptotically planar area-minimizing surface.' },
+    { id:'stab', x:20, y:250, w:200, zh:'稳定性 + 高斯方程', en:'Stability + Gauss eq.', s:'∫K ≥ ½∫(R+|A|²) > 0',
+      nzh:'<b>曲率一侧。</b>第二变分配合高斯方程和对数截断函数，得出 Σ 的总高斯曲率严格为正。',
+      nen:'<b>The curvature side.</b> Second variation, the Gauss equation and a log cutoff show the total Gauss curvature of Σ is strictly positive.' },
+    { id:'gb', x:480, y:250, w:200, zh:'高斯–博内', en:'Gauss–Bonnet', s:'∫K ≤ 0 for plane-like Σ',
+      nzh:'<b>拓扑一侧。</b>渐近于平面的曲面，大圆盘边界的转角趋于 2π，所以总曲率不能为正。',
+      nen:'<b>The topology side.</b> For a plane-like surface the boundary turning of large discs tends to 2π, so total curvature cannot be positive.' },
+    { id:'end', x:250, y:340, w:200, zh:'矛盾 ⇒ m ≥ 0', en:'Contradiction ⇒ m ≥ 0', s:'+ rigidity at m = 0',
+      nzh:'<b>结论。</b>两侧矛盾，所以 m ≥ 0。再用扰动论证得到刚性：m = 0 当且仅当空间是平直的 ℝ³。',
+      nen:'<b>Conclusion.</b> The two sides contradict, so m ≥ 0. A perturbation argument gives rigidity: m = 0 exactly for flat ℝ³.' }
+  ],
+  edges: [['neg','conf'],['conf','bar'],['bar','surf'],['surf','stab'],['surf','gb'],['stab','end'],['gb','end']]
+};
+</script>
+<script src="../assets/explainer.js"></script>
+</body>
+</html>

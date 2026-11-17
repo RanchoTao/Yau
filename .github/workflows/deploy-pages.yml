@@ -33,7 +33,7 @@ jobs:
           mkdir -p _site
           cp index.html _site/
           cp -R assets _site/
-          for d in calabi-yau; do cp -R "$d" _site/; done
+          for d in calabi-yau positive-mass li-yau duy syz geometric-analysis; do cp -R "$d" _site/; done
           touch _site/.nojekyll
 
       - name: Configure GitHub Pages

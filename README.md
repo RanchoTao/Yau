@@ -31,7 +31,7 @@
 | ◈ | **首屏** | 费马五次超曲面 z₁⁵ + z₂⁵ = 1 的实切片投影，可拖动旋转、调节投影角 |
 | ◇ | **其人** | 肖像、生平概述 |
 | ◇ | **年表** | 1949 年至今的关键节点 |
-| ◇ | **定理之碑** | 卡拉比猜想、正质量定理、李–丘估计、DUY 定理、SYZ 猜想、几何分析；可点进逐篇讲解（中英双语），首篇：[卡拉比猜想](https://masteryau.com/calabi-yau/) |
+| ◇ | **定理之碑** | 卡拉比猜想、正质量定理、李–丘估计、DUY 定理、SYZ 猜想、几何分析；每块碑都可点进一篇从零开始的原文讲解（中英双语） |
 | ◇ | **薪火·师承** | Blaschke → 陈省身 → 丘成桐 → 学生，滚动时依次画出 |
 | ◇ | **为数学·筑基** | 从香港中文大学数学所到 BIMSA、求真书院 |
 | ◇ | **点亮一颗星** | 访客留言，在星空中点亮一颗星 |
@@ -41,6 +41,21 @@
   <img src="docs/preview-theorems.jpg" width="32%" alt="定理之碑">
   <img src="docs/preview-lineage.jpg" width="32%" alt="薪火·师承">
 </p>
+
+## 定理讲解
+
+| 碑 | 页面 | 原文 |
+|---|---|---|
+| I | [卡拉比猜想](https://masteryau.com/calabi-yau/) | Yau, CPAM 1978 |
+| II | [正质量定理](https://masteryau.com/positive-mass/) | Schoen–Yau, CMP 1979 |
+| III | [李–丘估计](https://masteryau.com/li-yau/) | Li–Yau, Acta Math. 1986 |
+| IV | [唐纳森–乌伦贝克–丘定理](https://masteryau.com/duy/) | Uhlenbeck–Yau, CPAM 1986 |
+| V | [SYZ 猜想](https://masteryau.com/syz/) | Strominger–Yau–Zaslow, Nucl. Phys. B 1996 |
+| VI | [几何分析](https://masteryau.com/geometric-analysis/) | 综述 |
+
+每篇都按"一句话版本 → 背景 → 精确陈述 → 证明思路（含可点击的证明结构图）→ 影响 → 原文"的结构展开，右上角可切换中英文，首屏是与该定理相关的可拖动 3D 曲面（史瓦西喉部、热核、相扣环面、环面纤维化、悬链面–螺旋面）。
+
+讲解由 AI 辅助撰写，**欢迎专业读者勘误**。页面由 `tools/build_explainers.py` 从 `tools/content/*.html` 生成（卡拉比猜想页为手写），公共样式与脚本在 `assets/explainer.css`、`assets/explainer.js`。
 
 ## 首屏流形是怎么画的
 
@@ -66,12 +81,14 @@ z₂ = e^{2πi·k₂/5} · (−i·sinh(ζ))^{2/5},   k₁, k₂ ∈ {0,…,4}
 ```
 .
 ├── index.html              # 主页
-├── calabi-yau/             # 定理讲解：卡拉比猜想（中英双语，KaTeX）
+├── calabi-yau/ …          # 六篇定理讲解（中英双语，KaTeX）
+├── tools/                  # 讲解页生成脚本与正文
 ├── assets/
 │   ├── yau.webp            # 肖像（去背景、调色）
 │   ├── favicon.svg
 │   ├── apple-touch-icon.png
-│   └── og.jpg              # 社交分享预览图
+│   ├── og.jpg              # 社交分享预览图
+│   └── explainer.{css,js}  # 讲解页公共样式与 3D 曲面渲染
 ├── docs/                   # README 用图，不参与部署
 └── .github/workflows/deploy-pages.yml
 ```
