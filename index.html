@@ -147,7 +147,12 @@ h2 em{font-style:normal;color:var(--gold)}
 /* institutions */
 .inst{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
 .card{border:1px solid var(--line);padding:30px 28px;position:relative;transition:border-color .5s,transform .5s}
-.card:hover{border-color:var(--gold);transform:translateY(-4px)}
+.card{display:block;color:inherit;text-decoration:none}
+.card:hover,.card:focus-visible{border-color:var(--gold);transform:translateY(-4px)}
+.card:focus-visible{outline:1px solid var(--gold);outline-offset:4px}
+.card .go{position:absolute;right:22px;bottom:18px;font-family:var(--latin);font-size:15px;color:var(--gold);opacity:0;transition:opacity .5s}
+.card:hover .go,.card:focus-visible .go{opacity:.9}
+@media (hover:none){.card .go{opacity:.6}}
 .card .yr{font-family:var(--latin);font-size:40px;color:var(--gold);line-height:1}
 .card h3{font-size:18px;font-weight:500;margin-top:16px;letter-spacing:.04em}
 .card p{font-size:13.5px;color:var(--dim);margin-top:6px}
@@ -463,14 +468,14 @@ const EVENTS = [
   ['2023','获邵逸夫数学科学奖','']
 ];
 const INST = [
-  ['1993','香港中文大学数学科学研究所','Institute of Mathematical Sciences, CUHK'],
-  ['1996','中国科学院晨兴数学中心','Morningside Center of Mathematics, CAS'],
-  ['1998','世界华人数学家大会','International Congress of Chinese Mathematicians'],
-  ['2002','浙江大学数学科学研究中心','Center of Mathematical Sciences, Zhejiang University'],
-  ['2009','清华大学丘成桐数学科学中心','Yau Mathematical Sciences Center, Tsinghua'],
-  ['2014','哈佛大学数学科学与应用中心','Harvard CMSA'],
-  ['2020','北京雁栖湖应用数学研究院','BIMSA',1],
-  ['2021','清华大学求真书院','Qiuzhen College, Tsinghua']
+  ['1993','香港中文大学数学科学研究所','Institute of Mathematical Sciences, CUHK',0,'https://www.ims.cuhk.edu.hk/'],
+  ['1996','中国科学院晨兴数学中心','Morningside Center of Mathematics, CAS',0,'http://www.mcm.ac.cn/'],
+  ['1998','世界华人数学家大会','International Congress of Chinese Mathematicians',0,'https://iccm.tsinghua.edu.cn/'],
+  ['2002','浙江大学数学科学研究中心','Center of Mathematical Sciences, Zhejiang University',0,'https://cms.zju.edu.cn/'],
+  ['2009','清华大学丘成桐数学科学中心','Yau Mathematical Sciences Center, Tsinghua',0,'https://ymsc.tsinghua.edu.cn/'],
+  ['2014','哈佛大学数学科学与应用中心','Harvard CMSA',0,'https://cmsa.fas.harvard.edu/'],
+  ['2020','北京雁栖湖应用数学研究院','BIMSA',1,'https://www.bimsa.cn/'],
+  ['2021','清华大学求真书院','Qiuzhen College, Tsinghua',0,'https://qzc.tsinghua.edu.cn/']
 ];
 const HONORS = [['1981','维布伦几何奖'],['1982','菲尔兹奖'],['1985','麦克阿瑟奖'],['1994','克拉福德奖'],['1997','美国国家科学奖章'],['2010','沃尔夫数学奖'],['2023','邵逸夫数学科学奖']];
 const STUDENTS = [
@@ -483,7 +488,7 @@ const STUDENTS = [
 document.getElementById('timeline').innerHTML = EVENTS.map(e =>
   `<div class="ev reveal${e[3]?' major':''}"><div class="y">${e[0]}</div><div class="d"><h3>${e[1]}</h3>${e[2]?`<p>${e[2]}</p>`:''}</div></div>`).join('');
 document.getElementById('inst').innerHTML = INST.map(e =>
-  `<div class="card">${e[3]?'<span class="here">BIMSA</span>':''}<div class="yr">${e[0]}</div><h3>${e[1]}</h3><p>${e[2]}</p></div>`).join('');
+  `<a class="card" href="${e[4]}" target="_blank" rel="noopener">${e[3]?'<span class="here">BIMSA</span>':''}<div class="yr">${e[0]}</div><h3>${e[1]}</h3><p>${e[2]}</p><span class="go" aria-hidden="true">↗</span></a>`).join('');
 document.getElementById('honors').innerHTML = HONORS.map(h => `<div class="honor"><div class="yr">${h[0]}</div><div class="nm">${h[1]}</div></div>`).join('');
 
 /* genealogy tree */
